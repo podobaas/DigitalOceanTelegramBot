@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalOceanAuth", "DigitalOceanAuth\DigitalOceanAuth.csproj", "{9BF1E6B6-D231-4948-8BD7-6F3216E111D5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9BF1E6B6-D231-4948-8BD7-6F3216E111D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BF1E6B6-D231-4948-8BD7-6F3216E111D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BF1E6B6-D231-4948-8BD7-6F3216E111D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BF1E6B6-D231-4948-8BD7-6F3216E111D5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3BC2C180-C74E-472F-AE66-1CF734CC40CD}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,20 @@
+﻿@model DigitalOceanAuth.Models.AuthModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OAuth request</title>
+</head>
+<body>
+    @if (Model.IsSuccess)
+    {
+        <div style="padding:50px;text-align:center;font-size:55px;color:green;">Success!</div>
+        <div style="padding:5px;text-align:center;font-size:50px;">You can close this windows</div>
+    }
+    else
+    {
+        <div style="padding: 50px; text-align: center; font-size: 55px; color: red;">Error!</div>
+        <div style="padding:5px;text-align:center;font-size:50px;">You can close this windows</div>
+    }
+</body>
+</html>
