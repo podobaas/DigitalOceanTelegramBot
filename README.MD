@@ -46,6 +46,6 @@
 + [EasyNetQ](https://github.com/EasyNetQ/EasyNetQ)
 + [Serilog](https://github.com/serilog/serilog)
 
-##References
+## References
 + [LICENSE](LICENSE.MD)
 + [CHANGELOG](CHANGELOG.MD)
