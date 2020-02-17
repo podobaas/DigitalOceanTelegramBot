@@ -1,13 +1,14 @@
-﻿<h1 align="center">DigitalOcean :ocean: for Telegram</h1>
-**This bot for easy manager your droplets, firewalls and etc from Telegram messanger :star2:**
-Based on [DigitalOcean's API](https://developers.digitalocean.com/documentation/v2/#introduction)
+# :ocean: DigitalOcean for Telegram
+**This bot for easy manager your droplets, firewalls and etc from Telegram messanger** :star2:
 
-##:boom: Available functional in bot: :boom:
-**Account :ocean:**
+**Link:** [DigitalOceanBot](https://t.me/DigitalOceanDropletBot)
+
+## :boom: Available functional in bot: :boom:
+**Account** :ocean:
 + Account information
 + Balance
 
-**Droplets :droplet:**
+**Droplets** :droplet:
 + Create new droplet
 + Rename droplet
 + Reboot droplet
@@ -17,14 +18,14 @@ Based on [DigitalOcean's API](https://developers.digitalocean.com/documentation/
 + Create snaphot
 + Reset password
 
-**Firewalls :european_castle:**
+**Firewalls** :european_castle:
 + Create new firewall
 + Add inbound rule to firewall
 + Add outbound rule to firewall
 + Add droplets to firewall
 + Remove droplets from firewall
 
-##Missing functional (in development)
+## Missing functional (in development)
 + Projects
 + Block Storage
 + CDN Endpoints
@@ -37,17 +38,14 @@ Based on [DigitalOcean's API](https://developers.digitalocean.com/documentation/
 + Kubernetes
 + Load Balancers
 
-##Built With :heart:
-+ [TelegramBot API .NET] (https://github.com/TelegramBots/Telegram.Bot)
-+ [DigitalOcean API .NET] (https://github.com/trmcnvn/DigitalOcean.API)
-+ [MongoDB] (https://github.com/mongodb/mongo)
-+ [RabbitMQ] (https://github.com/rabbitmq/rabbitmq-server)
-+ [EasyNetQ] (https://github.com/EasyNetQ/EasyNetQ)
-+ [Serilog] (https://github.com/serilog/serilog)
-
-##Authors
-Podoba Aleksey - Initial work - [@podobaas](https://github.com/podobaas)
+## Built With :heart:
++ [TelegramBot API .NET](https://github.com/TelegramBots/Telegram.Bot)
++ [DigitalOcean API .NET](https://github.com/trmcnvn/DigitalOcean.API)
++ [MongoDB](https://github.com/mongodb/mongo)
++ [RabbitMQ](https://github.com/rabbitmq/rabbitmq-server)
++ [EasyNetQ](https://github.com/EasyNetQ/EasyNetQ)
++ [Serilog](https://github.com/serilog/serilog)
 
 ##References
-+ [LICENSE]()
-+ [CHANGELOG]()
++ [LICENSE](LICENSE.MD)
++ [CHANGELOG](CHANGELOG.MD)
