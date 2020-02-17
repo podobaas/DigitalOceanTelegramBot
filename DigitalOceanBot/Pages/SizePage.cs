@@ -30,8 +30,8 @@ namespace DigitalOceanBot.Pages
                 var size = sizes.Skip(page).Take(1).FirstOrDefault();
                 stringBuilder.Append("\U0001F4BB *Choose size for droplet* \n\n");
                 stringBuilder.Append($"Name: *{size.Slug}* \n");
-                stringBuilder.Append($"Price per month: *{size.PriceMonthly}$\\mo* \n");
-                stringBuilder.Append($"Price per hour: *{size.PriceHourly}$\\hour* \n");
+                stringBuilder.Append($"Price per month: *${size.PriceMonthly}* \n");
+                stringBuilder.Append($"Price per hour: *${size.PriceHourly.ToString("0.000")}* \n");
                 stringBuilder.Append($"Size: *{size.Memory} MB\\{size.Vcpus} vCPUs*");
 
                 return new PageModel
