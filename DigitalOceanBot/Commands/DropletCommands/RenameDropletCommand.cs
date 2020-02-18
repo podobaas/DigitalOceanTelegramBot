@@ -10,7 +10,7 @@ using Telegram.Bot.Types.Enums;
 
 namespace DigitalOceanBot.Commands.DropletCommands
 {
-    internal sealed class RenameDropletCommand : DigitalOceanActionBase, IBotCommand
+    public class RenameDropletCommand : DigitalOceanActionBase, IBotCommand
     {
         private readonly ITelegramBotClient _telegramBotClient;
         private readonly IRepository<Session> _sessionRepo;
@@ -37,7 +37,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
                 switch (sessionState)
                 {
                     case SessionState.SelectedDroplet:
-                        RenameDroplet(message);
+                        InputNewName(message);
                         break;
                     case SessionState.WaitInputNewNameDroplet:
                         SetNewNameDroplet(message);
@@ -56,14 +56,14 @@ namespace DigitalOceanBot.Commands.DropletCommands
             }
         }
 
-        private async void RenameDroplet(Message message)
+        private async void InputNewName(Message message)
         {
             _sessionRepo.Update(message.From.Id, session =>
             {
                 session.State = SessionState.WaitInputNewNameDroplet;
             });
 
-            await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Input new name:", ParseMode.Markdown);
+            await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Input new name:");
         }
 
         private void SetNewNameDroplet(Message message)

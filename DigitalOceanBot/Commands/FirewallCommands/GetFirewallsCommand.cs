@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using DigitalOcean.API;
 using DigitalOcean.API.Exceptions;
 using DigitalOceanBot.Factory;
 using DigitalOceanBot.Helpers;

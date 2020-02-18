@@ -10,7 +10,7 @@ using Telegram.Bot.Types.Enums;
 
 namespace DigitalOceanBot.Commands.DropletCommands
 {
-    internal sealed class PowerCycleDropletCommand : DigitalOceanActionBase, IBotCommand
+    public class PowerCycleDropletCommand : DigitalOceanActionBase, IBotCommand
     {
         private readonly ITelegramBotClient _telegramBotClient;
         private readonly ILogger<DigitalOceanWorker> _logger;
@@ -57,7 +57,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
 
         private void PowerCycleDroplet(Message message)
         {
-            StartActionWithConfirm(message, "Power cycle", async (digitalOceanClient, dropletId) => await digitalOceanClient.DropletActions.Reboot(dropletId));
+            StartActionWithConfirm(message, "Power cycle", async (digitalOceanClient, dropletId) => await digitalOceanClient.DropletActions.PowerCycle(dropletId));
         }
     }
 }

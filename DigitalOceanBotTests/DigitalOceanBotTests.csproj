@@ -15,8 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\podobaas\DigitalOceanTelegramBot\DigitalOceanBot.MongoDb\DigitalOceanBot.MongoDb.csproj" />
-    <ProjectReference Include="..\..\podobaas\DigitalOceanTelegramBot\DigitalOceanBot\DigitalOceanBot.csproj" />
+    <ProjectReference Include="..\DigitalOceanBot.MongoDb\DigitalOceanBot.MongoDb.csproj" />
+    <ProjectReference Include="..\DigitalOceanBot\DigitalOceanBot.csproj" />
+    <ProjectReference Include="..\DigitalOceanBot.MongoDb\DigitalOceanBot.MongoDb.csproj" />
+    <ProjectReference Include="..\DigitalOceanBot\DigitalOceanBot.csproj" />
   </ItemGroup>
 
   <ItemGroup>

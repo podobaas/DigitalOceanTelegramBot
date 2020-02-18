@@ -22,6 +22,8 @@ namespace DigitalOceanBot
              .UseSystemd()
              .ConfigureServices((hostContext, services) =>
              {
+                 BsonRegisterClassMap();
+                 
                  services.AddHostedService<DigitalOceanWorker>();
                  services.AddScoped<IRepository<DoUser>>(r => new UserRepository(Environment.GetEnvironmentVariable("MONGODB")));
                  services.AddScoped<IRepository<Session>>(r => new SessionRepository(Environment.GetEnvironmentVariable("MONGODB")));
@@ -31,13 +33,7 @@ namespace DigitalOceanBot
                  services.AddScoped<ICheckListPageFactory, CheckListPageFactory>();
                  services.AddSingleton<ITelegramBotClient>(t => new TelegramBotClient(Environment.GetEnvironmentVariable("TELEGRAM")));
                  services.AddSingleton(b => RabbitHutch.CreateBus(Environment.GetEnvironmentVariable("RABBITMQ")).Advanced);
-
-                 BsonClassMap.RegisterClassMap<Firewall>(cm =>
-                 {
-                     cm.AutoMap();
-                     cm.SetDiscriminator(typeof(Firewall).FullName);
-                 });
-
+                 
                  services.AddLogging(logging =>
                  {
                      logging.AddSerilog(new LoggerConfiguration()
@@ -49,6 +45,21 @@ namespace DigitalOceanBot
 
 
             host.Start();
+        }
+
+        private static void BsonRegisterClassMap()
+        {
+            BsonClassMap.RegisterClassMap<Firewall>(cm =>
+            {
+                cm.AutoMap();
+                cm.SetDiscriminator(typeof(Firewall).FullName);
+            });
+            
+            BsonClassMap.RegisterClassMap<CreateDroplet>(cm =>
+            {
+                cm.AutoMap();
+                cm.SetDiscriminator(typeof(CreateDroplet).FullName);
+            });
         }
     }
 }

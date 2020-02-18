@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DigitalOceanBot.BusMessage
+﻿namespace DigitalOceanBot.BusMessage
 {
     public class AuthMessage
     {

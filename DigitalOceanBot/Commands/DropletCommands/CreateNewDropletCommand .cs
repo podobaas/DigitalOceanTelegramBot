@@ -199,8 +199,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
         }
 
         #endregion
-
-
+        
         #region Callbacks
 
         public async void Execute(CallbackQuery callback, Message message, SessionState sessionState)

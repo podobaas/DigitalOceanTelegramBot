@@ -10,7 +10,7 @@ using Telegram.Bot.Types.Enums;
 
 namespace DigitalOceanBot.Commands.DropletCommands
 {
-    internal sealed class CreateSnapshotDropletCommand : DigitalOceanActionBase, IBotCommand
+    public class CreateSnapshotDropletCommand : DigitalOceanActionBase, IBotCommand
     {
         private readonly ITelegramBotClient _telegramBotClient;
         private readonly IRepository<Session> _sessionRepo;

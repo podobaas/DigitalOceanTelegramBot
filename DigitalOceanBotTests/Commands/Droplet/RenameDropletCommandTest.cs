@@ -13,7 +13,7 @@ using Xunit;
 
 namespace DigitalOceanBotTests
 {
-    public class RebootDropletCommandTest
+    public class RenameDropletCommandTest
     {
         ILogger<DigitalOceanWorker> logger;
         ITelegramBotClient tg;
@@ -22,7 +22,7 @@ namespace DigitalOceanBotTests
         IDigitalOceanClientFactory digitalOceanClientFactory;
         Message message;
 
-        public RebootDropletCommandTest()
+        public RenameDropletCommandTest()
         {
             InitTest();
         }
@@ -61,7 +61,7 @@ namespace DigitalOceanBotTests
 
             digitalOceanClientFactory.GetInstance(Arg.Any<int>())
                 .DropletActions
-                .Reboot(Arg.Any<int>())
+                .Rename(Arg.Any<int>(), Arg.Any<string>())
                 .Returns(
                     new Responses.Action
                     {
@@ -80,45 +80,29 @@ namespace DigitalOceanBotTests
         }
 
         [Fact]
-        public void ConfirmMessageTest()
+        public void InputNewNameTest()
         {
-            var command = Substitute.For<RebootDropletCommand>(logger, tg, userRepo, sessionRepo, digitalOceanClientFactory);
+            var command = Substitute.For<RenameDropletCommand>(logger, tg, userRepo, sessionRepo, digitalOceanClientFactory);
             command.Execute(message, SessionState.SelectedDroplet);
 
             command.Received().Execute(message, SessionState.SelectedDroplet);
             sessionRepo.Received().Update(Arg.Is<int>(i => i == 100), Arg.Invoke(new Session()));
-            tg.Received().SendTextMessageAsync(Arg.Is<ChatId>(i => i.Identifier == 101), Arg.Any<string>(), replyMarkup:Arg.Any<ReplyKeyboardMarkup>());
+            tg.Received().SendTextMessageAsync(Arg.Is<ChatId>(i => i.Identifier == 101), Arg.Any<string>());
         }
 
         [Fact]
-        public void RebootDropletTest_AnswerYes()
+        public void SetNewNameDroplet()
         {
-            message.Text = "Yes";
-            var command = Substitute.For<RebootDropletCommand>(logger, tg, userRepo, sessionRepo, digitalOceanClientFactory);
-            command.Execute(message, SessionState.WaitConfirmReboot);
+            var command = Substitute.For<RenameDropletCommand>(logger, tg, userRepo, sessionRepo, digitalOceanClientFactory);
+            command.Execute(message, SessionState.WaitInputNewNameDroplet);
 
-            command.Received().Execute(message, SessionState.WaitConfirmReboot);
+            command.Received().Execute(message, SessionState.WaitInputNewNameDroplet);
             var doApi = digitalOceanClientFactory.Received().GetInstance(Arg.Is<int>(i => i == 100));
             sessionRepo.Received().Get(Arg.Is<int>(i => i == 100));
-            doApi.DropletActions.Received().Reboot(Arg.Is<int>(i => i == 1000));
+            doApi.DropletActions.Received().Rename(Arg.Is<int>(i => i == 1000), Arg.Any<string>());
             doApi.DropletActions.Received().GetDropletAction(Arg.Is<int>(i => i == 1000), Arg.Is<int>(i => i == 200));
             tg.Received().SendTextMessageAsync(Arg.Is<ChatId>(i => i.Identifier == 101), Arg.Any<string>());
             sessionRepo.Received().Update(Arg.Is<int>(i => i == 100), Arg.Invoke(new Session()));
-        }
-        
-        [Fact]
-        public void RebootDropletTest_AnswerNo()
-        {
-            message.Text = "No";
-            var command = Substitute.For<RebootDropletCommand>(logger, tg, userRepo, sessionRepo, digitalOceanClientFactory);
-            command.Execute(message, SessionState.WaitConfirmReboot);
-
-            command.Received().Execute(message, SessionState.WaitConfirmReboot);
-            sessionRepo.Received().Update(Arg.Is<int>(i => i == 100), Arg.Invoke(new Session()));
-            tg.Received().SendTextMessageAsync(Arg.Is<ChatId>(i => i.Identifier == 101), Arg.Any<string>(), replyMarkup:Arg.Any<ReplyKeyboardMarkup>());
-
-            var doApi = digitalOceanClientFactory.DidNotReceive().GetInstance(Arg.Is<int>(i => i == 100));
-            doApi.DropletActions.DidNotReceive().Reboot(Arg.Is<int>(i => i == 1000));
         }
     }
 }

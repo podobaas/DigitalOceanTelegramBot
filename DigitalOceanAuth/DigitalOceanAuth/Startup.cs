@@ -1,6 +1,3 @@
-using DigitalOceanBot.MongoDb;
-using DigitalOceanBot.MongoDb.Models;
-using EasyNetQ;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -8,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
-using System;
 using System.IO;
 using System.Reflection;
 

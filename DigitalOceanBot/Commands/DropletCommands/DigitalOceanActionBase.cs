@@ -41,7 +41,6 @@ namespace DigitalOceanBot.Commands.DropletCommands
             {
                 if (message.Text == "Yes")
                 {
-                    var user = _userRepo.Get(message.From.Id);
                     var digitalOceanApi = _digitalOceanClientFactory.GetInstance(message.From.Id);
                     var session = _sessionRepo.Get(message.From.Id);
                     var dropletId = session.Data.CastObject<int>();
@@ -90,12 +89,11 @@ namespace DigitalOceanBot.Commands.DropletCommands
             }
         }
 
-        protected async void StartActionWithoutConfirm(Message message, string actionName, Func<DigitalOceanClient, int, Task<DigitalOcean.API.Models.Responses.Action>> func)
+        protected async void StartActionWithoutConfirm(Message message, string actionName, Func<IDigitalOceanClient, int, Task<DigitalOcean.API.Models.Responses.Action>> func)
         {
             try
             {
-                var user = _userRepo.Get(message.From.Id);
-                var digitalOceanApi = new DigitalOceanClient(user.UserInfo.access_token);
+                var digitalOceanApi = _digitalOceanClientFactory.GetInstance(message.From.Id);
                 var session = _sessionRepo.Get(message.From.Id);
                 var dropletId = session.Data.CastObject<int>();
                 var action = await func(digitalOceanApi, dropletId);
