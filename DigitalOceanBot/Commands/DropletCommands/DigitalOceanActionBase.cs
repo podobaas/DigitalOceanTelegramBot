@@ -12,7 +12,7 @@ using Telegram.Bot.Types;
 
 namespace DigitalOceanBot.Commands.DropletCommands
 {
-    internal abstract class DigitalOceanActionBase
+    public abstract class DigitalOceanActionBase
     {
         private readonly ITelegramBotClient _telegramBotClient;
         private readonly IRepository<DoUser> _userRepo;

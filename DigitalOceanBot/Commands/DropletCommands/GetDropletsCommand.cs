@@ -70,7 +70,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
 
         private async Task GetDroplets(Message message)
         {
-            await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "\U0001F4C0 Loading your droplets...", ParseMode.Markdown, replyMarkup: Keyboards.GetDropletsMenuKeyboard());
+            await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "\U0001F4C0 Loading your droplets...", replyMarkup: Keyboards.GetDropletsMenuKeyboard());
             var digitalOceanApi = _digitalOceanClientFactory.GetInstance(message.From.Id);
             var droplets = await digitalOceanApi.Droplets.GetAll();
 
@@ -96,7 +96,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
             }
             else
             {
-                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "You dont have a droplets \U0001F914", ParseMode.Markdown);
+                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "You dont have a droplets \U0001F914");
             }
         }
 
