@@ -4,7 +4,7 @@ using DigitalOceanBot.MongoDb.Models;
 
 namespace DigitalOceanBot.Factory
 {
-    internal class DigitalOceanClientFactory : IDigitalOceanClientFactory
+    public class DigitalOceanClientFactory : IDigitalOceanClientFactory
     {
         private readonly IRepository<DoUser> _userRepo;
 

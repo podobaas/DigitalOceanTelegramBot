@@ -110,11 +110,11 @@ namespace DigitalOceanBot.Commands.DropletCommands
 
             var sendMessage = await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, pageModel.Message, ParseMode.Markdown, replyMarkup: pageModel.Keyboard);
             
-            _handlerCallbackRepo.Update(message.From.Id, calllback =>
+            _handlerCallbackRepo.Update(message.From.Id, callback =>
             {
-                calllback.MessageId = sendMessage.MessageId;
-                calllback.UserId = message.From.Id;
-                calllback.HandlerType = this.GetType().FullName;
+                callback.MessageId = sendMessage.MessageId;
+                callback.UserId = message.From.Id;
+                callback.HandlerType = this.GetType().FullName;
             });
         }
 
@@ -136,11 +136,11 @@ namespace DigitalOceanBot.Commands.DropletCommands
 
             var sendMessage = await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, pageModel.Message, ParseMode.Markdown, replyMarkup: pageModel.Keyboard);
             
-            _handlerCallbackRepo.Update(message.From.Id, calllback =>
+            _handlerCallbackRepo.Update(message.From.Id, callback =>
             {
-                calllback.MessageId = sendMessage.MessageId;
-                calllback.UserId = message.From.Id;
-                calllback.HandlerType = this.GetType().FullName;
+                callback.MessageId = sendMessage.MessageId;
+                callback.UserId = message.From.Id;
+                callback.HandlerType = this.GetType().FullName;
             });
         }
 
@@ -162,11 +162,11 @@ namespace DigitalOceanBot.Commands.DropletCommands
             
             var sendMessage = await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, pageModel.Message, ParseMode.Markdown, replyMarkup: pageModel.Keyboard);
             
-            _handlerCallbackRepo.Update(message.From.Id, calllback =>
+            _handlerCallbackRepo.Update(message.From.Id, callback =>
             {
-                calllback.MessageId = sendMessage.MessageId;
-                calllback.UserId = message.From.Id;
-                calllback.HandlerType = this.GetType().FullName;
+                callback.MessageId = sendMessage.MessageId;
+                callback.UserId = message.From.Id;
+                callback.HandlerType = this.GetType().FullName;
             });
         }
 
