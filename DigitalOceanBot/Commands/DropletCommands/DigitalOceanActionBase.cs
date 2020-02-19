@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using DigitalOcean.API;
 using DigitalOcean.API.Exceptions;
@@ -52,7 +53,10 @@ namespace DigitalOceanBot.Commands.DropletCommands
                         session.State = SessionState.WaitAction;
                     });
 
-                    var resultStatus = await CheckActionStatus(dropletId, action.Id, digitalOceanApi);
+                    var cancellationTokenSource = new CancellationTokenSource();
+                    cancellationTokenSource.CancelAfter(TimeSpan.FromMinutes(3));
+                    var resultStatus = await CheckActionStatus(dropletId, action.Id, digitalOceanApi, cancellationTokenSource.Token);
+                    
                     if (resultStatus)
                     {
                         await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Done \U00002705", replyMarkup: Keyboards.GetSelectedDropletsMenuKeyboard());
@@ -74,13 +78,18 @@ namespace DigitalOceanBot.Commands.DropletCommands
                         session.State = SessionState.SelectedDroplet;
                     });
 
-                    await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Сanceled \U0001F630", replyMarkup: Keyboards.GetSelectedDropletsMenuKeyboard());
+                    await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Canceled \U0001F630", replyMarkup: Keyboards.GetSelectedDropletsMenuKeyboard());
                 }
             }
             catch (ApiException ex)
             {
                 _logger.LogError($"UserId={message.From.Id.ToString()}, Error={ex.Message}");
                 await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message.Replace(".", "\\.")}");
+            }
+            catch (OperationCanceledException)
+            {
+                _logger.LogError($"UserId={message.From.Id.ToString()}, ChatId={message.Chat.Id.ToString()}, Error=Operation CheckActionStatus was auto-canceled after 3 minutes");
+                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Sorry, check action status operation was auto-canceled after 3 minutes \U0001F628", replyMarkup: Keyboards.GetSelectedDropletsMenuKeyboard());
             }
             catch (Exception ex)
             {
@@ -104,7 +113,10 @@ namespace DigitalOceanBot.Commands.DropletCommands
                     session.State = SessionState.WaitAction;
                 });
 
-                var resultStatus = await CheckActionStatus(dropletId, action.Id, digitalOceanApi);
+                var cancellationTokenSource = new CancellationTokenSource();
+                cancellationTokenSource.CancelAfter(TimeSpan.FromMinutes(3));
+                var resultStatus = await CheckActionStatus(dropletId, action.Id, digitalOceanApi, cancellationTokenSource.Token);
+                
                 if (resultStatus)
                 {
                     await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Done \U00002705", replyMarkup: Keyboards.GetSelectedDropletsMenuKeyboard());
@@ -124,6 +136,11 @@ namespace DigitalOceanBot.Commands.DropletCommands
                 _logger.LogError($"UserId={message.From.Id.ToString()}, Error={ex.Message}");
                 await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message.Replace(".", "\\.")}");
             }
+            catch (OperationCanceledException)
+            {
+                _logger.LogError($"UserId={message.From.Id.ToString()}, ChatId={message.Chat.Id.ToString()}, Error=Operation CheckActionStatus was auto-canceled after 3 minutes");
+                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Sorry, check action status operation was auto-canceled after 3 minutes \U0001F628", replyMarkup: Keyboards.GetSelectedDropletsMenuKeyboard());
+            }
             catch (Exception ex)
             {
                 _logger.LogError($"UserId={message.From.Id.ToString()}, ChatId={message.Chat.Id.ToString()}, Error={ex.Message}, StackTrace={ex.StackTrace}");
@@ -141,21 +158,24 @@ namespace DigitalOceanBot.Commands.DropletCommands
             await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"You sure? \U0001F914", replyMarkup: Keyboards.GetConfirmKeyboard());
         }
 
-        private async Task<bool> CheckActionStatus(int dropletId, int actionId, IDigitalOceanClient digitalOceanClient)
+        private async Task<bool> CheckActionStatus(int dropletId, int actionId, IDigitalOceanClient digitalOceanClient, CancellationToken cancellationToken)
         {
             while (true)
             {
                 var action = await digitalOceanClient.DropletActions.GetDropletAction(dropletId, actionId);
+                
                 if (action.Status == "completed")
                 {
                     return true;
                 }
-                else if (action.Status == "errored")
+                if (action.Status == "errored")
                 {
                     return false;
                 }
 
                 await Task.Delay(3000);
+                
+                cancellationToken.ThrowIfCancellationRequested();
             }
         }
     }

@@ -73,12 +73,12 @@ namespace DigitalOceanBot.Commands.FirewallCommands
                 session.State = SessionState.WaitInputAddInboundRuleFirewall;
             });
 
-            await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Input an inbound rule in format:\n*tcp or udp or icmp:port or range:addresses*\nFor example:\ntcp:80:0\\.0\\.0\\.0/0;icmp:8000\\-9000:0\\.0\\.0\\.0/0;udp:421:1\\.1\\.1\\.1,0\\.0\\.0\\.0/0", ParseMode.MarkdownV2);
+            await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Input an inbound rule in format:\n*tcp or udp or icmp:port or range:addresses*\nFor example:\ntcp:80:0\\.0\\.0\\.0/0;icmp:8000\\-9000:0\\.0\\.0\\.0/0;udp:421:1\\.1\\.1\\.1,0\\.0\\.0\\.0/0", ParseMode.Markdown);
         }
 
         private async Task AddInboundRule(Message message)
         {
-            await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "\U0001F4C0 Adding inbound rule...", ParseMode.Markdown, replyMarkup: Keyboards.GetFirewallMenuKeyboard());
+            await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "\U0001F4C0 Adding inbound rule...", replyMarkup: Keyboards.GetFirewallMenuKeyboard());
 
             var session = _sessionRepo.Get(message.From.Id);
             var inboundRules = new List<InboundRule>();
@@ -102,7 +102,7 @@ namespace DigitalOceanBot.Commands.FirewallCommands
                 }
                 else
                 {
-                    await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"Invalid rule: {rule.Replace(".", "\\.")}\nPlease, try again", ParseMode.MarkdownV2);
+                    await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"Invalid rule: {rule.Replace(".", "\\.")}\nPlease, try again");
                     return;
                 }
             }
@@ -113,7 +113,7 @@ namespace DigitalOceanBot.Commands.FirewallCommands
                 InboundRules = inboundRules
             });
 
-            await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"Done \U00002705", ParseMode.MarkdownV2);
+            await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"Done \U00002705");
         }
 
         #endregion

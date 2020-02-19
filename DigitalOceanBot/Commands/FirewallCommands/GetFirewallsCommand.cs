@@ -13,7 +13,7 @@ using Telegram.Bot.Types.Enums;
 
 namespace DigitalOceanBot.Commands.FirewallCommands
 {
-    internal sealed class GetFirewallsCommand : IBotCommand, IBotCallback
+    public class GetFirewallsCommand : IBotCommand, IBotCallback
     {
         private readonly ITelegramBotClient _telegramBotClient;
         private readonly IRepository<Session> _sessionRepo;
@@ -70,11 +70,10 @@ namespace DigitalOceanBot.Commands.FirewallCommands
 
         private async void GetFirewalls(Message message)
         {
-            await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "\U0001F4C0 Loading your firewalls...", ParseMode.Markdown, replyMarkup: Keyboards.GetFirewallMenuKeyboard());
+            await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "\U0001F4C0 Loading your firewalls...", replyMarkup: Keyboards.GetFirewallMenuKeyboard());
             var digitalOceanApi = _digitalOceanClientFactory.GetInstance(message.From.Id);
             var firewalls = await digitalOceanApi.Firewalls.GetAll();
-            var droplets = await digitalOceanApi.Droplets.GetAll();
-
+            
             if (firewalls.Count > 0)
             {
                 _sessionRepo.Update(message.From.Id, session =>
@@ -83,21 +82,22 @@ namespace DigitalOceanBot.Commands.FirewallCommands
                     session.State = SessionState.FirewallsMenu;
                 });
 
+                var droplets = await digitalOceanApi.Droplets.GetAll();
                 var page = _pageFactory.GetInstance<FirewallPage>(droplets);
                 var pageModel = page.GetPage(message.From.Id);
                 
                 var sendMessage = await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, pageModel.Message, ParseMode.Markdown, replyMarkup: pageModel.Keyboard);
                 
-                _handlerCallbackRepo.Update(message.From.Id, calllback =>
+                _handlerCallbackRepo.Update(message.From.Id, callback =>
                 {
-                    calllback.MessageId = sendMessage.MessageId;
-                    calllback.UserId = message.From.Id;
-                    calllback.HandlerType = this.GetType().FullName;
+                    callback.MessageId = sendMessage.MessageId;
+                    callback.UserId = message.From.Id;
+                    callback.HandlerType = this.GetType().FullName;
                 });
             }
             else
             {
-                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "You dont have a firewalls \U0001F914", ParseMode.Markdown);
+                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "You dont have a firewalls \U0001F914");
             }
         }
 
