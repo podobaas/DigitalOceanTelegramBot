@@ -13,5 +13,15 @@ namespace DigitalOceanBot.Helpers
 
             throw new ArgumentNullException(nameof(obj));
         }
+
+        public static string GetDefaultIfStringEmpty(this string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return "None";
+            }
+
+            return text;
+        }
     }
 }

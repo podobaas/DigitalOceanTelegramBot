@@ -21,6 +21,10 @@
       "Type": "DigitalOceanBot.Commands.FirewallCommands.GetFirewallsCommand"
     },
     {
+      "Name": "📝 Projects",
+      "Type": "DigitalOceanBot.Commands.ProjectCommands.GetProjectsCommand"
+    },
+    {
       "Name": "Back",
       "Type": "DigitalOceanBot.Commands.BackCommand"
     },

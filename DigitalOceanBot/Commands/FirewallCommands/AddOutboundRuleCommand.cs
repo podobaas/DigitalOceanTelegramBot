@@ -72,7 +72,7 @@ namespace DigitalOceanBot.Commands.FirewallCommands
                 session.State = SessionState.WaitInputAddOutboundRuleFirewall;
             });
 
-            await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Input an outbound rule in format:\n*tcp or udp or icmp:port or range:addresses*\nFor example:\ntcp:80:0\\.0\\.0\\.0/0;icmp:8000\\-9000:0\\.0\\.0\\.0/0;udp:421:1\\.1\\.1\\.1,0\\.0\\.0\\.0/0", ParseMode.MarkdownV2);
+            await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Input an outbound rule in format:\n*tcp or udp or icmp:port or range:addresses*\n\nFor example:\n*tcp:80:0.0.0.0/0;icmp:8000-9000:0.0.0.0/0;udp:421:1.1.1.1,0.0.0.0/0", ParseMode.Markdown);
         }
 
         private async Task AddOutboundRule(Message message)

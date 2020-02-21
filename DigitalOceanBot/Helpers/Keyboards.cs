@@ -11,10 +11,11 @@ namespace DigitalOceanBot.Helpers
                 new KeyboardButton[]
                 {
                     new KeyboardButton("\U0001F30A Account"),
-                    new KeyboardButton("\U0001F4A7 Droplets"),
+                    new KeyboardButton("\U0001F4DD Projects"),
                 },
                 new KeyboardButton[]
                 {
+                    new KeyboardButton("\U0001F4A7 Droplets"),
                     new KeyboardButton("\U0001F3F0 Firewalls"),
                 }
             };
@@ -118,6 +119,51 @@ namespace DigitalOceanBot.Helpers
                 {
                     new KeyboardButton("Add droplets to firewall"),
                     new KeyboardButton("Remove droplets from firewall")
+                },
+                new KeyboardButton[]
+                {
+                    new KeyboardButton("Back")
+                }
+            };
+
+            return new ReplyKeyboardMarkup(inlineKeyboardButtons, true, true);
+        }
+        
+        public static ReplyKeyboardMarkup GetSelectedProjectMenuKeyboard()
+        {
+            var inlineKeyboardButtons = new KeyboardButton[][]
+            {
+                new KeyboardButton[]
+                {
+                    new KeyboardButton("Rename project"),
+                    new KeyboardButton("Change description"),
+                },
+                new KeyboardButton[]
+                {
+                    new KeyboardButton("Change purpose"),
+                    new KeyboardButton("Change environment")
+                },
+                new KeyboardButton[]
+                {
+                    new KeyboardButton("Set as default"),
+                    new KeyboardButton("Delete project"),
+                },
+                new KeyboardButton[]
+                {
+                    new KeyboardButton("Back")
+                }
+            };
+
+            return new ReplyKeyboardMarkup(inlineKeyboardButtons, true, true);
+        }
+        
+        public static ReplyKeyboardMarkup GetProjectsMenuKeyboard()
+        {
+            var inlineKeyboardButtons = new KeyboardButton[][]
+            {
+                new KeyboardButton[]
+                {
+                    new KeyboardButton("Create new project"),
                 },
                 new KeyboardButton[]
                 {
