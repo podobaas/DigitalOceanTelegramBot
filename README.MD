@@ -1,7 +1,7 @@
 # :ocean: **DigitalOcean for Telegram**
 ![DigitalOceanBot CI](https://github.com/podobaas/DigitalOceanTelegramBot/workflows/DigitalOceanBot%20CI/badge.svg) ![GitHub](https://img.shields.io/github/license/podobaas/DigitalOceanTelegramBot) [![GitHub issues](https://img.shields.io/github/issues/podobaas/DigitalOceanTelegramBot)](https://github.com/podobaas/DigitalOceanTelegramBot/issues)
 
-**This bot for easy manager your droplets, firewalls and etc from Telegram messanger** :star2:
+**This bot for easy manager your droplets, firewalls and etc from Telegram messenger** :star2:
 
 **Link:** [DigitalOceanBot](https://t.me/DigitalOceanDropletBot)
 
