@@ -27,5 +27,7 @@
         WaitChooseDropletsForFirewall = 22,
         WaitInputAddInboundRuleFirewall = 23,
         WaitInputAddOutboundRuleFirewall = 24,
+        ProjectsMenu = 25,
+        SelectedProject = 26
     }
 }
