@@ -1,14 +1,22 @@
-# :ocean: **DigitalOcean for Telegram**
+<p align="center">
+  <img src="https://emojis.wiki/emoji-pics/messenger/water-wave-messenger.png" width="100" height="100">
+</p>
+<h1 align="center">
+DigitalOcean for Telegram
+</h1>
+
 ![DigitalOceanBot CI](https://github.com/podobaas/DigitalOceanTelegramBot/workflows/DigitalOceanBot%20CI/badge.svg) ![GitHub](https://img.shields.io/github/license/podobaas/DigitalOceanTelegramBot) [![GitHub issues](https://img.shields.io/github/issues/podobaas/DigitalOceanTelegramBot)](https://github.com/podobaas/DigitalOceanTelegramBot/issues)
 
-**This bot for easy manager your droplets, firewalls and etc from Telegram messenger** :star2:
+This bot is a free, open source project that can replace the mobile application to easily manage your infrastructure in [DigitalOcean](https://www.digitalocean.com/)
 
-**Link:** [DigitalOceanBot](https://t.me/DigitalOceanDropletBot)
+Authorization based on DigitalOcean Application for API
 
-## :boom: Available functional in bot: :boom:
+:link: Telegram link: [DigitalOceanBot](https://t.me/DigitalOceanDropletBot)
+
+## Available functional:
 **Account** :ocean:
 + Account information
-+ Balance
++ Inforamtion about your credit
 
 **Droplets** :droplet:
 + Create new droplet
@@ -47,14 +55,12 @@
 + [RabbitMQ](https://github.com/rabbitmq/rabbitmq-server)
 + [EasyNetQ](https://github.com/EasyNetQ/EasyNetQ)
 + [Serilog](https://github.com/serilog/serilog)
++ [NSubstitute](https://github.com/nsubstitute/NSubstitute)
 
 ## Screenshots
-![](screenshots/1.png)
-
-![](screenshots/2.png)
-
-![](screenshots/3.png)
+<img src="/screenshots/1.png" width="250" height="200"> <img src="/screenshots/2.png" width="250" height="200"> <img src="/screenshots/3.png" width="250" height="200">
 
 ## References
 + [LICENSE](LICENSE)
 + [CHANGELOG](CHANGELOG.MD)
++ [CONTRIBUTING](CONTRIBUTING.md)
