@@ -4,8 +4,10 @@
 <h1 align="center">
 DigitalOcean for Telegram
 </h1>
-
-![DigitalOceanBot CI](https://github.com/podobaas/DigitalOceanTelegramBot/workflows/DigitalOceanBot%20CI/badge.svg) ![GitHub](https://img.shields.io/github/license/podobaas/DigitalOceanTelegramBot) [![GitHub issues](https://img.shields.io/github/issues/podobaas/DigitalOceanTelegramBot)](https://github.com/podobaas/DigitalOceanTelegramBot/issues)
+<p align="center">
+<img src="https://github.com/podobaas/DigitalOceanTelegramBot/workflows/DigitalOceanBot%20CI/badge.svg">
+<img src="https://img.shields.io/github/license/podobaas/DigitalOceanTelegramBot">
+</p>
 
 This bot is a free, open source project that can replace the mobile application to easily manage your infrastructure in [DigitalOcean](https://www.digitalocean.com/)
 
