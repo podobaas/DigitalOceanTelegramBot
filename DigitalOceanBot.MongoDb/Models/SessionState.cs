@@ -2,12 +2,12 @@
 {
     public enum SessionState
     {
-        Unknow = 0,
+        Unknown = 0,
         WaitAuth = 1,
         MainMenu = 2,
         DropletsMenu = 3,
         SelectedDroplet = 4,
-        WaitInputNewNameDroplet = 5,
+        WaitInputNameForNewDroplet = 5,
         WaitAction = 6,
         WaitConfirmReboot = 7,
         WaitConfirmPowerCycle = 8,
@@ -28,6 +28,9 @@
         WaitInputAddInboundRuleFirewall = 23,
         WaitInputAddOutboundRuleFirewall = 24,
         ProjectsMenu = 25,
-        SelectedProject = 26
+        SelectedProject = 26,
+        WaitInputNameForNewProject = 27,
+        WaitInputPurposeForNewProject = 28,
+        WaitInputDescriptionForNewProject = 29
     }
 }

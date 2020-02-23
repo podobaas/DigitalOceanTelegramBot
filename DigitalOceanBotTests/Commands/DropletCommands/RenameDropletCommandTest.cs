@@ -93,9 +93,9 @@ namespace DigitalOceanBotTests.Commands.DropletCommands
         public void SetNewNameDroplet()
         {
             var command = Substitute.For<RenameDropletCommand>(_logger, _tg, _userRepo, _sessionRepo, _digitalOceanClientFactory);
-            command.Execute(_message, SessionState.WaitInputNewNameDroplet);
+            command.Execute(_message, SessionState.WaitInputNameForNewDroplet);
 
-            command.Received().Execute(_message, SessionState.WaitInputNewNameDroplet);
+            command.Received().Execute(_message, SessionState.WaitInputNameForNewDroplet);
             var doApi = _digitalOceanClientFactory.Received().GetInstance(Arg.Is<int>(i => i == 100));
             _sessionRepo.Received().Get(Arg.Is<int>(i => i == 100));
             doApi.DropletActions.Received().Rename(Arg.Is<int>(i => i == 1000), Arg.Any<string>());

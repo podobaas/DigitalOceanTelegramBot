@@ -97,7 +97,7 @@ namespace DigitalOceanBot
 
                         if(session == null)
                         {
-                            controller.Execute(e.Message, SessionState.Unknow);
+                            controller.Execute(e.Message, SessionState.Unknown);
                         }
                         else if (session != null && controller != null)
                         {
