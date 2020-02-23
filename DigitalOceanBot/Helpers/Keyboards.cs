@@ -173,5 +173,54 @@ namespace DigitalOceanBot.Helpers
 
             return new ReplyKeyboardMarkup(inlineKeyboardButtons, true, true);
         }
+        
+        public static ReplyKeyboardMarkup GetPurposeKeyboard()
+        {
+            var inlineKeyboardButtons = new KeyboardButton[][]
+            {
+                new KeyboardButton[]
+                {
+                    new KeyboardButton("Just trying out DigitalOcean"),
+                },
+                new KeyboardButton[]
+                {
+                    new KeyboardButton("Class project / Educational purposes")
+                },
+                new KeyboardButton[]
+                {
+                    new KeyboardButton("Website or blog")
+                },
+                new KeyboardButton[]
+                {
+                    new KeyboardButton("Web Application")
+                },
+                new KeyboardButton[]
+                {
+                    new KeyboardButton("Service or API")
+                },
+                new KeyboardButton[]
+                {
+                    new KeyboardButton("Mobile Application")
+                },
+                new KeyboardButton[]
+                {
+                    new KeyboardButton("Machine learning / AI / Data processing")
+                },
+                new KeyboardButton[]
+                {
+                    new KeyboardButton("IoT")
+                },
+                new KeyboardButton[]
+                {
+                    new KeyboardButton("Operational / Developer tooling")
+                },
+                new KeyboardButton[]
+                {
+                    new KeyboardButton("Other")
+                }
+            };
+
+            return new ReplyKeyboardMarkup(inlineKeyboardButtons, true, true);
+        }
     }
 }

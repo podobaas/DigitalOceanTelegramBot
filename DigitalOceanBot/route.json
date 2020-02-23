@@ -79,6 +79,10 @@
     {
       "Name": "Remove droplets from firewall",
       "Type": "DigitalOceanBot.Commands.FirewallCommands.RemoveDropletsCommand"
+    },
+    {
+      "Name": "Create new project",
+      "Type": "DigitalOceanBot.Commands.ProjectCommands.CreateNewProjectCommand"
     }
   ],
   "States": [
@@ -121,6 +125,10 @@
     {
       "SessionStates": [ "24" ],
       "Type": "DigitalOceanBot.Commands.FirewallCommands.AddOutboundRuleCommand"
+    },
+    {
+      "SessionStates": [ "27","28","29" ],
+      "Type": "DigitalOceanBot.Commands.ProjectCommands.CreateNewProjectCommand"
     }
   ]
 }           

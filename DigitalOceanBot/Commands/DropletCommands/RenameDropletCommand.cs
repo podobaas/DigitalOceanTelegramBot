@@ -39,7 +39,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
                     case SessionState.SelectedDroplet:
                         InputNewName(message);
                         break;
-                    case SessionState.WaitInputNewNameDroplet:
+                    case SessionState.WaitInputNameForNewDroplet:
                         SetNewNameDroplet(message);
                         break;
                 }
@@ -60,7 +60,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
         {
             _sessionRepo.Update(message.From.Id, session =>
             {
-                session.State = SessionState.WaitInputNewNameDroplet;
+                session.State = SessionState.WaitInputNameForNewDroplet;
             });
 
             await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Input new name:");

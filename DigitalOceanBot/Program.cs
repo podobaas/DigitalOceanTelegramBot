@@ -55,6 +55,12 @@ namespace DigitalOceanBot
                 cm.SetDiscriminator(typeof(Firewall).FullName);
             });
             
+            BsonClassMap.RegisterClassMap<Project>(cm =>
+            {
+                cm.AutoMap();
+                cm.SetDiscriminator(typeof(Project).FullName);
+            });
+            
             BsonClassMap.RegisterClassMap<CreateDroplet>(cm =>
             {
                 cm.AutoMap();

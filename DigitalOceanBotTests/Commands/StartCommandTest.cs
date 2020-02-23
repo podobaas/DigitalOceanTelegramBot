@@ -42,9 +42,9 @@ namespace DigitalOceanBotTests.Commands
         public void SendAuthUrlTest()
         {
             var command = Substitute.For<StartCommand>(_tg, _userRepo, _sessionRepo, _handlerCallbakRepo, _logger);
-            command.Execute(_message, SessionState.Unknow);
+            command.Execute(_message, SessionState.Unknown);
 
-            command.Received().Execute(_message, SessionState.Unknow);
+            command.Received().Execute(_message, SessionState.Unknown);
             _userRepo.Received().Get(Arg.Is<int>(i => i == 100));
             _userRepo.Received().Create(Arg.Any<DoUser>());
             _sessionRepo.Received().Create(Arg.Any<Session>());
@@ -56,10 +56,10 @@ namespace DigitalOceanBotTests.Commands
         public void SendAuthUrlTest_ExistsUser()
         {
             var command = Substitute.For<StartCommand>(_tg, _userRepo, _sessionRepo, _handlerCallbakRepo, _logger);
-            command.Execute(_message, SessionState.Unknow);
+            command.Execute(_message, SessionState.Unknown);
 
             _userRepo.Get(Arg.Any<int>()).Returns(new DoUser { UserId = 100 });
-            command.Received().Execute(_message, SessionState.Unknow);
+            command.Received().Execute(_message, SessionState.Unknown);
             _userRepo.Received().Get(Arg.Is<int>(i => i == 100));
             _userRepo.DidNotReceive().Update(Arg.Is<int>(i => i == 100), Arg.Invoke(new DoUser()));
             _sessionRepo.DidNotReceive().Update(Arg.Is<int>(i => i == 100), Arg.Invoke(new Session()));
