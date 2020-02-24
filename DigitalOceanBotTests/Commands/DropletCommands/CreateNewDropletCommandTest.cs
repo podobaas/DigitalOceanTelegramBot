@@ -135,21 +135,11 @@ namespace DigitalOceanBotTests.Commands.DropletCommands
                     Keyboard = new InlineKeyboardMarkup(new List<List<InlineKeyboardButton>>())
                 });
 
-            _userRepo.Get(Arg.Any<int>())
-                .Returns(new DoUser
-                {
-                    UserId = 100,
-                    UserInfo = new UserInfo
-                    {
-                        access_token = "token",
-                        info = new Info
-                        {
-                            email = "test@test.com",
-                            name = "test",
-                            uuid = "uuid"
-                        },
-                    }
-                });
+            _userRepo.Get(Arg.Any<int>()).Returns(new DoUser
+            {
+                UserId = 100,
+                Token = "token"
+            });
         }
 
         [Fact]

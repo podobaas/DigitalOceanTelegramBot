@@ -23,10 +23,7 @@ namespace DigitalOceanBotTests.Factory
             _userRepo.Get(Arg.Any<int>()).Returns(new DoUser
             {
                 UserId = 100,
-                UserInfo = new UserInfo
-                {
-                    access_token = "token"
-                }
+                Token = "token"
             });
         }
         

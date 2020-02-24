@@ -63,7 +63,7 @@ namespace DigitalOceanBotTests.Commands
             _userRepo.Received().Get(Arg.Is<int>(i => i == 100));
             _userRepo.DidNotReceive().Update(Arg.Is<int>(i => i == 100), Arg.Invoke(new DoUser()));
             _sessionRepo.DidNotReceive().Update(Arg.Is<int>(i => i == 100), Arg.Invoke(new Session()));
-            _tg.Received().SendTextMessageAsync(Arg.Is<ChatId>(i => i.Identifier == 101), Arg.Any<string>());
+            _tg.DidNotReceive().SendTextMessageAsync(Arg.Is<ChatId>(i => i.Identifier == 101), Arg.Any<string>());
         }
     }
 }

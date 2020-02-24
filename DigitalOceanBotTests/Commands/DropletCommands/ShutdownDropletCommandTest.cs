@@ -42,16 +42,7 @@ namespace DigitalOceanBotTests.Commands.DropletCommands
             _userRepo.Get(Arg.Any<int>()).Returns(new DoUser
             {
                 UserId = 100,
-                UserInfo = new UserInfo
-                {
-                    access_token = "token",
-                    info = new Info
-                    {
-                        email = "test@test.com",
-                        name = "test",
-                        uuid = "uuid"
-                    },
-                }
+                Token = "token"
             });
             
             _sessionRepo.Get(Arg.Any<int>()).Returns(new Session

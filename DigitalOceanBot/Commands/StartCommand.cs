@@ -56,7 +56,8 @@ namespace DigitalOceanBot.Commands
                 _userRepo.Create(new DoUser
                 {
                     UserId = message.From.Id,
-                    State = state
+                    State = state,
+                    IsAuthorized = false
                 });
 
                 _sessionRepo.Create(new Session
@@ -75,7 +76,7 @@ namespace DigitalOceanBot.Commands
 
                 await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Hi! Sign In, please to DigitalOcean account", replyMarkup: GetAuthKeyboard(state));
             }
-            else
+            else if(user.IsAuthorized)
             {
                 await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "You are already logged in. If you want to exit the account and revoke the token, then run the command /stop");
             }

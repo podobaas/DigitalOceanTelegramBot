@@ -15,6 +15,10 @@ namespace DigitalOceanBot.MongoDb.Models
         [BsonRepresentation(BsonType.DateTime)]
         public DateTime TokenExpires { get; set; }
 
-        public UserInfo UserInfo { get; set; }
+        [BsonRepresentation(BsonType.String)]
+        public string Token { get; set; }
+        
+        [BsonRepresentation(BsonType.Boolean)]
+        public bool IsAuthorized { get; set; }
     }
 }
