@@ -1,6 +1,7 @@
 ﻿using DigitalOceanBot.MongoDb.Models;
 using MongoDB.Driver;
 using System;
+using System.Collections.Generic;
 
 namespace DigitalOceanBot.MongoDb
 {
@@ -13,6 +14,11 @@ namespace DigitalOceanBot.MongoDb
         {
             _mongoClient = new MongoClient(connectionString);
             _database = _mongoClient.GetDatabase("DigitalOceanBot");
+        }
+
+        public IEnumerable<Session> GetAll()
+        {
+            return _database.GetCollection<Session>("Sessions").FindSync(Builders<Session>.Filter.Empty).ToList();
         }
 
         public void Create(Session entity)
@@ -38,7 +44,7 @@ namespace DigitalOceanBot.MongoDb
 
         public void Delete(int userId)
         {
-            _database.GetCollection<HandlerCallback>("Sessions").DeleteOne(h => h.UserId == userId);
+            _database.GetCollection<Session>("Sessions").DeleteOne(h => h.UserId == userId);
         }
     }
 }

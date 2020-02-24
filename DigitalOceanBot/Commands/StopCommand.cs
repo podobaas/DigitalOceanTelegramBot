@@ -47,10 +47,10 @@ namespace DigitalOceanBot.Commands
         private async Task Stop(Message message)
         {
             var user = _userRepo.Get(message.From.Id);
-            if (user != null)
+            if (user != null && user.IsAuthorized)
             {
                 var tokenManager = new TokenManager();
-                var result = await tokenManager.RevokeToken(user.UserInfo.access_token);
+                var result = await tokenManager.RevokeToken(user.Token);
 
                 if (result)
                 {

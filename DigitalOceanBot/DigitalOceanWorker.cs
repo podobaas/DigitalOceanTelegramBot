@@ -82,45 +82,36 @@ namespace DigitalOceanBot
             return Task.CompletedTask;
         }
 
-        private async void OnMessage(object sender, MessageEventArgs e)
+        private void OnMessage(object sender, MessageEventArgs e)
         {
             try
             {
                 if (e.Message.Type == MessageType.Text && !e.Message.From.IsBot)
                 {
-                    var command = _botCommand.Commands.FirstOrDefault(c => c.Name == e.Message.Text);
-
-                    if (command != null)
+                    var session = _sessionRepo.Get(e.Message.From.Id);
+                    if (session != null)
                     {
-                        var controller = GetCommandOrCallback<IBotCommand>(command.Type);
-                        var session = _sessionRepo.Get(e.Message.From.Id);
-
-                        if(session == null)
+                        var command = _botCommand.Commands.FirstOrDefault(c => c.Name == e.Message.Text);
+                        if (command != null)
                         {
-                            controller.Execute(e.Message, SessionState.Unknown);
+                            var controller = GetCommandOrCallback<IBotCommand>(command.Type);
+                            controller?.Execute(e.Message, session.State);
+                            
                         }
-                        else if (session != null && controller != null)
-                        {
-                            await RefreshTokenIfNeed(e.Message.From.Id, e.Message.Text);
-                            controller.Execute(e.Message, session.State);
-                        }
-                    }
-                    else
-                    {
-                        var session = _sessionRepo.Get(e.Message.From.Id);
-                        if(session != null)
+                        else
                         {
                             var className = _botCommand.States.FirstOrDefault(c => c.SessionStates.Contains(session.State))?.Type;
                             if (!string.IsNullOrEmpty(className))
                             {
                                 var controller = GetCommandOrCallback<IBotCommand>(className);
-                                if (controller != null)
-                                {
-                                    await RefreshTokenIfNeed(e.Message.From.Id, string.Empty);
-                                    controller.Execute(e.Message, session.State);
-                                }
+                                controller?.Execute(e.Message, session.State);
                             }
                         }
+                    }
+                    else
+                    {
+                        var controller = GetCommandOrCallback<IBotCommand>(typeof(StartCommand).FullName);
+                        controller.Execute(e.Message, SessionState.Unknown);
                     }
                 }
             }
@@ -147,7 +138,6 @@ namespace DigitalOceanBot
                             
                             if (callback != null && session != null)
                             {
-                                await RefreshTokenIfNeed(e.Update.CallbackQuery.From.Id, string.Empty);
                                 await _telegramBotClient.AnswerCallbackQueryAsync(e.Update.CallbackQuery.Id);
                                 callback.Execute(e.Update.CallbackQuery, e.Update.CallbackQuery.Message, session.State);
                             }
@@ -201,31 +191,6 @@ namespace DigitalOceanBot
         {
             var json = File.ReadAllText($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}//route.json");
             _botCommand = JsonConvert.DeserializeObject<Router>(json);
-        }
-
-        private async Task RefreshTokenIfNeed(int userId, string command)
-        {
-            try
-            {
-                if (command != "/start" && command != "/stop")
-                {
-                    var user = _userRepo.Get(userId);
-                    if (user != null && user.TokenExpires.Ticks <= DateTime.Now.Ticks)
-                    {
-                        var tokenManager = new TokenManager();
-                        var userInfo = await tokenManager.RefreshToken(user.UserInfo.refresh_token);
-
-                        _userRepo.Update(userId, user =>
-                        {
-                            user.UserInfo = userInfo;
-                        });
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-                _logger.LogError($"UserId={userId.ToString()}, ErrorMessage={ex.Message}, StackTrace={ex.StackTrace}");
-            }
         }
     }
 }

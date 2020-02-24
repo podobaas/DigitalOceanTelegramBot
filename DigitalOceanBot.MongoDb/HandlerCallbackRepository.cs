@@ -1,6 +1,7 @@
 ﻿using DigitalOceanBot.MongoDb.Models;
 using MongoDB.Driver;
 using System;
+using System.Collections.Generic;
 
 namespace DigitalOceanBot.MongoDb
 {
@@ -11,6 +12,11 @@ namespace DigitalOceanBot.MongoDb
         public HandlerCallbackRepository(string connectionString)
         {
             _database = new MongoClient(connectionString).GetDatabase("DigitalOceanBot");
+        }
+
+        public IEnumerable<HandlerCallback> GetAll()
+        {
+            return _database.GetCollection<HandlerCallback>("HandlersCallback").FindSync(Builders<HandlerCallback>.Filter.Empty).ToList();
         }
 
         public void Create(HandlerCallback entity)

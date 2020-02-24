@@ -16,7 +16,7 @@ namespace DigitalOceanBot.Factory
         public IDigitalOceanClient GetInstance(int userId)
         {
             var user = _userRepo.Get(userId);
-            return new DigitalOceanClient(user.UserInfo.access_token);
+            return new DigitalOceanClient(user.Token);
         }
     }
 }

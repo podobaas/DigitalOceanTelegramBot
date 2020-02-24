@@ -65,7 +65,6 @@ namespace DigitalOceanBot.Commands.AccountCommands
             var balance = await digitalOceanApi.BalanceClient.Get();
 
             stringBuilder.Append($"\U0001F4C4 Account info: \n");
-            stringBuilder.Append($"Name: *{user.UserInfo.info.name}* \n");
             stringBuilder.Append($"Email: *{account.Email}* \n");
             var emailIconState = account.EmailVerified ? "\U00002705" : "\U0000274C";
             stringBuilder.Append($"Email verified: *{emailIconState}* \n");

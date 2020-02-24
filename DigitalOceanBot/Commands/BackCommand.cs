@@ -34,9 +34,11 @@ namespace DigitalOceanBot.Commands
         {
             try
             {
-                await _telegramBotClient.SendChatActionAsync(message.Chat.Id, ChatAction.Typing);
-                await BackToMainMenu(message);
-                
+                if (sessionState != SessionState.WaitAuth)
+                {
+                    await _telegramBotClient.SendChatActionAsync(message.Chat.Id, ChatAction.Typing);
+                    await BackToMainMenu(message);
+                }
             }
             catch (Exception ex)
             {

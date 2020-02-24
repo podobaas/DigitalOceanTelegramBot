@@ -77,8 +77,9 @@ namespace DigitalOceanAuth.Controllers
                     {
                         _userRepo.Update(user.UserId, (user) =>
                         {
-                            user.TokenExpires = DateTime.Now.AddSeconds(userInfo.expires_in);
-                            user.UserInfo = userInfo;
+                            user.TokenExpires = DateTime.UtcNow.AddMinutes(15);
+                            user.Token = userInfo.access_token;
+                            user.IsAuthorized = true;
                         });
 
                         _bus.Send("auth-queue", new AuthMessage

@@ -25,6 +25,7 @@ namespace DigitalOceanBot
                  BsonRegisterClassMap();
                  
                  services.AddHostedService<DigitalOceanWorker>();
+                 services.AddHostedService<AutoRevokeTokenWorker>();
                  services.AddScoped<IRepository<DoUser>>(r => new UserRepository(Environment.GetEnvironmentVariable("MONGODB")));
                  services.AddScoped<IRepository<Session>>(r => new SessionRepository(Environment.GetEnvironmentVariable("MONGODB")));
                  services.AddScoped<IRepository<HandlerCallback>>(r => new HandlerCallbackRepository(Environment.GetEnvironmentVariable("MONGODB")));
