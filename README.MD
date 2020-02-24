@@ -19,7 +19,7 @@ For security, **your token is auto revoked after 15 minutes** after authorizatio
 
 ## Basic commands
 
-**/start** - Authentication in DigitalOCean account
+**/start** - Authentication in DigitalOcean account
 
 **/stop** - Revokation your token and delete session data from database
 
