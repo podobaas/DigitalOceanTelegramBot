@@ -76,7 +76,7 @@ namespace DigitalOceanBot.Pages
 
         private InlineKeyboardMarkup GetInlineKeyboard(int dropletId, int dropletsCount, int page)
         {
-            var back = new InlineKeyboardButton()
+            var back = new InlineKeyboardButton
             {
                 Text = "\U0001F448 Back",
                 CallbackData = page > 0 ? $"BackDroplet;{(page - 1).ToString()}" : "Empty"
@@ -100,7 +100,7 @@ namespace DigitalOceanBot.Pages
                 CallbackData = $"SelectDroplet;{dropletId.ToString()}"
             };
 
-            var buttons = new List<List<InlineKeyboardButton>>()
+            var buttons = new List<List<InlineKeyboardButton>>
             {
                 new List<InlineKeyboardButton>
                 {

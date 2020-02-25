@@ -51,7 +51,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
                 {
                     case SessionState.DropletsMenu:
                     case SessionState.MainMenu:
-                        await GetDroplets(message);
+                        await GetDroplets(message).ConfigureAwait(false);;
                         break;
 
                 }
@@ -91,7 +91,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
                 {
                     calllback.MessageId = sendMessage.MessageId;
                     calllback.UserId = message.From.Id;
-                    calllback.HandlerType = this.GetType().FullName;
+                    calllback.HandlerType = GetType().FullName;
                 });
             }
             else
@@ -114,10 +114,10 @@ namespace DigitalOceanBot.Commands.DropletCommands
                 switch (sessionState)
                 {
                     case SessionState.DropletsMenu when callBackData[0] == "NextDroplet" || callBackData[0] == "BackDroplet":
-                        await NextOrBackDroplet(callback, message);
+                        await NextOrBackDroplet(callback, message).ConfigureAwait(false);
                         break;
                     case SessionState.DropletsMenu when callBackData[0] == "SelectDroplet":
-                        await SelectDroplet(callback, message);
+                        await SelectDroplet(callback, message).ConfigureAwait(false);
                         break;
                 }
             }

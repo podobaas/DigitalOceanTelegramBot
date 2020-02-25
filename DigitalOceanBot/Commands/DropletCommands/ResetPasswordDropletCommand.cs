@@ -18,9 +18,8 @@ namespace DigitalOceanBot.Commands.DropletCommands
         public ResetPasswordDropletCommand(
             ILogger<DigitalOceanWorker> logger,
             ITelegramBotClient telegramBotClient,
-            IRepository<DoUser> userRepo,
             IRepository<Session> sessionRepo,
-            IDigitalOceanClientFactory digitalOceanClientFactory) : base(logger, telegramBotClient, userRepo, sessionRepo, digitalOceanClientFactory)
+            IDigitalOceanClientFactory digitalOceanClientFactory) : base(logger, telegramBotClient, sessionRepo, digitalOceanClientFactory)
         {
             _telegramBotClient = telegramBotClient;
             _logger = logger;
@@ -35,7 +34,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
                 switch (sessionState)
                 {
                     case SessionState.SelectedDroplet:
-                        ConfirmMessage(message, SessionState.WaitConfirmResetPassword);
+                        await ConfirmMessage(message, SessionState.WaitConfirmResetPassword).ConfigureAwait(false);
                         break;
                     case SessionState.WaitConfirmResetPassword:
                         ResetPasswordDroplet(message);

@@ -70,7 +70,7 @@ namespace DigitalOceanBot.Pages
 
         private InlineKeyboardMarkup GetInlineKeyboard(string projectId, int projectCount, int page)
         {
-            var back = new InlineKeyboardButton()
+            var back = new InlineKeyboardButton
             {
                 Text = "\U0001F448 Back",
                 CallbackData = page > 0 ? $"BackProject;{(page - 1).ToString()}" : "Empty"
@@ -94,7 +94,7 @@ namespace DigitalOceanBot.Pages
                 CallbackData = $"SelectProject;{projectId}"
             };
 
-            var buttons = new List<List<InlineKeyboardButton>>()
+            var buttons = new List<List<InlineKeyboardButton>>
             {
                 new List<InlineKeyboardButton>
                 {

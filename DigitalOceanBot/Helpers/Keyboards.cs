@@ -6,14 +6,14 @@ namespace DigitalOceanBot.Helpers
     {
         public static ReplyKeyboardMarkup GetMainMenuKeyboard()
         {
-            var inlineKeyboardButtons = new KeyboardButton[][]
+            var inlineKeyboardButtons = new[]
             {
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("\U0001F30A Account"),
                     new KeyboardButton("\U0001F4DD Projects"),
                 },
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("\U0001F4A7 Droplets"),
                     new KeyboardButton("\U0001F3F0 Firewalls"),
@@ -25,13 +25,13 @@ namespace DigitalOceanBot.Helpers
 
         public static ReplyKeyboardMarkup GetDropletsMenuKeyboard()
         {
-            var inlineKeyboardButtons = new KeyboardButton[][]
+            var inlineKeyboardButtons = new[]
             {
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Create new droplet"),
                 },
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Back")
                 }
@@ -42,28 +42,28 @@ namespace DigitalOceanBot.Helpers
 
         public static ReplyKeyboardMarkup GetSelectedDropletsMenuKeyboard()
         {
-            var inlineKeyboardButtons = new KeyboardButton[][]
+            var inlineKeyboardButtons = new[]
             {
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Rename droplet"),
                 },
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Reboot droplet"),
                     new KeyboardButton("Power cycle droplet"),
                 },
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Shutdown droplet"),
                     new KeyboardButton("Power on droplet"),
                 },
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Create snapshot"),
                     new KeyboardButton("Reset password"),
                 },
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Back")
                 }
@@ -74,13 +74,13 @@ namespace DigitalOceanBot.Helpers
 
         public static ReplyKeyboardMarkup GetConfirmKeyboard()
         {
-            var inlineKeyboardButtons = new KeyboardButton[][]
+            var inlineKeyboardButtons = new[]
             {
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Yes"),
                 },
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("No")
                 }
@@ -91,13 +91,13 @@ namespace DigitalOceanBot.Helpers
 
         public static ReplyKeyboardMarkup GetFirewallMenuKeyboard()
         {
-            var inlineKeyboardButtons = new KeyboardButton[][]
+            var inlineKeyboardButtons = new[]
             {
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Create new firewall"),
                 },
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Back")
                 }
@@ -108,19 +108,19 @@ namespace DigitalOceanBot.Helpers
         
         public static ReplyKeyboardMarkup GetSelectedFirewallMenuKeyboard()
         {
-            var inlineKeyboardButtons = new KeyboardButton[][]
+            var inlineKeyboardButtons = new[]
             {
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Add inbound rule"),
                     new KeyboardButton("Add outbound rule"),
                 },
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Add droplets to firewall"),
                     new KeyboardButton("Remove droplets from firewall")
                 },
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Back")
                 }
@@ -131,24 +131,24 @@ namespace DigitalOceanBot.Helpers
         
         public static ReplyKeyboardMarkup GetSelectedProjectMenuKeyboard()
         {
-            var inlineKeyboardButtons = new KeyboardButton[][]
+            var inlineKeyboardButtons = new[]
             {
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Rename project"),
                     new KeyboardButton("Change description"),
                 },
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Change purpose"),
                     new KeyboardButton("Change environment")
                 },
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Set as default"),
                     new KeyboardButton("Delete project"),
                 },
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Back")
                 }
@@ -159,13 +159,13 @@ namespace DigitalOceanBot.Helpers
         
         public static ReplyKeyboardMarkup GetProjectsMenuKeyboard()
         {
-            var inlineKeyboardButtons = new KeyboardButton[][]
+            var inlineKeyboardButtons = new[]
             {
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Create new project"),
                 },
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Back")
                 }
@@ -176,45 +176,45 @@ namespace DigitalOceanBot.Helpers
         
         public static ReplyKeyboardMarkup GetPurposeKeyboard()
         {
-            var inlineKeyboardButtons = new KeyboardButton[][]
+            var inlineKeyboardButtons = new[]
             {
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Just trying out DigitalOcean"),
                 },
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Class project / Educational purposes")
                 },
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Website or blog")
                 },
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Web Application")
                 },
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Service or API")
                 },
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Mobile Application")
                 },
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Machine learning / AI / Data processing")
                 },
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("IoT")
                 },
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Operational / Developer tooling")
                 },
-                new KeyboardButton[]
+                new[]
                 {
                     new KeyboardButton("Other")
                 }

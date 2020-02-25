@@ -40,7 +40,7 @@ namespace DigitalOceanBot.Commands.AccountCommands
                 switch (sessionState)
                 {
                     case SessionState.MainMenu:
-                        await GetAccount(message);
+                        await GetAccount(message).ConfigureAwait(false);
                         break;
                 }
             }

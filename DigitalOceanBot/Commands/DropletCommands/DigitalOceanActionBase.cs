@@ -16,21 +16,18 @@ namespace DigitalOceanBot.Commands.DropletCommands
     public abstract class DigitalOceanActionBase
     {
         private readonly ITelegramBotClient _telegramBotClient;
-        private readonly IRepository<DoUser> _userRepo;
         private readonly IRepository<Session> _sessionRepo;
         private readonly ILogger<DigitalOceanWorker> _logger;
         private readonly IDigitalOceanClientFactory _digitalOceanClientFactory;
 
-        public DigitalOceanActionBase(
+        protected DigitalOceanActionBase(
             ILogger<DigitalOceanWorker> logger,
             ITelegramBotClient telegramBotClient,
-            IRepository<DoUser> userRepo,
             IRepository<Session> sessionRepo,
             IDigitalOceanClientFactory digitalOceanClientFactory)
         {
             _logger = logger;
             _telegramBotClient = telegramBotClient;
-            _userRepo = userRepo;
             _sessionRepo = sessionRepo;
             _digitalOceanClientFactory = digitalOceanClientFactory;
         }
@@ -148,7 +145,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
             }
         }
 
-        protected async void ConfirmMessage(Message message, SessionState sessionState)
+        protected async Task ConfirmMessage(Message message, SessionState sessionState)
         {
             _sessionRepo.Update(message.From.Id, (session) =>
             {

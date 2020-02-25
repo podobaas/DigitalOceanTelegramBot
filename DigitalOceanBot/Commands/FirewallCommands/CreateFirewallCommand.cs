@@ -53,16 +53,16 @@ namespace DigitalOceanBot.Commands.FirewallCommands
                 switch (sessionState)
                 {
                     case SessionState.FirewallsMenu:
-                        await InputNameFirewall(message);
+                        await InputNameFirewall(message).ConfigureAwait(false);
                         break;
                     case SessionState.WaitInputNameFirewall:
-                        await InputInboundRule(message);
+                        await InputInboundRule(message).ConfigureAwait(false);
                         break;
                     case SessionState.WaitInputInboundFirewallRule:
-                        await InputOutboundRule(message);
+                        await InputOutboundRule(message).ConfigureAwait(false);
                         break;
                     case SessionState.WaitInputOutboundFirewallRule:
-                        await AddDropletsToFirewall(message);
+                        await AddDropletsToFirewall(message).ConfigureAwait(false);
                         break;
                 }
             }
@@ -191,7 +191,7 @@ namespace DigitalOceanBot.Commands.FirewallCommands
             {
                 calllback.MessageId = sendMessage.MessageId;
                 calllback.UserId = message.From.Id;
-                calllback.HandlerType = this.GetType().FullName;
+                calllback.HandlerType = GetType().FullName;
             });
         }
 
@@ -210,13 +210,13 @@ namespace DigitalOceanBot.Commands.FirewallCommands
                 switch (sessionState)
                 {
                     case SessionState.WaitChooseDropletsForFirewall when callBackData[0] == "SelectDroplet":
-                        await SelectDropletForFirewall(callback, message);
+                        await SelectDropletForFirewall(callback, message).ConfigureAwait(false);
                         break;
                     case SessionState.WaitChooseDropletsForFirewall when callBackData[0] == "Skip":
-                        await CreateFirewall(callback, message, false);
+                        await CreateFirewall(callback, message, false).ConfigureAwait(false);
                         break;
                     case SessionState.WaitChooseDropletsForFirewall when callBackData[0] == "Ok":
-                        await CreateFirewall(callback, message, true);
+                        await CreateFirewall(callback, message, true).ConfigureAwait(false);
                         break;
                 }
             }

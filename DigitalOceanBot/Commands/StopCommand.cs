@@ -35,7 +35,7 @@ namespace DigitalOceanBot.Commands
         {
             try
             {
-                await Stop(message);
+                await Stop(message).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

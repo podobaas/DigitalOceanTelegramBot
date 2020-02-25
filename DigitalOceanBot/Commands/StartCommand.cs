@@ -37,7 +37,7 @@ namespace DigitalOceanBot.Commands
         {
             try
             {
-                await SendAuthUrl(message);
+                await SendAuthUrl(message).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

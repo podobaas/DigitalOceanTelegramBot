@@ -73,7 +73,7 @@ namespace DigitalOceanBotTests.Commands.DropletCommands
         [Fact]
         public void InputNameSnapshotDropletTest()
         {
-            var command = Substitute.For<CreateSnapshotDropletCommand>(_logger, _tg, _userRepo, _sessionRepo, _digitalOceanClientFactory);
+            var command = Substitute.For<CreateSnapshotDropletCommand>(_logger, _tg, _sessionRepo, _digitalOceanClientFactory);
             command.Execute(_message, SessionState.SelectedDroplet);
             
             command.Received().Execute(_message, SessionState.SelectedDroplet);
@@ -84,7 +84,7 @@ namespace DigitalOceanBotTests.Commands.DropletCommands
         [Fact]
         public void CreateSnapshotDropletTest()
         {
-            var command = Substitute.For<CreateSnapshotDropletCommand>(_logger, _tg, _userRepo, _sessionRepo, _digitalOceanClientFactory);
+            var command = Substitute.For<CreateSnapshotDropletCommand>(_logger, _tg, _sessionRepo, _digitalOceanClientFactory);
             command.Execute(_message, SessionState.WaitInputSnapshotName);
 
             command.Received().Execute(_message, SessionState.WaitInputSnapshotName);

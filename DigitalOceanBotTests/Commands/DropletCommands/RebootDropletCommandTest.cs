@@ -73,7 +73,7 @@ namespace DigitalOceanBotTests.Commands.DropletCommands
         [Fact]
         public void ConfirmMessageTest()
         {
-            var command = Substitute.For<RebootDropletCommand>(_logger, _tg, _userRepo, _sessionRepo, _digitalOceanClientFactory);
+            var command = Substitute.For<RebootDropletCommand>(_logger, _tg, _sessionRepo, _digitalOceanClientFactory);
             command.Execute(_message, SessionState.SelectedDroplet);
 
             command.Received().Execute(_message, SessionState.SelectedDroplet);
@@ -85,7 +85,7 @@ namespace DigitalOceanBotTests.Commands.DropletCommands
         public void RebootDropletTest_AnswerYes()
         {
             _message.Text = "Yes";
-            var command = Substitute.For<RebootDropletCommand>(_logger, _tg, _userRepo, _sessionRepo, _digitalOceanClientFactory);
+            var command = Substitute.For<RebootDropletCommand>(_logger, _tg, _sessionRepo, _digitalOceanClientFactory);
             command.Execute(_message, SessionState.WaitConfirmReboot);
 
             command.Received().Execute(_message, SessionState.WaitConfirmReboot);
@@ -101,7 +101,7 @@ namespace DigitalOceanBotTests.Commands.DropletCommands
         public void RebootDropletTest_AnswerNo()
         {
             _message.Text = "No";
-            var command = Substitute.For<RebootDropletCommand>(_logger, _tg, _userRepo, _sessionRepo, _digitalOceanClientFactory);
+            var command = Substitute.For<RebootDropletCommand>(_logger, _tg, _sessionRepo, _digitalOceanClientFactory);
             command.Execute(_message, SessionState.WaitConfirmReboot);
 
             command.Received().Execute(_message, SessionState.WaitConfirmReboot);
