@@ -13,20 +13,17 @@ namespace DigitalOceanBot.Commands
     internal sealed class BackCommand : IBotCommand
     {
         private readonly ITelegramBotClient _telegramBotClient;
-        private readonly IRepository<DoUser> _userRepo;
         private readonly IRepository<Session> _sessionRepo;
         private readonly ILogger<DigitalOceanWorker> _logger;
 
         public BackCommand(
             ILogger<DigitalOceanWorker> logger,
             ITelegramBotClient telegramBotClient,
-            IRepository<Session> sessionRepo,
-            IRepository<DoUser> userRepo)
+            IRepository<Session> sessionRepo)
         {
             _logger = logger;
             _telegramBotClient = telegramBotClient;
             _sessionRepo = sessionRepo;
-            _userRepo = userRepo;
         }
 
 
@@ -37,7 +34,7 @@ namespace DigitalOceanBot.Commands
                 if (sessionState != SessionState.WaitAuth)
                 {
                     await _telegramBotClient.SendChatActionAsync(message.Chat.Id, ChatAction.Typing);
-                    await BackToMainMenu(message);
+                    await BackToMainMenu(message).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)

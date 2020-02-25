@@ -67,9 +67,9 @@ namespace DigitalOceanBot.Pages
             }
         }
 
-        private InlineKeyboardMarkup GetInlineKeyboard(string slug, int regionCount, int page)
+        private static InlineKeyboardMarkup GetInlineKeyboard(string slug, int regionCount, int page)
         {
-            var back = new InlineKeyboardButton()
+            var back = new InlineKeyboardButton
             {
                 Text = "\U0001F448 Back",
                 CallbackData = page > 0 ? $"BackSize;{(page - 1).ToString()}" : "Empty"
@@ -90,10 +90,10 @@ namespace DigitalOceanBot.Pages
             var choose = new InlineKeyboardButton
             {
                 Text = $"Select this size",
-                CallbackData = $"SelectSize;{slug.ToString()}"
+                CallbackData = $"SelectSize;{slug}"
             };
 
-            var buttons = new List<List<InlineKeyboardButton>>()
+            var buttons = new List<List<InlineKeyboardButton>>
             {
                 new List<InlineKeyboardButton>
                 {

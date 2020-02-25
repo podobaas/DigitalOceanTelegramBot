@@ -45,10 +45,10 @@ namespace DigitalOceanBot.Commands.FirewallCommands
                 switch (sessionState)
                 {
                     case SessionState.SelectedFirewall:
-                        await InputOutboundRule(message);
+                        await InputOutboundRule(message).ConfigureAwait(false);
                         break;
                     case SessionState.WaitInputAddInboundRuleFirewall:
-                        await AddOutboundRule(message);
+                        await AddOutboundRule(message).ConfigureAwait(false);
                         break;
 
                 }

@@ -44,16 +44,16 @@ namespace DigitalOceanBot.Commands.ProjectCommands
                 switch (sessionState)
                 {
                     case SessionState.ProjectsMenu:
-                        await InputNameForProject(message);
+                        await InputNameForProject(message).ConfigureAwait(false);
                         break;
                     case SessionState.WaitInputNameForNewProject:
-                        await InputPurposeForProject(message);
+                        await InputPurposeForProject(message).ConfigureAwait(false);
                         break;
                     case SessionState.WaitInputPurposeForNewProject:
-                        await InputDescriptionForProject(message);
+                        await InputDescriptionForProject(message).ConfigureAwait(false);
                         break;
                     case SessionState.WaitInputDescriptionForNewProject:
-                        await CreateProject(message);
+                        await CreateProject(message).ConfigureAwait(false);
                         break;
 
                 }

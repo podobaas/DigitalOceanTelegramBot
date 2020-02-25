@@ -51,7 +51,7 @@ namespace DigitalOceanBot.Commands.ProjectCommands
                 {
                     case SessionState.ProjectsMenu:
                     case SessionState.MainMenu:
-                        await GetProjects(message);
+                        await GetProjects(message).ConfigureAwait(false);
                         break;
 
                 }
@@ -91,7 +91,7 @@ namespace DigitalOceanBot.Commands.ProjectCommands
                 {
                     callback.MessageId = sendMessage.MessageId;
                     callback.UserId = message.From.Id;
-                    callback.HandlerType = this.GetType().FullName;
+                    callback.HandlerType = GetType().FullName;
                 });
             }
             else
@@ -114,10 +114,10 @@ namespace DigitalOceanBot.Commands.ProjectCommands
                 switch (sessionState)
                 {
                     case SessionState.ProjectsMenu when callBackData[0] == "NextProject" || callBackData[0] == "BackProject":
-                        await NextOrBackProject(callback, message);
+                        await NextOrBackProject(callback, message).ConfigureAwait(false);
                         break;
                     case SessionState.ProjectsMenu when callBackData[0] == "SelectProject":
-                        await SelectProject(callback, message);
+                        await SelectProject(callback, message).ConfigureAwait(false);
                         break;
                 }
             }

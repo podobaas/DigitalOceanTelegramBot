@@ -69,9 +69,9 @@ namespace DigitalOceanBot.Pages
             }
         }
 
-        private InlineKeyboardMarkup GetInlineKeyboard(int imageId, int imageCount, int page)
+        private static InlineKeyboardMarkup GetInlineKeyboard(int imageId, int imageCount, int page)
         {
-            var back = new InlineKeyboardButton()
+            var back = new InlineKeyboardButton
             {
                 Text = "\U0001F448 Back",
                 CallbackData = page > 0 ? $"BackImage;{(page - 1).ToString()}" : "Empty"
@@ -95,7 +95,7 @@ namespace DigitalOceanBot.Pages
                 CallbackData = $"SelectImage;{imageId.ToString()}"
             };
 
-            var buttons = new List<List<InlineKeyboardButton>>()
+            var buttons = new List<List<InlineKeyboardButton>>
             {
                 new List<InlineKeyboardButton>
                 {

@@ -51,7 +51,7 @@ namespace DigitalOceanBot.Commands.FirewallCommands
                 {
                     case SessionState.FirewallsMenu:
                     case SessionState.MainMenu:
-                        GetFirewalls(message);
+                        await GetFirewalls(message).ConfigureAwait(false);
                         break;
 
                 }
@@ -68,7 +68,7 @@ namespace DigitalOceanBot.Commands.FirewallCommands
             }
         }
 
-        private async void GetFirewalls(Message message)
+        private async Task GetFirewalls(Message message)
         {
             await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "\U0001F4C0 Loading your firewalls...", replyMarkup: Keyboards.GetFirewallMenuKeyboard());
             var digitalOceanApi = _digitalOceanClientFactory.GetInstance(message.From.Id);
@@ -92,7 +92,7 @@ namespace DigitalOceanBot.Commands.FirewallCommands
                 {
                     callback.MessageId = sendMessage.MessageId;
                     callback.UserId = message.From.Id;
-                    callback.HandlerType = this.GetType().FullName;
+                    callback.HandlerType = GetType().FullName;
                 });
             }
             else
@@ -116,21 +116,21 @@ namespace DigitalOceanBot.Commands.FirewallCommands
                 switch (sessionState)
                 {
                     case SessionState.FirewallsMenu when callBackData[0] == "NextFirewall" || callBackData[0] == "BackFirewall":
-                        await NextOrBackFirewall(callback, message);
+                        await NextOrBackFirewall(callback, message).ConfigureAwait(false);
                         break;
                     case SessionState.FirewallsMenu when callBackData[0] == "SelectFirewall":
-                        await SelectFirewall(callback, message);
+                        await SelectFirewall(callback, message).ConfigureAwait(false);
                         break;
                 }
             }
             catch (ApiException ex)
             {
-                _logger.LogError($"UserId={message.From.Id}, Error={ex.Message}");
+                _logger.LogError($"UserId={message.From.Id.ToString()}, Error={ex.Message}");
                 await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message.Replace(".", "\\.")}");
             }
             catch (Exception ex)
             {
-                _logger.LogError($"UserId={message.From.Id}, Error={ex.Message}, StackTrace={ex.StackTrace}");
+                _logger.LogError($"UserId={message.From.Id.ToString()}, Error={ex.Message}, StackTrace={ex.StackTrace}");
                 await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Sorry, аn error has occurred \U0001F628");
             }
         }

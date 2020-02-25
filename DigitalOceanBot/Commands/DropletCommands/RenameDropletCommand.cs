@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using DigitalOcean.API.Exceptions;
 using DigitalOceanBot.Factory;
 using DigitalOceanBot.MongoDb;
@@ -19,9 +20,8 @@ namespace DigitalOceanBot.Commands.DropletCommands
         public RenameDropletCommand(
             ILogger<DigitalOceanWorker> logger,
             ITelegramBotClient telegramBotClient,
-            IRepository<DoUser> userRepo,
             IRepository<Session> sessionRepo,
-            IDigitalOceanClientFactory digitalOceanClientFactory) : base(logger, telegramBotClient, userRepo, sessionRepo, digitalOceanClientFactory)
+            IDigitalOceanClientFactory digitalOceanClientFactory) : base(logger, telegramBotClient, sessionRepo, digitalOceanClientFactory)
         {
             _logger = logger;
             _telegramBotClient = telegramBotClient;
@@ -37,7 +37,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
                 switch (sessionState)
                 {
                     case SessionState.SelectedDroplet:
-                        InputNewName(message);
+                        await InputNewName(message).ConfigureAwait(false);
                         break;
                     case SessionState.WaitInputNameForNewDroplet:
                         SetNewNameDroplet(message);
@@ -56,7 +56,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
             }
         }
 
-        private async void InputNewName(Message message)
+        private async Task InputNewName(Message message)
         {
             _sessionRepo.Update(message.From.Id, session =>
             {

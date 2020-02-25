@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using DigitalOcean.API.Exceptions;
 using DigitalOceanBot.Factory;
 using DigitalOceanBot.MongoDb;
@@ -19,9 +20,8 @@ namespace DigitalOceanBot.Commands.DropletCommands
         public CreateSnapshotDropletCommand(
             ILogger<DigitalOceanWorker> logger,
             ITelegramBotClient telegramBotClient,
-            IRepository<DoUser> userRepo,
             IRepository<Session> sessionRepo,
-            IDigitalOceanClientFactory digitalOceanClientFactory) : base(logger, telegramBotClient, userRepo, sessionRepo, digitalOceanClientFactory)
+            IDigitalOceanClientFactory digitalOceanClientFactory) : base(logger, telegramBotClient, sessionRepo, digitalOceanClientFactory)
         {
             _telegramBotClient = telegramBotClient;
             _sessionRepo = sessionRepo;
@@ -37,7 +37,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
                 switch (sessionState)
                 {
                     case SessionState.SelectedDroplet:
-                        InputNameSnapshotDroplet(message);
+                        await InputNameSnapshotDroplet(message).ConfigureAwait(false);
                         break;
                     case SessionState.WaitInputSnapshotName:
                         CreateSnapshotDroplet(message);
@@ -56,7 +56,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
             }
         }
         
-        private async void InputNameSnapshotDroplet(Message message)
+        private async Task InputNameSnapshotDroplet(Message message)
         {
             _sessionRepo.Update(message.From.Id, session =>
             {

@@ -52,7 +52,7 @@ namespace DigitalOceanBot.Commands.FirewallCommands
                 switch (sessionState)
                 {
                     case SessionState.SelectedFirewall:
-                        await GetDroplets(message);
+                        await GetDroplets(message).ConfigureAwait(false);
                         break;
                 }
             }
@@ -92,7 +92,7 @@ namespace DigitalOceanBot.Commands.FirewallCommands
             {
                 calllback.MessageId = sendMessage.MessageId;
                 calllback.UserId = message.From.Id;
-                calllback.HandlerType = this.GetType().FullName;
+                calllback.HandlerType = GetType().FullName;
             });
         }
         
@@ -108,10 +108,10 @@ namespace DigitalOceanBot.Commands.FirewallCommands
                 switch (sessionState)
                 {
                     case SessionState.WaitChooseDropletsForFirewall when callBackData[0] == "SelectDroplet":
-                        await SelectDropletForFirewall(callback, message);
+                        await SelectDropletForFirewall(callback, message).ConfigureAwait(false);
                         break;
                     case SessionState.WaitChooseDropletsForFirewall when callBackData[0] == "Ok":
-                        await AddDropletsToFirewall(callback, message);
+                        await AddDropletsToFirewall(callback, message).ConfigureAwait(false);
                         break;
                 }
             }

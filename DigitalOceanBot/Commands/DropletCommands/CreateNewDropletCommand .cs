@@ -51,13 +51,13 @@ namespace DigitalOceanBot.Commands.DropletCommands
                 switch (sessionState)
                 {
                     case SessionState.DropletsMenu:
-                        await InputNameDroplet(message);
+                        await InputNameDroplet(message).ConfigureAwait(false);
                         break;
                     case SessionState.WaitInputNameDroplet:
-                        await ChooseImage(message);
+                        await ChooseImage(message).ConfigureAwait(false);
                         break;
                     case SessionState.WaitChooseImageDroplet:
-                        await ChooseRegion(message);
+                        await ChooseRegion(message).ConfigureAwait(false);
                         break;
                 }
             }
@@ -114,7 +114,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
             {
                 callback.MessageId = sendMessage.MessageId;
                 callback.UserId = message.From.Id;
-                callback.HandlerType = this.GetType().FullName;
+                callback.HandlerType = GetType().FullName;
             });
         }
 
@@ -140,7 +140,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
             {
                 callback.MessageId = sendMessage.MessageId;
                 callback.UserId = message.From.Id;
-                callback.HandlerType = this.GetType().FullName;
+                callback.HandlerType = GetType().FullName;
             });
         }
 
@@ -166,7 +166,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
             {
                 callback.MessageId = sendMessage.MessageId;
                 callback.UserId = message.From.Id;
-                callback.HandlerType = this.GetType().FullName;
+                callback.HandlerType = GetType().FullName;
             });
         }
 
@@ -212,22 +212,22 @@ namespace DigitalOceanBot.Commands.DropletCommands
                 switch (sessionState)
                 {
                     case SessionState.WaitChooseImageDroplet when callBackData[0] == "NextImage" || callBackData[0] == "BackImage":
-                        await NextOrBackImage(callback, message);
+                        await NextOrBackImage(callback, message).ConfigureAwait(false);
                         break;
                     case SessionState.WaitChooseImageDroplet when callBackData[0] == "SelectImage":
-                        await SelectImage(callback, message);
+                        await SelectImage(callback, message).ConfigureAwait(false);
                         break;
                     case SessionState.WaitChooseRegionDroplet when callBackData[0] == "NextRegion" || callBackData[0] == "BackRegion":
-                        await NextOrBackRegion(callback, message);
+                        await NextOrBackRegion(callback, message).ConfigureAwait(false);
                         break;
                     case SessionState.WaitChooseRegionDroplet when callBackData[0] == "SelectRegion":
-                        await SelectRegion(callback, message);
+                        await SelectRegion(callback, message).ConfigureAwait(false);
                         break;
                     case SessionState.WaitChooseSizeDroplet when callBackData[0] == "NextSize" || callBackData[0] == "BackSize":
-                        await NextOrBackSize(callback, message);
+                        await NextOrBackSize(callback, message).ConfigureAwait(false);
                         break;
                     case SessionState.WaitChooseSizeDroplet when callBackData[0] == "SelectSize":
-                        await SelectSize(callback, message);
+                        await SelectSize(callback, message).ConfigureAwait(false);
                         break;
                 }
             }
@@ -269,7 +269,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
             await _telegramBotClient.EditMessageTextAsync(message.Chat.Id, message.MessageId, pageModel.Message, ParseMode.Markdown);
             message.From = callback.From;
 
-            await ChooseRegion(message);
+            await ChooseRegion(message).ConfigureAwait(false);
         }
 
         private async Task NextOrBackRegion(CallbackQuery callback, Message message)
@@ -299,7 +299,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
             await _telegramBotClient.EditMessageTextAsync(message.Chat.Id, message.MessageId, pageModel.Message, ParseMode.Markdown);
             message.From = callback.From;
             
-            await ChooseSize(message);
+            await ChooseSize(message).ConfigureAwait(false);
         }
 
         private async Task NextOrBackSize(CallbackQuery callback, Message message)
@@ -329,7 +329,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
             await _telegramBotClient.EditMessageTextAsync(message.Chat.Id, message.MessageId, pageModel.Message, ParseMode.Markdown);
             message.From = callback.From;
             
-            await CreateDroplet(message);
+            await CreateDroplet(message).ConfigureAwait(false);
         }
 
         #endregion

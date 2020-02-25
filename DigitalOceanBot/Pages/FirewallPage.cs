@@ -115,9 +115,9 @@ namespace DigitalOceanBot.Pages
             }
         }
 
-        private InlineKeyboardMarkup GetInlineKeyboard(string imageId, int imageCount, int page)
+        private static InlineKeyboardMarkup GetInlineKeyboard(string imageId, int imageCount, int page)
         {
-            var back = new InlineKeyboardButton()
+            var back = new InlineKeyboardButton
             {
                 Text = "\U0001F448 Back",
                 CallbackData = page > 0 ? $"BackFirewall;{(page - 1).ToString()}" : "Empty"
@@ -141,7 +141,7 @@ namespace DigitalOceanBot.Pages
                 CallbackData = $"SelectFirewall;{imageId}"
             };
 
-            var buttons = new List<List<InlineKeyboardButton>>()
+            var buttons = new List<List<InlineKeyboardButton>>
             {
                 new List<InlineKeyboardButton>
                 {

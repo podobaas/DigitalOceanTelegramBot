@@ -37,7 +37,7 @@ namespace DigitalOceanBot.Commands
         {
             try
             {
-                await SendAuthUrl(message);
+                await SendAuthUrl(message).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -82,15 +82,15 @@ namespace DigitalOceanBot.Commands
             }
         }
 
-        private InlineKeyboardMarkup GetAuthKeyboard(string state)
+        private static InlineKeyboardMarkup GetAuthKeyboard(string state)
         {
-            var link = new InlineKeyboardButton()
+            var link = new InlineKeyboardButton
             {
                 Text = "Sign In \U0001F40B",
                 Url = $"{Environment.GetEnvironmentVariable("AUTH_URL")}&state={state}&scope=read write"
             };
 
-            var buttons = new List<List<InlineKeyboardButton>>()
+            var buttons = new List<List<InlineKeyboardButton>>
             {
                 new List<InlineKeyboardButton>
                 {

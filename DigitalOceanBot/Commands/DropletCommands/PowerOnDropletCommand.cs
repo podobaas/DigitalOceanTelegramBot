@@ -18,9 +18,8 @@ namespace DigitalOceanBot.Commands.DropletCommands
         public PowerOnDropletCommand(
             ILogger<DigitalOceanWorker> logger,
             ITelegramBotClient telegramBotClient,
-            IRepository<DoUser> userRepo,
             IRepository<Session> sessionRepo,
-            IDigitalOceanClientFactory digitalOceanClientFactory) : base(logger, telegramBotClient, userRepo, sessionRepo, digitalOceanClientFactory)
+            IDigitalOceanClientFactory digitalOceanClientFactory) : base(logger, telegramBotClient, sessionRepo, digitalOceanClientFactory)
         {
             _telegramBotClient = telegramBotClient;
             _logger = logger;

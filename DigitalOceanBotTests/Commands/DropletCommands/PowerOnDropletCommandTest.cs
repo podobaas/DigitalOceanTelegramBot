@@ -72,7 +72,7 @@ namespace DigitalOceanBotTests.Commands.DropletCommands
         [Fact]
         public void PowerOnDropletTest()
         {
-            var command = Substitute.For<PowerOnDropletCommand>(_logger, _tg, _userRepo, _sessionRepo, _digitalOceanClientFactory);
+            var command = Substitute.For<PowerOnDropletCommand>(_logger, _tg, _sessionRepo, _digitalOceanClientFactory);
             command.Execute(_message, SessionState.SelectedDroplet);
 
             command.Received().Execute(_message, SessionState.SelectedDroplet);
