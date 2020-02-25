@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DigitalOceanBot.Helpers
 {
-    public class SecureStateString
+    public static class SecureStateString
     {
         public static string Get(int userId, long chatId)
         {
@@ -16,9 +16,9 @@ namespace DigitalOceanBot.Helpers
                 var hash = sha256.ComputeHash(bytes);
                 var stringBuilder = new StringBuilder();
 
-                for (int i = 0; i < hash.Length; i++)
+                foreach (var item in hash)
                 {
-                    stringBuilder.Append(hash[i].ToString("x2"));
+                    stringBuilder.Append(item.ToString("x2"));
                 }
 
                 var result = stringBuilder.ToString();

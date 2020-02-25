@@ -54,10 +54,10 @@ namespace DigitalOceanBot.Commands.DropletCommands
                         await InputNameDroplet(message).ConfigureAwait(false);
                         break;
                     case SessionState.WaitInputNameDroplet:
-                        await ChooseImage(message).ConfigureAwait(false);;
+                        await ChooseImage(message).ConfigureAwait(false);
                         break;
                     case SessionState.WaitChooseImageDroplet:
-                        await ChooseRegion(message).ConfigureAwait(false);;
+                        await ChooseRegion(message).ConfigureAwait(false);
                         break;
                 }
             }

@@ -65,7 +65,7 @@ namespace DigitalOceanBot.Pages
             }
         }
 
-        private InlineKeyboardMarkup GetInlineKeyboard(string slug, int regionCount, int page)
+        private static InlineKeyboardMarkup GetInlineKeyboard(string slug, int regionCount, int page)
         {
             var back = new InlineKeyboardButton
             {

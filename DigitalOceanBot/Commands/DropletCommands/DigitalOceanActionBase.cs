@@ -42,7 +42,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
                     var digitalOceanApi = _digitalOceanClientFactory.GetInstance(message.From.Id);
                     var session = _sessionRepo.Get(message.From.Id);
                     var dropletId = session.Data.CastObject<int>();
-                    var action = await func(digitalOceanApi, dropletId);
+                    var action = await func(digitalOceanApi, dropletId).ConfigureAwait(false);
                     await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"\U0001F4C0 {actionName}...");
 
                     _sessionRepo.Update(message.From.Id, session =>
@@ -155,24 +155,23 @@ namespace DigitalOceanBot.Commands.DropletCommands
             await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"You sure? \U0001F914", replyMarkup: Keyboards.GetConfirmKeyboard());
         }
 
-        private async Task<bool> CheckActionStatus(int dropletId, int actionId, IDigitalOceanClient digitalOceanClient, CancellationToken cancellationToken)
+        private static async Task<bool> CheckActionStatus(int dropletId, int actionId, IDigitalOceanClient digitalOceanClient, CancellationToken cancellationToken)
         {
             while (true)
             {
                 var action = await digitalOceanClient.DropletActions.GetDropletAction(dropletId, actionId);
                 
-                if (action.Status == "completed")
+                switch (action.Status)
                 {
-                    return true;
+                    case "completed":
+                        return true;
+                    case "errored":
+                        return false;
+                    default:
+                        await Task.Delay(3000);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        break;
                 }
-                if (action.Status == "errored")
-                {
-                    return false;
-                }
-
-                await Task.Delay(3000);
-                
-                cancellationToken.ThrowIfCancellationRequested();
             }
         }
     }

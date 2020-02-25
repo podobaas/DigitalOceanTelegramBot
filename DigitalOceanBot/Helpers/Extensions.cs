@@ -16,12 +16,7 @@ namespace DigitalOceanBot.Helpers
 
         public static string GetDefaultIfStringEmpty(this string text)
         {
-            if (string.IsNullOrEmpty(text))
-            {
-                return "None";
-            }
-
-            return text;
+            return string.IsNullOrEmpty(text) ? "None" : text;
         }
     }
 }

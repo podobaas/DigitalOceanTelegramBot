@@ -74,7 +74,7 @@ namespace DigitalOceanBot.Pages
             }
         }
 
-        private InlineKeyboardMarkup GetInlineKeyboard(int dropletId, int dropletsCount, int page)
+        private static InlineKeyboardMarkup GetInlineKeyboard(int dropletId, int dropletsCount, int page)
         {
             var back = new InlineKeyboardButton
             {

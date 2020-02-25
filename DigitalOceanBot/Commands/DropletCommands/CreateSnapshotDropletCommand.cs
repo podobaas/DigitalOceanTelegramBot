@@ -37,7 +37,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
                 switch (sessionState)
                 {
                     case SessionState.SelectedDroplet:
-                        await InputNameSnapshotDroplet(message).ConfigureAwait(false);;
+                        await InputNameSnapshotDroplet(message).ConfigureAwait(false);
                         break;
                     case SessionState.WaitInputSnapshotName:
                         CreateSnapshotDroplet(message);

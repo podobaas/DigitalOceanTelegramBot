@@ -71,7 +71,7 @@ namespace DigitalOceanAuth.Controllers
                         return View(new AuthModel { IsSuccess = false });
                     }
 
-                    var userInfo = await GetToken(request.Code, request.State);
+                    var userInfo = await GetToken(request.Code, request.State).ConfigureAwait(false);
 
                     if (string.IsNullOrEmpty(userInfo.error))
                     {
@@ -100,7 +100,7 @@ namespace DigitalOceanAuth.Controllers
                             IsSuccess = false
                         });
 
-                        _logger.LogError($"Code={request.Code}, State={request.State}, UserId={user.UserId}, Error={userInfo.error_description}");
+                        _logger.LogError($"Code={request.Code}, State={request.State}, UserId={user.UserId.ToString()}, Error={userInfo.error_description}");
 
                         return View(new AuthModel { IsSuccess = false });
                     }
