@@ -19,6 +19,8 @@ For security, **your token is auto revoked after 15 minutes** after authorizatio
 
 ## Basic commands
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e890c6fd60c148a48548cec18d6a1636)](https://app.codacy.com/manual/podobaas/DigitalOceanTelegramBot?utm_source=github.com&utm_medium=referral&utm_content=podobaas/DigitalOceanTelegramBot&utm_campaign=Badge_Grade_Dashboard)
+
 **/start** - Authentication in DigitalOcean account
 
 **/stop** - Revokation your token and delete session data from database
