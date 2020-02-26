@@ -31,7 +31,7 @@ namespace DigitalOceanBot.Commands.AccountCommands
             _digitalOceanClientFactory = digitalOceanClientFactory;
         }
 
-        public async void Execute(Message message, SessionState sessionState)
+        public async Task Execute(Message message, SessionState sessionState)
         {
             try
             {

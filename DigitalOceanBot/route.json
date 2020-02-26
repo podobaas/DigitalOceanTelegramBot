@@ -83,6 +83,10 @@
     {
       "Name": "Create new project",
       "Type": "DigitalOceanBot.Commands.ProjectCommands.CreateNewProjectCommand"
+    },
+    {
+      "Name": "Rename project",
+      "Type": "DigitalOceanBot.Commands.ProjectCommands.RenameProjectCommand"
     }
   ],
   "States": [
@@ -129,6 +133,10 @@
     {
       "SessionStates": [ "27","28","29" ],
       "Type": "DigitalOceanBot.Commands.ProjectCommands.CreateNewProjectCommand"
+    },
+    {
+      "SessionStates": [ "30" ],
+      "Type": "DigitalOceanBot.Commands.ProjectCommands.RenameProjectCommand"
     }
   ]
 }           
