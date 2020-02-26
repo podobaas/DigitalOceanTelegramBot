@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using DigitalOcean.API.Exceptions;
 using DigitalOceanBot.Factory;
 using DigitalOceanBot.MongoDb;
@@ -25,7 +26,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
             _logger = logger;
         }
 
-        public async void Execute(Message message, SessionState sessionState)
+        public async Task Execute(Message message, SessionState sessionState)
         {
             try
             {
@@ -37,7 +38,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
                         await ConfirmMessage(message, SessionState.WaitConfirmShutdown).ConfigureAwait(false);
                         break;
                     case SessionState.WaitConfirmShutdown:
-                        ShutdownDroplet(message);
+                        await ShutdownDroplet(message).ConfigureAwait(false);
                         break;
                 }
             }
@@ -54,9 +55,9 @@ namespace DigitalOceanBot.Commands.DropletCommands
         }
 
 
-        private void ShutdownDroplet(Message message)
+        private async Task ShutdownDroplet(Message message)
         {
-            StartActionWithConfirm(message, "Shutdown droplet", async (digitalOceanApi, dropletId) => await digitalOceanApi.DropletActions.Shutdown(dropletId));
+            await StartActionWithConfirm(message, "Shutdown droplet", async (digitalOceanApi, dropletId) => await digitalOceanApi.DropletActions.Shutdown(dropletId));
         }
     }
 }

@@ -28,7 +28,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
             _logger = logger;
         }
 
-        public async void Execute(Message message, SessionState sessionState)
+        public async Task Execute(Message message, SessionState sessionState)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
                         await InputNameSnapshotDroplet(message).ConfigureAwait(false);
                         break;
                     case SessionState.WaitInputSnapshotName:
-                        CreateSnapshotDroplet(message);
+                        await CreateSnapshotDroplet(message).ConfigureAwait(false);
                         break;
                 }
             }
@@ -66,9 +66,9 @@ namespace DigitalOceanBot.Commands.DropletCommands
             await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Input snapshot name:");
         }
         
-        private void CreateSnapshotDroplet(Message message)
+        private async Task CreateSnapshotDroplet(Message message)
         {
-            StartActionWithoutConfirm(message, "Create snapshot", async (digitalOceanApi, dropletId) => await digitalOceanApi.DropletActions.Snapshot(dropletId, message.Text));
+            await StartActionWithoutConfirm(message, "Create snapshot", async (digitalOceanApi, dropletId) => await digitalOceanApi.DropletActions.Snapshot(dropletId, message.Text));
         }
     }
 }

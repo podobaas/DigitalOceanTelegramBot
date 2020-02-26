@@ -26,7 +26,6 @@ namespace DigitalOceanBot
         private readonly ITelegramBotClient _telegramBotClient;
         private readonly IAdvancedBus _bus;
         private readonly IRepository<Session> _sessionRepo;
-        private readonly IRepository<DoUser> _userRepo;
         private readonly IRepository<HandlerCallback> _handlerCallbackRepo;
         private readonly IServiceProvider _serviceProvider;
         private Router _botCommand;
@@ -38,14 +37,12 @@ namespace DigitalOceanBot
             IAdvancedBus bus,
             ILogger<DigitalOceanWorker> logger,
             IRepository<Session> sessionRepo,
-            IRepository<DoUser> userRepo,
             IRepository<HandlerCallback> handlerCallbackRepo)
         {
             _logger = logger;
             _telegramBotClient = telegramBotClient;
             _bus = bus;
             _sessionRepo = sessionRepo;
-            _userRepo = userRepo;
             _handlerCallbackRepo = handlerCallbackRepo;
             _serviceProvider = serviceProvider;
 
@@ -82,7 +79,7 @@ namespace DigitalOceanBot
             return Task.CompletedTask;
         }
 
-        private void OnMessage(object sender, MessageEventArgs e)
+        private async void OnMessage(object sender, MessageEventArgs e)
         {
             try
             {
@@ -104,14 +101,14 @@ namespace DigitalOceanBot
                             if (!string.IsNullOrEmpty(className))
                             {
                                 var controller = GetCommandOrCallback<IBotCommand>(className);
-                                controller?.Execute(e.Message, session.State);
+                                await controller.Execute(e.Message, session.State);
                             }
                         }
                     }
                     else
                     {
                         var controller = GetCommandOrCallback<IBotCommand>(typeof(StartCommand).FullName);
-                        controller.Execute(e.Message, SessionState.Unknown);
+                        await controller.Execute(e.Message, SessionState.Unknown);
                     }
                 }
             }
@@ -139,7 +136,7 @@ namespace DigitalOceanBot
                             if (callback != null && session != null)
                             {
                                 await _telegramBotClient.AnswerCallbackQueryAsync(e.Update.CallbackQuery.Id);
-                                callback.Execute(e.Update.CallbackQuery, e.Update.CallbackQuery.Message, session.State);
+                                await callback.Execute(e.Update.CallbackQuery, e.Update.CallbackQuery.Message, session.State);
                             }
                         }
                     }

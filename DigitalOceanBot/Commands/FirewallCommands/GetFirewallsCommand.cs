@@ -41,7 +41,7 @@ namespace DigitalOceanBot.Commands.FirewallCommands
 
         #region Commands
 
-        public async void Execute(Message message, SessionState sessionState)
+        public async Task Execute(Message message, SessionState sessionState)
         {
             try
             {
@@ -106,7 +106,7 @@ namespace DigitalOceanBot.Commands.FirewallCommands
 
         #region Callbacks
 
-        public async void Execute(CallbackQuery callback, Message message, SessionState sessionState)
+        public async Task Execute(CallbackQuery callback, Message message, SessionState sessionState)
         {
             try
             {

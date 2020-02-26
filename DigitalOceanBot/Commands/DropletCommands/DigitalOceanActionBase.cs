@@ -33,7 +33,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
         }
 
 
-        protected async void StartActionWithConfirm(Message message, string actionName, Func<IDigitalOceanClient, int, Task<DigitalOcean.API.Models.Responses.Action>> func)
+        protected async Task StartActionWithConfirm(Message message, string actionName, Func<IDigitalOceanClient, int, Task<DigitalOcean.API.Models.Responses.Action>> func)
         {
             try
             {
@@ -95,14 +95,14 @@ namespace DigitalOceanBot.Commands.DropletCommands
             }
         }
 
-        protected async void StartActionWithoutConfirm(Message message, string actionName, Func<IDigitalOceanClient, int, Task<DigitalOcean.API.Models.Responses.Action>> func)
+        protected async Task StartActionWithoutConfirm(Message message, string actionName, Func<IDigitalOceanClient, int, Task<DigitalOcean.API.Models.Responses.Action>> func)
         {
             try
             {
                 var digitalOceanApi = _digitalOceanClientFactory.GetInstance(message.From.Id);
                 var session = _sessionRepo.Get(message.From.Id);
                 var dropletId = session.Data.CastObject<int>();
-                var action = await func(digitalOceanApi, dropletId);
+                var action = await func(digitalOceanApi, dropletId).ConfigureAwait(false);
                 await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"\U0001F4C0 {actionName}...");
 
                 _sessionRepo.Update(message.From.Id, session =>
@@ -155,7 +155,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
             await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"You sure? \U0001F914", replyMarkup: Keyboards.GetConfirmKeyboard());
         }
 
-        private static async Task<bool> CheckActionStatus(int dropletId, int actionId, IDigitalOceanClient digitalOceanClient, CancellationToken cancellationToken)
+        private async Task<bool> CheckActionStatus(int dropletId, int actionId, IDigitalOceanClient digitalOceanClient, CancellationToken cancellationToken)
         {
             while (true)
             {

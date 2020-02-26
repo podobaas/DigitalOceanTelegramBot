@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using DigitalOcean.API.Exceptions;
 using DigitalOceanBot.Factory;
 using DigitalOceanBot.MongoDb;
@@ -25,7 +26,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
             _logger = logger;
         }
 
-        public async void Execute(Message message, SessionState sessionState)
+        public async Task Execute(Message message, SessionState sessionState)
         {
             try
             {
@@ -37,7 +38,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
                         await ConfirmMessage(message, SessionState.WaitConfirmResetPassword).ConfigureAwait(false);
                         break;
                     case SessionState.WaitConfirmResetPassword:
-                        ResetPasswordDroplet(message);
+                        await ResetPasswordDroplet(message).ConfigureAwait(false);
                         break;
                 }
             }
@@ -54,9 +55,9 @@ namespace DigitalOceanBot.Commands.DropletCommands
         }
 
 
-        private void ResetPasswordDroplet(Message message)
+        private async Task ResetPasswordDroplet(Message message)
         {
-            StartActionWithConfirm(message, "Reset password", async (digitalOceanApi, dropletId) => await digitalOceanApi.DropletActions.ResetPassword(dropletId));
+            await StartActionWithConfirm(message, "Reset password", async (digitalOceanApi, dropletId) => await digitalOceanApi.DropletActions.ResetPassword(dropletId));
         }
     }
 }
