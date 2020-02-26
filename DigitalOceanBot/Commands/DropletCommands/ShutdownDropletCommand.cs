@@ -38,7 +38,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
                         await ConfirmMessage(message, SessionState.WaitConfirmShutdown).ConfigureAwait(false);
                         break;
                     case SessionState.WaitConfirmShutdown:
-                        ShutdownDroplet(message);
+                        await ShutdownDroplet(message).ConfigureAwait(false);
                         break;
                 }
             }
@@ -55,9 +55,9 @@ namespace DigitalOceanBot.Commands.DropletCommands
         }
 
 
-        private void ShutdownDroplet(Message message)
+        private async Task ShutdownDroplet(Message message)
         {
-            StartActionWithConfirm(message, "Shutdown droplet", async (digitalOceanApi, dropletId) => await digitalOceanApi.DropletActions.Shutdown(dropletId));
+            await StartActionWithConfirm(message, "Shutdown droplet", async (digitalOceanApi, dropletId) => await digitalOceanApi.DropletActions.Shutdown(dropletId));
         }
     }
 }

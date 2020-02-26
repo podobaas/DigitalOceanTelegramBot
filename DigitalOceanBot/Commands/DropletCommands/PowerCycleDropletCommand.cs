@@ -38,7 +38,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
                         await ConfirmMessage(message, SessionState.WaitConfirmPowerCycle).ConfigureAwait(false);
                         break;
                     case SessionState.WaitConfirmPowerCycle:
-                        PowerCycleDroplet(message);
+                        await PowerCycleDroplet(message).ConfigureAwait(false);
                         break;
                 }
             }
@@ -55,9 +55,9 @@ namespace DigitalOceanBot.Commands.DropletCommands
         }
 
 
-        private void PowerCycleDroplet(Message message)
+        private async Task PowerCycleDroplet(Message message)
         {
-            StartActionWithConfirm(message, "Power cycle", async (digitalOceanClient, dropletId) => await digitalOceanClient.DropletActions.PowerCycle(dropletId));
+            await StartActionWithConfirm(message, "Power cycle", async (digitalOceanClient, dropletId) => await digitalOceanClient.DropletActions.PowerCycle(dropletId));
         }
     }
 }

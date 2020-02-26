@@ -40,7 +40,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
                         await InputNewName(message).ConfigureAwait(false);
                         break;
                     case SessionState.WaitInputNameForNewDroplet:
-                        SetNewNameDroplet(message);
+                        await SetNewNameDroplet(message).ConfigureAwait(false);
                         break;
                 }
             }
@@ -66,9 +66,9 @@ namespace DigitalOceanBot.Commands.DropletCommands
             await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Input new name:");
         }
 
-        private void SetNewNameDroplet(Message message)
+        private async Task SetNewNameDroplet(Message message)
         {
-            StartActionWithoutConfirm(message, "Rename droplet", async (digitalOceanApi, dropletId) => await digitalOceanApi.DropletActions.Rename(dropletId, message.Text));
+            await StartActionWithoutConfirm(message, "Rename droplet", async (digitalOceanApi, dropletId) => await digitalOceanApi.DropletActions.Rename(dropletId, message.Text));
         }
     }
 }

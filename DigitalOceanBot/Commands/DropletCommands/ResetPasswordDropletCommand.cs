@@ -38,7 +38,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
                         await ConfirmMessage(message, SessionState.WaitConfirmResetPassword).ConfigureAwait(false);
                         break;
                     case SessionState.WaitConfirmResetPassword:
-                        ResetPasswordDroplet(message);
+                        await ResetPasswordDroplet(message).ConfigureAwait(false);
                         break;
                 }
             }
@@ -55,9 +55,9 @@ namespace DigitalOceanBot.Commands.DropletCommands
         }
 
 
-        private void ResetPasswordDroplet(Message message)
+        private async Task ResetPasswordDroplet(Message message)
         {
-            StartActionWithConfirm(message, "Reset password", async (digitalOceanApi, dropletId) => await digitalOceanApi.DropletActions.ResetPassword(dropletId));
+            await StartActionWithConfirm(message, "Reset password", async (digitalOceanApi, dropletId) => await digitalOceanApi.DropletActions.ResetPassword(dropletId));
         }
     }
 }

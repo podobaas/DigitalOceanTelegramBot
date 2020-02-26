@@ -35,7 +35,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
                 switch (sessionState)
                 {
                     case SessionState.SelectedDroplet:
-                        PowerOnDroplet(message);
+                        await PowerOnDroplet(message).ConfigureAwait(false);
                         break;
                 }
             }
@@ -52,9 +52,9 @@ namespace DigitalOceanBot.Commands.DropletCommands
         }
 
 
-        private void PowerOnDroplet(Message message)
+        private async Task PowerOnDroplet(Message message)
         {
-            StartActionWithoutConfirm(message, "Power on", async (digitalOceanApi, dropletId) => await digitalOceanApi.DropletActions.PowerOn(dropletId));
+            await StartActionWithoutConfirm(message, "Power on", async (digitalOceanApi, dropletId) => await digitalOceanApi.DropletActions.PowerOn(dropletId));
         }
     }
 }

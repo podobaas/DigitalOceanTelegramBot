@@ -7,13 +7,11 @@ namespace DigitalOceanBot.MongoDb
 {
     public class UserRepository : IRepository<DoUser>
     {
-        private readonly MongoClient _mongoClient;
         private readonly IMongoDatabase _database;
 
         public UserRepository(string connectionString)
         {
-            _mongoClient = new MongoClient(connectionString);
-            _database = _mongoClient.GetDatabase("DigitalOceanBot");
+            _database = new MongoClient(connectionString).GetDatabase("DigitalOceanBot");
         }
 
         public IEnumerable<DoUser> GetAll()
