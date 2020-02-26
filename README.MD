@@ -14,7 +14,7 @@ This bot is a free, open source project that can replace the mobile application 
 
 Authorization based on DigitalOcean Application for API
 
-For security, **your token is auto revoked after 15 minutes** after authorization in DO account!
+For more security, **your token is auto revoked after 15 minutes** after authorization in DO account!
 
 :link: Telegram link: [DigitalOceanBot](https://t.me/DigitalOceanDropletBot)
 
@@ -48,6 +48,7 @@ For security, **your token is auto revoked after 15 minutes** after authorizatio
 
 **Projects** :pencil2:
 + Create new project
++ Rename project
 
 ## Missing functional (in development)
 + Projects
