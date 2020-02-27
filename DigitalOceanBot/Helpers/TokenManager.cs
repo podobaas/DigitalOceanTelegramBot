@@ -8,7 +8,7 @@ namespace DigitalOceanBot.Helpers
 {
     public class TokenManager
     {
-        public async Task<bool> RevokeToken(string accessToken)
+        public static async Task<bool> RevokeToken(string accessToken)
         {
             var url = $"{Environment.GetEnvironmentVariable("REVOKE_TOKEN_URL")}?token={accessToken}";
             var client = new RestClient(url)

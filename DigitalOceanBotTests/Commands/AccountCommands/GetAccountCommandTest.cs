@@ -69,11 +69,10 @@ namespace DigitalOceanBotTests.Commands.AccountCommands
         [Fact]
         public void GetAccountTest()
         {
-            var command = Substitute.For<GetAccountCommand>(_logger, _tg, _userRepo, _digitalOceanClientFactory);
+            var command = Substitute.For<GetAccountCommand>(_logger, _tg, _digitalOceanClientFactory);
             command.Execute(_message, SessionState.MainMenu);
 
             command.Received().Execute(_message, SessionState.MainMenu);
-            _userRepo.Received().Get(Arg.Is<int>(i => i == 100));
             var doApi = _digitalOceanClientFactory.Received().GetInstance(Arg.Is<int>(i => i == 100));
             doApi.Account.Received().Get();
             doApi.BalanceClient.Received().Get();
@@ -83,11 +82,10 @@ namespace DigitalOceanBotTests.Commands.AccountCommands
         [Fact]
         public void GetAccountTest_InvalidSessionState()
         {
-            var command = Substitute.For<GetAccountCommand>(_logger, _tg, _userRepo, _digitalOceanClientFactory);
+            var command = Substitute.For<GetAccountCommand>(_logger, _tg, _digitalOceanClientFactory);
             command.Execute(_message, SessionState.WaitAction);
 
             command.Received().Execute(_message, SessionState.WaitAction);
-            _userRepo.DidNotReceive().Get(Arg.Is<int>(i => i == 100));
             var doApi = _digitalOceanClientFactory.DidNotReceive().GetInstance(Arg.Is<int>(i => i == 100));
             doApi.Account.DidNotReceive().Get();
             doApi.BalanceClient.DidNotReceive().Get();

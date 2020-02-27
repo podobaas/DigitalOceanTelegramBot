@@ -26,7 +26,7 @@ namespace DigitalOceanBot.Pages
             _droplets = droplets;
         }
 
-        public PageModel GetPage(int userId, int page = 0)
+        public PageModel GetPage(int userId, int page)
         {
             var stringBuilder = new StringBuilder(string.Empty);
             var session = _sessionRepo.Get(userId);

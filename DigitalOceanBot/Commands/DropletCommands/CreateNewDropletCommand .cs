@@ -106,7 +106,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
             });
 
             var page = _pageFactory.GetInstance<ImagePage>();
-            var pageModel = page.GetPage(message.From.Id);
+            var pageModel = page.GetPage(message.From.Id, 0);
 
             var sendMessage = await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, pageModel.Message, ParseMode.Markdown, replyMarkup: pageModel.Keyboard);
             
@@ -132,7 +132,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
             });
 
             var page = _pageFactory.GetInstance<RegionPage>();
-            var pageModel = page.GetPage(message.From.Id);
+            var pageModel = page.GetPage(message.From.Id, 0);
 
             var sendMessage = await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, pageModel.Message, ParseMode.Markdown, replyMarkup: pageModel.Keyboard);
             
@@ -158,7 +158,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
             });
 
             var page = _pageFactory.GetInstance<SizePage>();
-            var pageModel = page.GetPage(message.From.Id);
+            var pageModel = page.GetPage(message.From.Id, 0);
             
             var sendMessage = await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, pageModel.Message, ParseMode.Markdown, replyMarkup: pageModel.Keyboard);
             

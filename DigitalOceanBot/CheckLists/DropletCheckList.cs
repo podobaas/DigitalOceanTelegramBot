@@ -8,7 +8,7 @@ namespace DigitalOceanBot.CheckLists
 {
     public class DropletCheckList: ICheckListPage<Droplet>
     {
-        public PageModel GetCheckListPage(IEnumerable<Droplet> collection, bool hasSkip = false)
+        public PageModel GetCheckListPage(IEnumerable<Droplet> collection, bool hasSkip)
         {
             var buttonList = new List<InlineKeyboardButton>();
 

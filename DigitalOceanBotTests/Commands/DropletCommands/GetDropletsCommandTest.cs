@@ -105,7 +105,7 @@ namespace DigitalOceanBotTests.Commands.DropletCommands
             doApi.Droplets.Received().GetAll();
             _pageFactory
                 .Received().GetInstance<DropletPage>()
-                .Received().GetPage(Arg.Is<int>(i => i == 100));
+                .Received().GetPage(Arg.Is<int>(i => i == 100), Arg.Any<int>());
             _sessionRepo.Received().Update(Arg.Is<int>(i => i == 100), Arg.Invoke(new Session()));
             _handlerCallbackRepo.Received().Update(Arg.Is<int>(i => i == 100), Arg.Invoke(new HandlerCallback()));
             _tg.Received().SendTextMessageAsync(Arg.Is<ChatId>(i => i.Identifier == 101), Arg.Any<string>(), ParseMode.Markdown, replyMarkup: Arg.Any<InlineKeyboardMarkup>());

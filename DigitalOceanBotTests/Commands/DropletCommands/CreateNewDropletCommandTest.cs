@@ -163,7 +163,7 @@ namespace DigitalOceanBotTests.Commands.DropletCommands
             var doApi = _digitalOceanClientFactory.Received().GetInstance(Arg.Is<int>(i => i == 100));
             doApi.Images.Received().GetAll(Requests.ImageType.Distribution);
             _sessionRepo.Received().Update(Arg.Is<int>(i => i == 100), Arg.Invoke(new Session()));
-            _pageFactory.Received().GetInstance<ImagePage>().Received().GetPage(Arg.Is<int>(i => i == 100));
+            _pageFactory.Received().GetInstance<ImagePage>().Received().GetPage(Arg.Is<int>(i => i == 100), Arg.Any<int>());
             _tg.SendTextMessageAsync(Arg.Is<ChatId>(i => i.Identifier == 101), Arg.Any<string>(), ParseMode.Markdown, replyMarkup: Arg.Any<InlineKeyboardMarkup>());
             _handlerCallbackRepo.Received().Update(Arg.Is<int>(i => i == 100), Arg.Invoke(new HandlerCallback()));
         }
@@ -194,7 +194,7 @@ namespace DigitalOceanBotTests.Commands.DropletCommands
             var doApi = _digitalOceanClientFactory.Received().GetInstance(Arg.Is<int>(i => i == 100));
             doApi.Regions.Received().GetAll();
             _sessionRepo.Received().Update(Arg.Is<int>(i => i == 100), Arg.Invoke(new Session()));
-            _pageFactory.Received().GetInstance<RegionPage>().Received().GetPage(Arg.Is<int>(i => i == 100));
+            _pageFactory.Received().GetInstance<RegionPage>().Received().GetPage(Arg.Is<int>(i => i == 100), Arg.Any<int>());
             _tg.SendTextMessageAsync(Arg.Is<ChatId>(i => i.Identifier == 101), Arg.Any<string>(), ParseMode.Markdown, replyMarkup: Arg.Any<InlineKeyboardMarkup>());
             _handlerCallbackRepo.Received().Update(Arg.Is<int>(i => i == 100), Arg.Invoke(new HandlerCallback()));
         }
@@ -225,7 +225,7 @@ namespace DigitalOceanBotTests.Commands.DropletCommands
             var doApi = _digitalOceanClientFactory.Received().GetInstance(Arg.Is<int>(i => i == 100));
             doApi.Sizes.Received().GetAll();
             _sessionRepo.Received().Update(Arg.Is<int>(i => i == 100), Arg.Invoke(new Session()));
-            _pageFactory.Received().GetInstance<SizePage>().Received().GetPage(Arg.Is<int>(i => i == 100));
+            _pageFactory.Received().GetInstance<SizePage>().Received().GetPage(Arg.Is<int>(i => i == 100), Arg.Any<int>());
             _tg.SendTextMessageAsync(Arg.Is<ChatId>(i => i.Identifier == 101), Arg.Any<string>(), ParseMode.Markdown, replyMarkup: Arg.Any<InlineKeyboardMarkup>());
             _handlerCallbackRepo.Received().Update(Arg.Is<int>(i => i == 100), Arg.Invoke(new HandlerCallback()));
         }

@@ -112,7 +112,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
 
                 var cancellationTokenSource = new CancellationTokenSource();
                 cancellationTokenSource.CancelAfter(TimeSpan.FromMinutes(3));
-                var resultStatus = await CheckActionStatus(dropletId, action.Id, digitalOceanApi, cancellationTokenSource.Token);
+                var resultStatus = await CheckActionStatus(dropletId, action.Id, digitalOceanApi, cancellationTokenSource.Token).ConfigureAwait(false);
                 
                 if (resultStatus)
                 {
@@ -155,7 +155,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
             await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"You sure? \U0001F914", replyMarkup: Keyboards.GetConfirmKeyboard());
         }
 
-        private async Task<bool> CheckActionStatus(int dropletId, int actionId, IDigitalOceanClient digitalOceanClient, CancellationToken cancellationToken)
+        private static async Task<bool> CheckActionStatus(int dropletId, int actionId, IDigitalOceanClient digitalOceanClient, CancellationToken cancellationToken)
         {
             while (true)
             {

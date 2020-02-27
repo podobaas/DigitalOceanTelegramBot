@@ -50,7 +50,7 @@ namespace DigitalOceanBot.Commands
             if (user != null && user.IsAuthorized)
             {
                 var tokenManager = new TokenManager();
-                var result = await tokenManager.RevokeToken(user.Token);
+                var result = await TokenManager.RevokeToken(user.Token);
 
                 if (result)
                 {

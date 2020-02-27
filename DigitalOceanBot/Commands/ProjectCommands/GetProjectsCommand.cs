@@ -83,7 +83,7 @@ namespace DigitalOceanBot.Commands.ProjectCommands
                 });
 
                 var page = _pageFactory.GetInstance<ProjectPage>();
-                var pageModel = page.GetPage(message.From.Id);
+                var pageModel = page.GetPage(message.From.Id, 0);
 
                 var sendMessage = await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, pageModel.Message, ParseMode.Markdown, replyMarkup: pageModel.Keyboard);
                 

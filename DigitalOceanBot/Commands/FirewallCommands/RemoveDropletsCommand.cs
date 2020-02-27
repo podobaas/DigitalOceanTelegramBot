@@ -86,7 +86,7 @@ namespace DigitalOceanBot.Commands.FirewallCommands
 
             var droplets = await digitalOceanApi.Droplets.GetAll();
             var checkListPage = _checkListPageFactory.GetInstance<Responses.Droplet, DropletCheckList>();
-            var pageModel = checkListPage.GetCheckListPage(droplets.Where(d => fireWall.DropletIds.Contains(d.Id)));
+            var pageModel = checkListPage.GetCheckListPage(droplets.Where(d => fireWall.DropletIds.Contains(d.Id)), false);
             
             var sendMessage = await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, pageModel.Message, ParseMode.Markdown, replyMarkup: pageModel.Keyboard);
                 

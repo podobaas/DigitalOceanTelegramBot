@@ -6,7 +6,7 @@ namespace DigitalOceanBot.CheckLists
 {
     public interface ICheckListPage<in T>
     {
-        PageModel GetCheckListPage(IEnumerable<T> collection, bool hasSkip = false);
+        PageModel GetCheckListPage(IEnumerable<T> collection, bool hasSkip);
 
         InlineKeyboardMarkup SelectItem(InlineKeyboardMarkup inlineKeyboardMarkup, string id);
 

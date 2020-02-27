@@ -74,7 +74,7 @@ namespace DigitalOceanBot
                 {
                     if ((user.TokenExpires.Ticks < DateTime.UtcNow.Ticks) && user.IsAuthorized)
                     {
-                        var result = await tokenManager.RevokeToken(user.Token);
+                        var result = await TokenManager.RevokeToken(user.Token);
                         if (result)
                         {
                             _userRepo.Delete(user.UserId);
