@@ -3,7 +3,6 @@ using System.Text;
 using System.Threading.Tasks;
 using DigitalOcean.API.Exceptions;
 using DigitalOceanBot.Factory;
-using DigitalOceanBot.MongoDb;
 using DigitalOceanBot.MongoDb.Models;
 using Microsoft.Extensions.Logging;
 using Telegram.Bot;
@@ -15,19 +14,16 @@ namespace DigitalOceanBot.Commands.AccountCommands
     public class GetAccountCommand : IBotCommand
     {
         private readonly ITelegramBotClient _telegramBotClient;
-        private readonly IRepository<DoUser> _userRepo;
         private readonly ILogger<DigitalOceanWorker> _logger;
         private readonly IDigitalOceanClientFactory _digitalOceanClientFactory;
 
         public GetAccountCommand(
             ILogger<DigitalOceanWorker> logger,
             ITelegramBotClient telegramBotClient,
-            IRepository<DoUser> userRepo,
             IDigitalOceanClientFactory digitalOceanClientFactory)
         {
             _logger = logger;
             _telegramBotClient = telegramBotClient;
-            _userRepo = userRepo;
             _digitalOceanClientFactory = digitalOceanClientFactory;
         }
 
@@ -37,11 +33,9 @@ namespace DigitalOceanBot.Commands.AccountCommands
             {
                 await _telegramBotClient.SendChatActionAsync(message.From.Id, ChatAction.Typing);
 
-                switch (sessionState)
+                if (sessionState == SessionState.MainMenu)
                 {
-                    case SessionState.MainMenu:
-                        await GetAccount(message).ConfigureAwait(false);
-                        break;
+                    await GetAccount(message).ConfigureAwait(false);
                 }
             }
             catch (ApiException ex)
@@ -59,7 +53,6 @@ namespace DigitalOceanBot.Commands.AccountCommands
         private async Task GetAccount(Message message)
         {
             var stringBuilder = new StringBuilder(string.Empty);
-            var user = _userRepo.Get(message.From.Id);
             var digitalOceanApi = _digitalOceanClientFactory.GetInstance(message.From.Id);
             var account = await digitalOceanApi.Account.Get();
             var balance = await digitalOceanApi.BalanceClient.Get();
