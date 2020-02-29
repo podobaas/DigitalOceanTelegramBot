@@ -1,4 +1,17 @@
-﻿## 1.0.0b
+## 1.1
+
+**ADDED**
+
+Projects :pencil2:
++ Create new project
++ Rename project
++ Change description
++ Change purpose
++ Change environment
++ Set as default project
+
+
+## 1.0.0b
 
 **ADDED**
 
