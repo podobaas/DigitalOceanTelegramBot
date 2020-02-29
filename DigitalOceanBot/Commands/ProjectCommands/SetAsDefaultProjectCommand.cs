@@ -1,41 +1,44 @@
 ﻿using System;
 using System.Threading.Tasks;
 using DigitalOcean.API.Exceptions;
+using DigitalOcean.API.Models.Requests;
 using DigitalOceanBot.Factory;
+using DigitalOceanBot.Helpers;
 using DigitalOceanBot.MongoDb;
 using DigitalOceanBot.MongoDb.Models;
 using Microsoft.Extensions.Logging;
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
 
-namespace DigitalOceanBot.Commands.DropletCommands
+namespace DigitalOceanBot.Commands.ProjectCommands
 {
-    public class ShutdownDropletCommand : DigitalOceanActionBase, IBotCommand
+    public class SetAsDefaultProjectCommand : IBotCommand
     {
         private readonly ITelegramBotClient _telegramBotClient;
+        private readonly IRepository<Session> _sessionRepo;
         private readonly ILogger<DigitalOceanWorker> _logger;
+        private readonly IDigitalOceanClientFactory _digitalOceanClientFactory;
 
-        public ShutdownDropletCommand(
+        public SetAsDefaultProjectCommand(
             ILogger<DigitalOceanWorker> logger,
             ITelegramBotClient telegramBotClient,
             IRepository<Session> sessionRepo,
-            IDigitalOceanClientFactory digitalOceanClientFactory) : base(logger, telegramBotClient, sessionRepo, digitalOceanClientFactory)
+            IDigitalOceanClientFactory digitalOceanClientFactory)
         {
-            _telegramBotClient = telegramBotClient;
             _logger = logger;
+            _telegramBotClient = telegramBotClient;
+            _sessionRepo = sessionRepo;
+            _digitalOceanClientFactory = digitalOceanClientFactory;
         }
-
+        
         public async Task Execute(Message message, SessionState sessionState)
         {
             try
             {
-                if (sessionState == SessionState.SelectedDroplet)
+                if (sessionState == SessionState.SelectedProject)
                 {
-                    await ConfirmMessage(message, SessionState.WaitConfirmShutdown).ConfigureAwait(false);
-                }
-                else if (sessionState == SessionState.WaitConfirmShutdown)
-                {
-                    await ShutdownDroplet(message).ConfigureAwait(false);
+                    await SetAsDefaultProject(message).ConfigureAwait(false);
                 }
             }
             catch (ApiException ex)
@@ -49,10 +52,19 @@ namespace DigitalOceanBot.Commands.DropletCommands
                 await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Sorry, аn error has occurred \U0001F628");
             }
         }
-        
-        private async Task ShutdownDroplet(Message message)
+
+        private async Task SetAsDefaultProject(Message message)
         {
-            await StartActionWithConfirm(message, "Shutdown droplet", async (digitalOceanApi, dropletId) => await digitalOceanApi.DropletActions.Shutdown(dropletId));
+            var digitalOceanApi = _digitalOceanClientFactory.GetInstance(message.From.Id);
+            var session = _sessionRepo.Get(message.From.Id);
+            var projectId = session.Data.CastObject<string>();
+
+            await digitalOceanApi.Projects.Patch(projectId, new PatchProject
+            {
+                IsDefault = true
+            });
+            
+            await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Done \U00002705");
         }
     }
 }

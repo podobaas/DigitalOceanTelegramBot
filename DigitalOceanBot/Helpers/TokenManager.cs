@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using DigitalOceanBot.MongoDb.Models;
-using Newtonsoft.Json;
 using RestSharp;
 
 namespace DigitalOceanBot.Helpers

@@ -31,8 +31,6 @@ namespace DigitalOceanBot.Commands.AccountCommands
         {
             try
             {
-                await _telegramBotClient.SendChatActionAsync(message.From.Id, ChatAction.Typing);
-
                 if (sessionState == SessionState.MainMenu)
                 {
                     await GetAccount(message).ConfigureAwait(false);
@@ -41,7 +39,7 @@ namespace DigitalOceanBot.Commands.AccountCommands
             catch (ApiException ex)
             {
                 _logger.LogError($"UserId={message.From.Id.ToString()}, Error={ex.Message}");
-                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message.Replace(".", "\\.")}");
+                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message}");
             }
             catch (Exception ex)
             {

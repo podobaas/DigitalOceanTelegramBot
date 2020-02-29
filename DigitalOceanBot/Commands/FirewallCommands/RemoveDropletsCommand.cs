@@ -39,27 +39,22 @@ namespace DigitalOceanBot.Commands.FirewallCommands
             _digitalOceanClientFactory = digitalOceanClientFactory;
             _checkListPageFactory = checkListPageFactory;
         }
-
-
+        
         #region Commands
 
         public async Task Execute(Message message, SessionState sessionState)
         {
             try
             {
-                await _telegramBotClient.SendChatActionAsync(message.Chat.Id, ChatAction.Typing);
-
-                switch (sessionState)
+                if (sessionState == SessionState.SelectedFirewall)
                 {
-                    case SessionState.SelectedFirewall:
-                        await GetDroplets(message).ConfigureAwait(false);
-                        break;
+                    await GetDroplets(message).ConfigureAwait(false);
                 }
             }
             catch (ApiException ex)
             {
                 _logger.LogError($"UserId={message.From.Id.ToString()}, Error={ex.Message}");
-                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message.Replace(".", "\\.")}");
+                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message}");
             }
             catch (Exception ex)
             {
@@ -90,11 +85,11 @@ namespace DigitalOceanBot.Commands.FirewallCommands
             
             var sendMessage = await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, pageModel.Message, ParseMode.Markdown, replyMarkup: pageModel.Keyboard);
                 
-            _handlerCallbackRepo.Update(message.From.Id, calllback =>
+            _handlerCallbackRepo.Update(message.From.Id, callback =>
             {
-                calllback.MessageId = sendMessage.MessageId;
-                calllback.UserId = message.From.Id;
-                calllback.HandlerType = GetType().FullName;
+                callback.MessageId = sendMessage.MessageId;
+                callback.UserId = message.From.Id;
+                callback.HandlerType = GetType().FullName;
             });
         }
         
@@ -104,7 +99,6 @@ namespace DigitalOceanBot.Commands.FirewallCommands
         {
             try
             {
-                await _telegramBotClient.SendChatActionAsync(callback.From.Id, ChatAction.Typing);
                 var callBackData = callback.Data.Split(';');
 
                 switch (sessionState)
@@ -120,7 +114,7 @@ namespace DigitalOceanBot.Commands.FirewallCommands
             catch (ApiException ex)
             {
                 _logger.LogError($"UserId={message.From.Id.ToString()}, Error={ex.Message}");
-                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message.Replace(".", "\\.")}");
+                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message}");
             }
             catch (Exception ex)
             {

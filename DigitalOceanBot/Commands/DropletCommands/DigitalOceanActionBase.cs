@@ -51,7 +51,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
                     });
 
                     var cancellationTokenSource = new CancellationTokenSource();
-                    cancellationTokenSource.CancelAfter(TimeSpan.FromMinutes(3));
+                    cancellationTokenSource.CancelAfter(TimeSpan.FromMinutes(10));
                     var resultStatus = await CheckActionStatus(dropletId, action.Id, digitalOceanApi, cancellationTokenSource.Token);
                     
                     if (resultStatus)
@@ -81,12 +81,12 @@ namespace DigitalOceanBot.Commands.DropletCommands
             catch (ApiException ex)
             {
                 _logger.LogError($"UserId={message.From.Id.ToString()}, Error={ex.Message}");
-                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message.Replace(".", "\\.")}");
+                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message}");
             }
             catch (OperationCanceledException)
             {
                 _logger.LogError($"UserId={message.From.Id.ToString()}, ChatId={message.Chat.Id.ToString()}, Error=Operation CheckActionStatus was auto-canceled after 3 minutes");
-                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Sorry, check action status operation was auto-canceled after 3 minutes \U0001F628", replyMarkup: Keyboards.GetSelectedDropletsMenuKeyboard());
+                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Sorry, check action status operation was auto-canceled after 10 minutes \U0001F628", replyMarkup: Keyboards.GetSelectedDropletsMenuKeyboard());
             }
             catch (Exception ex)
             {
@@ -131,7 +131,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
             catch (ApiException ex)
             {
                 _logger.LogError($"UserId={message.From.Id.ToString()}, Error={ex.Message}");
-                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message.Replace(".", "\\.")}");
+                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message}");
             }
             catch (OperationCanceledException)
             {

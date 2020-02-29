@@ -135,6 +135,10 @@ namespace DigitalOceanBot.Helpers
             {
                 new[]
                 {
+                    new KeyboardButton("Set as default")
+                },
+                new[]
+                {
                     new KeyboardButton("Rename project"),
                     new KeyboardButton("Change description"),
                 },
@@ -142,11 +146,6 @@ namespace DigitalOceanBot.Helpers
                 {
                     new KeyboardButton("Change purpose"),
                     new KeyboardButton("Change environment")
-                },
-                new[]
-                {
-                    new KeyboardButton("Set as default"),
-                    new KeyboardButton("Delete project"),
                 },
                 new[]
                 {
@@ -217,6 +216,27 @@ namespace DigitalOceanBot.Helpers
                 new[]
                 {
                     new KeyboardButton("Other")
+                }
+            };
+
+            return new ReplyKeyboardMarkup(inlineKeyboardButtons, true, true);
+        }
+        
+        public static ReplyKeyboardMarkup GetEnvironmentKeyboard()
+        {
+            var inlineKeyboardButtons = new[]
+            {
+                new[]
+                {
+                    new KeyboardButton("Development"),
+                },
+                new[]
+                {
+                    new KeyboardButton("Staging")
+                },
+                new[]
+                {
+                    new KeyboardButton("Production")
                 }
             };
 

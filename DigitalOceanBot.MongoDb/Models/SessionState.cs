@@ -32,6 +32,9 @@
         WaitInputNameForNewProject = 27,
         WaitInputPurposeForNewProject = 28,
         WaitInputDescriptionForNewProject = 29,
-        WaitInputNewNameForProject = 30
+        WaitInputNewNameForProject = 30,
+        WaitInputNewDescriptionForProject = 31,
+        WaitInputNewPurposeForProject = 32,
+        WaitInputNewEnvironmentForProject = 33
     }
 }

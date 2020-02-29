@@ -7,7 +7,6 @@ using DigitalOceanBot.MongoDb.Models;
 using Microsoft.Extensions.Logging;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
 
 namespace DigitalOceanBot.Commands.DropletCommands
 {
@@ -30,22 +29,19 @@ namespace DigitalOceanBot.Commands.DropletCommands
         {
             try
             {
-                await _telegramBotClient.SendChatActionAsync(message.Chat.Id, ChatAction.Typing);
-
-                switch (sessionState)
+                if (sessionState == SessionState.SelectedDroplet)
                 {
-                    case SessionState.SelectedDroplet:
-                        await ConfirmMessage(message, SessionState.WaitConfirmResetPassword).ConfigureAwait(false);
-                        break;
-                    case SessionState.WaitConfirmResetPassword:
-                        await ResetPasswordDroplet(message).ConfigureAwait(false);
-                        break;
+                    await ConfirmMessage(message, SessionState.WaitConfirmResetPassword).ConfigureAwait(false);
+                }
+                else if (sessionState == SessionState.WaitConfirmResetPassword)
+                {
+                    await ResetPasswordDroplet(message).ConfigureAwait(false);
                 }
             }
             catch (ApiException ex)
             {
                 _logger.LogError($"UserId={message.From.Id.ToString()}, Error={ex.Message}");
-                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message.Replace(".", "\\.")}");
+                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message}");
             }
             catch (Exception ex)
             {
@@ -53,8 +49,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
                 await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Sorry, аn error has occurred \U0001F628");
             }
         }
-
-
+        
         private async Task ResetPasswordDroplet(Message message)
         {
             await StartActionWithConfirm(message, "Reset password", async (digitalOceanApi, dropletId) => await digitalOceanApi.DropletActions.ResetPassword(dropletId));
