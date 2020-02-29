@@ -10,7 +10,7 @@ DigitalOcean for Telegram
 <img src="https://img.shields.io/github/license/podobaas/DigitalOceanTelegramBot"/>
 </p>
 
-Control your [DigitalOcean](https://www.digitalocean.com/) resources from the Telegram messenger  <img src="https://i.ibb.co/b5mrrsZ/telegram-1.png" height="32" width="32"></a>
+Control your [DigitalOcean](https://www.digitalocean.com/) resources from the Telegram messenger   <img src="https://i.ibb.co/b5mrrsZ/telegram-1.png" style="vertical-align: middle;" height="22" width="22"></a>
 
 Authorization based on DigitalOcean Application for API
 
@@ -49,9 +49,12 @@ For more security, **your token is auto revoked after 15 minutes** after authori
 **Projects** :pencil2:
 + Create new project
 + Rename project
++ Change description
++ Change purpose
++ Change environment
++ Set as default project
 
 ## Missing functional (in development)
-+ Projects
 + Block Storage
 + CDN Endpoints
 + Certificates
