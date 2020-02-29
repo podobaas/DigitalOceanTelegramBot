@@ -87,6 +87,22 @@
     {
       "Name": "Rename project",
       "Type": "DigitalOceanBot.Commands.ProjectCommands.RenameProjectCommand"
+    },
+    {
+      "Name": "Change description",
+      "Type": "DigitalOceanBot.Commands.ProjectCommands.ChangeDescriptionProjectCommand"
+    },
+    {
+      "Name": "Change purpose",
+      "Type": "DigitalOceanBot.Commands.ProjectCommands.ChangePurposeProjectCommand"
+    },
+    {
+      "Name": "Change environment",
+      "Type": "DigitalOceanBot.Commands.ProjectCommands.ChangeEnvironmentProjectCommand"
+    },
+    {
+      "Name": "Set as default",
+      "Type": "DigitalOceanBot.Commands.ProjectCommands.SetAsDefaultProjectCommand"
     }
   ],
   "States": [
@@ -137,6 +153,18 @@
     {
       "SessionStates": [ "30" ],
       "Type": "DigitalOceanBot.Commands.ProjectCommands.RenameProjectCommand"
+    },
+    {
+      "SessionStates": [ "31" ],
+      "Type": "DigitalOceanBot.Commands.ProjectCommands.ChangeDescriptionProjectCommand"
+    },
+    {
+      "SessionStates": [ "32" ],
+      "Type": "DigitalOceanBot.Commands.ProjectCommands.ChangePurposeProjectCommand"
+    },
+    {
+      "SessionStates": [ "33" ],
+      "Type": "DigitalOceanBot.Commands.ProjectCommands.ChangeEnvironmentProjectCommand"
     }
   ]
 }           

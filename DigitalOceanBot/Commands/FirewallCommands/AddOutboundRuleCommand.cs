@@ -32,31 +32,24 @@ namespace DigitalOceanBot.Commands.FirewallCommands
             _sessionRepo = sessionRepo;
             _digitalOceanClientFactory = digitalOceanClientFactory;
         }
-
-
-        #region Commands
-
+        
         public async Task Execute(Message message, SessionState sessionState)
         {
             try
             {
-                await _telegramBotClient.SendChatActionAsync(message.Chat.Id, ChatAction.Typing);
-
-                switch (sessionState)
+                if (sessionState == SessionState.SelectedFirewall)
                 {
-                    case SessionState.SelectedFirewall:
-                        await InputOutboundRule(message).ConfigureAwait(false);
-                        break;
-                    case SessionState.WaitInputAddInboundRuleFirewall:
-                        await AddOutboundRule(message).ConfigureAwait(false);
-                        break;
-
+                    await InputOutboundRule(message).ConfigureAwait(false);
+                }
+                else if (sessionState == SessionState.WaitInputAddInboundRuleFirewall)
+                {
+                    await AddOutboundRule(message).ConfigureAwait(false);
                 }
             }
             catch (ApiException ex)
             {
                 _logger.LogError($"UserId={message.From.Id.ToString()}, Error={ex.Message}");
-                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message.Replace(".", "\\.")}");
+                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message}");
             }
             catch (Exception ex)
             {
@@ -114,7 +107,5 @@ namespace DigitalOceanBot.Commands.FirewallCommands
 
             await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"Done \U00002705", ParseMode.MarkdownV2);
         }
-
-        #endregion
     }
 }

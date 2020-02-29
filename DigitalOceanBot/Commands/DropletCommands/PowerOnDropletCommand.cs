@@ -7,7 +7,6 @@ using DigitalOceanBot.MongoDb.Models;
 using Microsoft.Extensions.Logging;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
 
 namespace DigitalOceanBot.Commands.DropletCommands
 {
@@ -30,19 +29,15 @@ namespace DigitalOceanBot.Commands.DropletCommands
         {
             try
             {
-                await _telegramBotClient.SendChatActionAsync(message.Chat.Id, ChatAction.Typing);
-
-                switch (sessionState)
+                if (sessionState == SessionState.SelectedDroplet)
                 {
-                    case SessionState.SelectedDroplet:
-                        await PowerOnDroplet(message).ConfigureAwait(false);
-                        break;
+                    await PowerOnDroplet(message).ConfigureAwait(false);
                 }
             }
             catch (ApiException ex)
             {
                 _logger.LogError($"UserId={message.From.Id.ToString()}, Error={ex.Message}");
-                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message.Replace(".", "\\.")}");
+                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message}");
             }
             catch (Exception ex)
             {

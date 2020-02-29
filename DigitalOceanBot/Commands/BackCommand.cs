@@ -6,7 +6,6 @@ using DigitalOceanBot.MongoDb.Models;
 using Microsoft.Extensions.Logging;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
 
 namespace DigitalOceanBot.Commands
 {
@@ -33,7 +32,6 @@ namespace DigitalOceanBot.Commands
             {
                 if (sessionState != SessionState.WaitAuth)
                 {
-                    await _telegramBotClient.SendChatActionAsync(message.Chat.Id, ChatAction.Typing);
                     await BackToMainMenu(message).ConfigureAwait(false);
                 }
             }

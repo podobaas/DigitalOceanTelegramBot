@@ -48,8 +48,6 @@ namespace DigitalOceanBot.Commands.FirewallCommands
         {
             try
             {
-                await _telegramBotClient.SendChatActionAsync(message.Chat.Id, ChatAction.Typing);
-                
                 switch (sessionState)
                 {
                     case SessionState.FirewallsMenu:
@@ -69,7 +67,7 @@ namespace DigitalOceanBot.Commands.FirewallCommands
             catch (ApiException ex)
             {
                 _logger.LogError($"UserId={message.From.Id.ToString()}, Error={ex.Message}");
-                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message.Replace(".", "\\.")}");
+                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message}");
             }
             catch (Exception ex)
             {
@@ -223,7 +221,7 @@ namespace DigitalOceanBot.Commands.FirewallCommands
             catch (ApiException ex)
             {
                 _logger.LogError($"UserId={message.From.Id.ToString()}, Error={ex.Message}");
-                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message.Replace(".", "\\.")}");
+                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message}");
             }
             catch (Exception ex)
             {

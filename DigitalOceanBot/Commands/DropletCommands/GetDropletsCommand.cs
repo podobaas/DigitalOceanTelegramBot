@@ -45,21 +45,15 @@ namespace DigitalOceanBot.Commands.DropletCommands
         {
             try
             {
-                await _telegramBotClient.SendChatActionAsync(message.Chat.Id, ChatAction.Typing);
-
-                switch (sessionState)
+                if (sessionState == SessionState.DropletsMenu || sessionState == SessionState.MainMenu)
                 {
-                    case SessionState.DropletsMenu:
-                    case SessionState.MainMenu:
-                        await GetDroplets(message).ConfigureAwait(false);
-                        break;
-
+                    await GetDroplets(message).ConfigureAwait(false);
                 }
             }
             catch (ApiException ex)
             {
                 _logger.LogError($"UserId={message.From.Id.ToString()}, Error={ex.Message}");
-                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message.Replace(".", "\\.")}");
+                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message}");
             }
             catch (Exception ex)
             {
@@ -108,7 +102,6 @@ namespace DigitalOceanBot.Commands.DropletCommands
         {
             try
             {
-                await _telegramBotClient.SendChatActionAsync(message.Chat.Id, ChatAction.Typing);
                 var callBackData = callback.Data.Split(';');
 
                 switch (sessionState)
@@ -124,7 +117,7 @@ namespace DigitalOceanBot.Commands.DropletCommands
             catch (ApiException ex)
             {
                 _logger.LogError($"UserId={message.From.Id.ToString()}, Error={ex.Message}");
-                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message.Replace(".", "\\.")}");
+                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message}");
             }
             catch (Exception ex)
             {

@@ -3,18 +3,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>OAuth request</title>
+    <title>DigitalOcean Auth</title>
+        <style>
+          .pm-main-app-login {
+            color: #505050;
+            line-height: 24px;
+            text-align: center;
+            margin-top: 100px;
+          }
+    
+          .pm-main-app-login  > h1 {
+            font-size: 22px;
+          }
+    
+          .pm-main-app-login  > p {
+            font-size: 16px;
+          }
+        </style>
 </head>
 <body>
     @if (Model.IsSuccess)
     {
-        <div style="padding:50px;text-align:center;font-size:55px;color:green;">Success!</div>
-        <div style="padding:5px;text-align:center;font-size:50px;">You can close this windows</div>
+        <div class="pm-main-app-login ">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" fill="none">
+                <circle cx="50" cy="50" r="50" fill="#26B47F"/>
+                <path d="M43.875 5.37327C43.875 2.54484 41.6154 0.25 38.8258 0.25C37.2459 0.25 35.837 0.987934 34.9103 2.14009L34.9084 2.13816L16.7115 24.8158L8.88268 16.2132L8.87889 16.2171C7.95606 15.2036 6.64012 14.5659 5.17421 14.5659C2.38477 14.5639 0.125 16.8567 0.125 19.6872C0.125 21.0282 0.637698 22.2439 1.46749 23.1572L1.46369 23.161L13.2421 36.1026L13.2459 36.0988C14.1687 37.1122 15.4847 37.75 16.9506 37.75C18.5304 37.75 19.9394 37.0121 20.866 35.8599L20.8679 35.8618L42.7428 8.60646L42.7409 8.60453C43.4492 7.724 43.8745 6.59882 43.8745 5.37342L43.875 5.37327Z" fill="white" transform="translate(28, 32)"/>
+            </svg>
+            <h1>You're signed in</h1>
+            <p>You can return to Telegram messenger</p>
+        </div>
     }
     else
     {
-        <div style="padding: 50px; text-align: center; font-size: 55px; color: red;">Error!</div>
-        <div style="padding:5px;text-align:center;font-size:50px;">You can close this windows</div>
+        <div class="pm-main-app-login">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" height="100" viewBox="0 0 100 100" version="1.1">
+            <g id="surface1">
+            <path style=" stroke:none;fill-rule:nonzero;fill:rgb(84.313725%,35.294118%,29.019608%);fill-opacity:1;" d="M 100 50 C 100 77.613281 77.613281 100 50 100 C 22.386719 100 0 77.613281 0 50 C 0 22.386719 22.386719 0 50 0 C 77.613281 0 100 22.386719 100 50 Z M 100 50 "/>
+            <path style="fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke:rgb(100%,100%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 16 34 L 34 16 " transform="matrix(2,0,0,2,0,0)"/>
+            <path style="fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke:rgb(100%,100%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 16 16 L 34 34 " transform="matrix(2,0,0,2,0,0)"/>
+            </g>
+            </svg>
+            <h1>You're not signed in</h1>
+            <p>Please, try again</p>
+        </div>
     }
 </body>
 </html>

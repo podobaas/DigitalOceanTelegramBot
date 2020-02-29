@@ -73,8 +73,8 @@ namespace DigitalOceanBot.Commands
                     MessageId = 0,
                     HandlerType = null
                 });
-
-                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Hi! Sign In, please to DigitalOcean account", replyMarkup: GetAuthKeyboard(state));
+                
+                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Welcome to the DigitalOcean Bot \U0000263A \n Sign in to your DO account", replyMarkup: GetAuthKeyboard(state));
             }
             else if(user.IsAuthorized)
             {
@@ -86,7 +86,7 @@ namespace DigitalOceanBot.Commands
         {
             var link = new InlineKeyboardButton
             {
-                Text = "Sign In \U0001F40B",
+                Text = "Sign in \U0001F40B",
                 Url = $"{Environment.GetEnvironmentVariable("AUTH_URL")}&state={state}&scope=read write"
             };
 

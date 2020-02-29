@@ -9,7 +9,6 @@ using DigitalOceanBot.MongoDb.Models;
 using Microsoft.Extensions.Logging;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
 
 namespace DigitalOceanBot.Commands.ProjectCommands
 {
@@ -33,14 +32,10 @@ namespace DigitalOceanBot.Commands.ProjectCommands
         }
 
 
-        #region Commands
-
         public async Task Execute(Message message, SessionState sessionState)
         {
             try
             {
-                await _telegramBotClient.SendChatActionAsync(message.Chat.Id, ChatAction.Typing);
-
                 switch (sessionState)
                 {
                     case SessionState.ProjectsMenu:
@@ -61,7 +56,7 @@ namespace DigitalOceanBot.Commands.ProjectCommands
             catch (ApiException ex)
             {
                 _logger.LogError($"UserId={message.From.Id.ToString()}, Error={ex.Message}");
-                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message.Replace(".", "\\.")}");
+                await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, $"DigitalOcean API Error: {ex.Message}");
             }
             catch (Exception ex)
             {
@@ -128,8 +123,5 @@ namespace DigitalOceanBot.Commands.ProjectCommands
             
             await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Done \U00002705", replyMarkup: Keyboards.GetSelectedProjectMenuKeyboard());
         }
-
-        #endregion
-        
     }
 }

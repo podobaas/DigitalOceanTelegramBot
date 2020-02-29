@@ -12,14 +12,14 @@ using Telegram.Bot.Types;
 
 namespace DigitalOceanBot.Commands.ProjectCommands
 {
-    public class RenameProjectCommand : IBotCommand
+    public class ChangeDescriptionProjectCommand : IBotCommand
     {
         private readonly ITelegramBotClient _telegramBotClient;
         private readonly IRepository<Session> _sessionRepo;
         private readonly ILogger<DigitalOceanWorker> _logger;
         private readonly IDigitalOceanClientFactory _digitalOceanClientFactory;
 
-        public RenameProjectCommand(
+        public ChangeDescriptionProjectCommand(
             ILogger<DigitalOceanWorker> logger,
             ITelegramBotClient telegramBotClient,
             IRepository<Session> sessionRepo,
@@ -37,11 +37,11 @@ namespace DigitalOceanBot.Commands.ProjectCommands
             {
                 if (sessionState == SessionState.SelectedProject)
                 {
-                    await InputNameForProject(message).ConfigureAwait(false);
+                    await InputDescriptionForProject(message).ConfigureAwait(false);
                 }
-                else if (sessionState == SessionState.WaitInputNewNameForProject)
+                else if (sessionState == SessionState.WaitInputNewDescriptionForProject)
                 {
-                    await RenameProject(message).ConfigureAwait(false);
+                    await ChangeDescription(message).ConfigureAwait(false);
                 }
             }
             catch (ApiException ex)
@@ -56,17 +56,17 @@ namespace DigitalOceanBot.Commands.ProjectCommands
             }
         }
 
-        private async Task InputNameForProject(Message message)
+        private async Task InputDescriptionForProject(Message message)
         {
             _sessionRepo.Update(message.From.Id, session =>
             {
-                session.State = SessionState.WaitInputNewNameForProject;
+                session.State = SessionState.WaitInputNewDescriptionForProject;
             });
 
-            await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Input new name for project:");
+            await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Input new description for project:");
         }
         
-        private async Task RenameProject(Message message)
+        private async Task ChangeDescription(Message message)
         {
             var digitalOceanApi = _digitalOceanClientFactory.GetInstance(message.From.Id);
             var session = _sessionRepo.Get(message.From.Id);
@@ -74,7 +74,7 @@ namespace DigitalOceanBot.Commands.ProjectCommands
 
             await digitalOceanApi.Projects.Patch(projectId, new PatchProject
             {
-                Name = message.Text
+                Description = message.Text
             });
             
             _sessionRepo.Update(message.From.Id, session =>
@@ -84,5 +84,6 @@ namespace DigitalOceanBot.Commands.ProjectCommands
             
             await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, "Done \U00002705");
         }
+        
     }
 }
