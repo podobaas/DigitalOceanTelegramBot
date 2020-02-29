@@ -10,7 +10,7 @@ DigitalOcean for Telegram
 <img src="https://img.shields.io/github/license/podobaas/DigitalOceanTelegramBot"/>
 </p>
 
-This bot is a free, open source project that can replace the mobile application to easily manage your infrastructure in [DigitalOcean](https://www.digitalocean.com/)
+Control your [DigitalOcean](https://www.digitalocean.com/) resources from the Telegram messenger  <img src="https://i.ibb.co/b5mrrsZ/telegram-1.png" height="32" width="32"></a>
 
 Authorization based on DigitalOcean Application for API
 
