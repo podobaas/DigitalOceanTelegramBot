@@ -27,7 +27,7 @@ For more security, **your token is auto revoked after 15 minutes** after authori
 ## Available functional:
 **Account** :ocean:
 + Account information
-+ Inforamtion about your credit
++ Information about your credit
 
 **Droplets** :droplet:
 + Create new droplet
@@ -36,7 +36,7 @@ For more security, **your token is auto revoked after 15 minutes** after authori
 + Power cycle droplet
 + Shutdouwn droplet
 + Power on droplet
-+ Create snaphot
++ Create snapshot
 + Reset password
 
 **Firewalls** :european_castle:
