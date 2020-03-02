@@ -18,6 +18,8 @@ For more security, **your token is auto revoked after 15 minutes** after authori
 
 :link: Telegram link: [DigitalOceanBot](https://t.me/DigitalOceanDropletBot)
 
+:link: DigitalOcean Community Tools page: [DigitalOcean For Telegram](https://www.digitalocean.com/community/tools/digitalocean-for-telegram)
+
 ## Basic commands
 
 **/start** - Authentication in DigitalOcean account
