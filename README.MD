@@ -20,6 +20,15 @@ For more security, **your token is auto revoked after 15 minutes** after authori
 
 :link: DigitalOcean Community Tools page: [DigitalOcean For Telegram](https://www.digitalocean.com/community/tools/digitalocean-for-telegram)
 
+<br/>
+<p>This project is supported by:</p>
+<p>
+  <a href="https://www.digitalocean.com/">
+    <img src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_horizontal_blue.svg" width="201px">
+  </a>
+</p>
+<br/>
+
 ## Basic commands
 
 **/start** - Authentication in DigitalOcean account
