@@ -27,13 +27,14 @@ DigitalOcean for Telegram
 
 ✺ For more security, **your token is auto revoked after 15 minutes** after authorization in DO account!
 
+<br/>
+
 <h4 align="center">This project is supported by:</h4>
 <p p align="center">
   <a href="https://www.digitalocean.com/">
     <img src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_horizontal_blue.svg" width="201px">
   </a>
 </p>
-<br/>
 
 ## Basic commands
 
