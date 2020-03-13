@@ -14,7 +14,7 @@ DigitalOcean for Telegram
 </p>
 
 <p align="center">
-  <a href="https://telegram.me/DigitalOceanDropletBot" target="_blank">DigitalOceanBot</a> |
+  <a href="https://telegram.me/DigitalOceanDropletBot" target="_blank">Link to telegtam bot</a> |
   <a href="https://www.digitalocean.com/community/tools/digitalocean-for-telegram" target="_blank">DigitalOcean Community Tools Page</a> 
 </p>   
   
