@@ -1,9 +1,6 @@
 <p align="center">
   <img src="/screenshots/logo.png" width="410" height="250">
 </p>
-<h1 align="center">
-DigitalOcean for Telegram
-</h1>
 
 <h4 align="center">Control your <a href="https://www.digitalocean.com" target="_blank">DigitalOcean</a> resources from the Telegram messenger</h4>
 
