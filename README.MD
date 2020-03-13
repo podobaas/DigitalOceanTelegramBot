@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://emojis.wiki/emoji-pics/messenger/water-wave-messenger.png" width="100" height="100">
+  <img src="/screenshots/logo.png" width="410" height="250">
 </p>
 <h1 align="center">
 DigitalOcean for Telegram
