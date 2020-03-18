@@ -73,7 +73,7 @@ namespace DigitalOceanAuth.Controllers
 
                     var userInfo = await GetToken(request.Code, request.State).ConfigureAwait(false);
 
-                    if (string.IsNullOrEmpty(userInfo.error))
+                    if (string.IsNullOrEmpty(userInfo.error) && userInfo.scope.Length == 10)
                     {
                         _userRepo.Update(user.UserId, (user) =>
                         {
