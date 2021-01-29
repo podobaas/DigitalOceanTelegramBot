@@ -76,7 +76,7 @@ namespace DigitalOceanBot.Commands.ProjectCommands
                     session.State = SessionState.ProjectsMenu;
                 });
 
-                var page = _pageFactory.GetInstance<ProjectPage>();
+                var page = _pageFactory.GetInstance<ProjectPaginator>();
                 var pageModel = page.GetPage(message.From.Id, 0);
 
                 var sendMessage = await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, pageModel.Message, ParseMode.Markdown, replyMarkup: pageModel.Keyboard);
@@ -129,8 +129,8 @@ namespace DigitalOceanBot.Commands.ProjectCommands
         private async Task SelectProject(CallbackQuery callback, Message message)
         {
             var projectId = callback.Data.Split(';')[1];
-            var page = _pageFactory.GetInstance<ProjectPage>();
-            var pageModel = page.SelectPage(callback.From.Id, projectId);
+            var page = _pageFactory.GetInstance<ProjectPaginator>();
+            var pageModel = page.Select(projectId);
 
             _sessionRepo.Update(callback.From.Id, session =>
             {
@@ -145,7 +145,7 @@ namespace DigitalOceanBot.Commands.ProjectCommands
         private async Task NextOrBackProject(CallbackQuery callback, Message message)
         {
             var pageCount = int.Parse(callback.Data.Split(';')[1]);
-            var page = _pageFactory.GetInstance<ProjectPage>();
+            var page = _pageFactory.GetInstance<ProjectPaginator>();
             var pageModel = page.GetPage(callback.From.Id, pageCount);
 
             await _telegramBotClient.EditMessageTextAsync(message.Chat.Id, message.MessageId, pageModel.Message, ParseMode.Markdown, replyMarkup: pageModel.Keyboard);

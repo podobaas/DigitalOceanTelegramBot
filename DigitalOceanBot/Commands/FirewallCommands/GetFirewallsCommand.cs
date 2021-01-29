@@ -77,7 +77,7 @@ namespace DigitalOceanBot.Commands.FirewallCommands
                 });
 
                 var droplets = await digitalOceanApi.Droplets.GetAll();
-                var page = _pageFactory.GetInstance<FirewallPage>(droplets);
+                var page = _pageFactory.GetInstance<FirewallPaginator>(droplets);
                 var pageModel = page.GetPage(message.From.Id, 0);
                 
                 var sendMessage = await _telegramBotClient.SendTextMessageAsync(message.Chat.Id, pageModel.Message, ParseMode.Markdown, replyMarkup: pageModel.Keyboard);
@@ -133,7 +133,7 @@ namespace DigitalOceanBot.Commands.FirewallCommands
             var digitalOceanApi = _digitalOceanClientFactory.GetInstance(callback.From.Id);
             var pageCount = int.Parse(callback.Data.Split(';')[1]);
             var droplets = await digitalOceanApi.Droplets.GetAll();
-            var page = _pageFactory.GetInstance<FirewallPage>(droplets);
+            var page = _pageFactory.GetInstance<FirewallPaginator>(droplets);
             var pageModel = page.GetPage(callback.From.Id, pageCount);
 
             await _telegramBotClient.EditMessageTextAsync(message.Chat.Id, message.MessageId, pageModel.Message, ParseMode.Markdown, replyMarkup: pageModel.Keyboard);
@@ -142,8 +142,8 @@ namespace DigitalOceanBot.Commands.FirewallCommands
         private async Task SelectFirewall(CallbackQuery callback, Message message)
         {
             var firewallId = callback.Data.Split(';')[1];
-            var page = _pageFactory.GetInstance<FirewallPage>();
-            var pageModel = page.SelectPage(callback.From.Id, firewallId);
+            var page = _pageFactory.GetInstance<FirewallPaginator>();
+            var pageModel = page.Select(firewallId);
 
             _sessionRepo.Update(callback.From.Id, session =>
             {

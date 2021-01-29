@@ -1,9 +1,4 @@
-﻿using DigitalOcean.API.Models.Responses;
-using DigitalOceanBot.CheckLists;
-using DigitalOceanBot.Factory;
-using Xunit;
-
-namespace DigitalOceanBotTests.Factory
+﻿namespace DigitalOceanBotTests.Factory
 {
     public class CheckListPageFactoryTest
     {

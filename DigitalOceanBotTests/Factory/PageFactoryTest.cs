@@ -1,9 +1,5 @@
-﻿using DigitalOceanBot.Factory;
-using DigitalOceanBot.MongoDb;
+﻿using DigitalOceanBot.MongoDb;
 using DigitalOceanBot.MongoDb.Models;
-using DigitalOceanBot.Pages;
-using NSubstitute;
-using Xunit;
 
 namespace DigitalOceanBotTests.Factory
 {

@@ -1,16 +1,5 @@
-using System;
-using DigitalOcean.API.Models.Responses;
-using DigitalOceanBot;
-using DigitalOceanBot.Commands.AccountCommands;
-using DigitalOceanBot.Factory;
 using DigitalOceanBot.MongoDb;
 using DigitalOceanBot.MongoDb.Models;
-using Microsoft.Extensions.Logging;
-using NSubstitute;
-using Telegram.Bot;
-using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
-using Xunit;
 
 namespace DigitalOceanBotTests.Commands.AccountCommands
 {

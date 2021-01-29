@@ -1,20 +1,5 @@
-using System;
-using System.Collections.Generic;
-using DigitalOcean.API.Models.Responses;
-using DigitalOceanBot;
-using DigitalOceanBot.Commands.FirewallCommands;
-using DigitalOceanBot.Factory;
-using DigitalOceanBot.Models;
 using DigitalOceanBot.MongoDb;
 using DigitalOceanBot.MongoDb.Models;
-using DigitalOceanBot.Pages;
-using Microsoft.Extensions.Logging;
-using NSubstitute;
-using Telegram.Bot;
-using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
-using Telegram.Bot.Types.ReplyMarkups;
-using Xunit;
 
 namespace DigitalOceanBotTests.Commands.FirewallCommands
 {

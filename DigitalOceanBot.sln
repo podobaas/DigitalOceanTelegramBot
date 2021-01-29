@@ -5,12 +5,6 @@ VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalOceanBot", "DigitalOceanBot\DigitalOceanBot.csproj", "{5C25DCA5-7529-4A9C-92C0-4E9EC116D7FD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalOceanBot.MongoDb", "DigitalOceanBot.MongoDb\DigitalOceanBot.MongoDb.csproj", "{B2D6349B-75F5-4D42-B4D1-B7FA7D1FD438}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalOceanAuth", "DigitalOceanAuth\DigitalOceanAuth\DigitalOceanAuth.csproj", "{0DCFAA5D-8560-4834-B8E2-76157D8F9460}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalOceanBot.BusMessage", "DigitalOcean.BusMessage\DigitalOceanBot.BusMessage.csproj", "{82EA9DFB-71FD-413E-83D0-E89D418779B0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalOceanBotTests", "DigitalOceanBotTests\DigitalOceanBotTests.csproj", "{065DF338-E9F2-4D79-9657-4952E872558E}"
 EndProject
 Global
@@ -23,18 +17,6 @@ Global
 		{5C25DCA5-7529-4A9C-92C0-4E9EC116D7FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C25DCA5-7529-4A9C-92C0-4E9EC116D7FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C25DCA5-7529-4A9C-92C0-4E9EC116D7FD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B2D6349B-75F5-4D42-B4D1-B7FA7D1FD438}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2D6349B-75F5-4D42-B4D1-B7FA7D1FD438}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2D6349B-75F5-4D42-B4D1-B7FA7D1FD438}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2D6349B-75F5-4D42-B4D1-B7FA7D1FD438}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0DCFAA5D-8560-4834-B8E2-76157D8F9460}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0DCFAA5D-8560-4834-B8E2-76157D8F9460}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0DCFAA5D-8560-4834-B8E2-76157D8F9460}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0DCFAA5D-8560-4834-B8E2-76157D8F9460}.Release|Any CPU.Build.0 = Release|Any CPU
-		{82EA9DFB-71FD-413E-83D0-E89D418779B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{82EA9DFB-71FD-413E-83D0-E89D418779B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{82EA9DFB-71FD-413E-83D0-E89D418779B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{82EA9DFB-71FD-413E-83D0-E89D418779B0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{065DF338-E9F2-4D79-9657-4952E872558E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{065DF338-E9F2-4D79-9657-4952E872558E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{065DF338-E9F2-4D79-9657-4952E872558E}.Release|Any CPU.ActiveCfg = Release|Any CPU

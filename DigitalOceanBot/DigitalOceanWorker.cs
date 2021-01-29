@@ -1,19 +1,18 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using DigitalOceanBot.BusMessage;
-using DigitalOceanBot.Commands;
-using DigitalOceanBot.Helpers;
-using DigitalOceanBot.MongoDb;
-using DigitalOceanBot.MongoDb.Models;
-using EasyNetQ;
-using Microsoft.Extensions.DependencyInjection;
+using DigitalOceanBot.Core;
+using DigitalOceanBot.Core.CallbackQueries.Droplet;
+using DigitalOceanBot.Core.CallbackQueries.Firewall;
+using DigitalOceanBot.Core.Commands.Account;
+using DigitalOceanBot.Core.Commands.Droplet;
+using DigitalOceanBot.Core.Commands.Firewall;
+using DigitalOceanBot.Core.Commands.Main;
+using DigitalOceanBot.Core.StateHandlers.Droplet;
+using DigitalOceanBot.Core.StateHandlers.Firewall;
+using DigitalOceanBot.Types.Enums;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using Serilog;
 using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types.Enums;
@@ -22,172 +21,115 @@ namespace DigitalOceanBot
 {
     public class DigitalOceanWorker : IHostedService
     {
-        private readonly ILogger<DigitalOceanWorker> _logger;
+        private readonly BotCommandManager _botCommandManager;
+        private readonly ILogger _logger;
         private readonly ITelegramBotClient _telegramBotClient;
-        private readonly IAdvancedBus _bus;
-        private readonly IRepository<Session> _sessionRepo;
-        private readonly IRepository<HandlerCallback> _handlerCallbackRepo;
-        private readonly IServiceProvider _serviceProvider;
-        private Router _botCommand;
+        private readonly int _userId;
 
 
-        public DigitalOceanWorker(
-            IServiceProvider serviceProvider,
-            ITelegramBotClient telegramBotClient,
-            IAdvancedBus bus,
-            ILogger<DigitalOceanWorker> logger,
-            IRepository<Session> sessionRepo,
-            IRepository<HandlerCallback> handlerCallbackRepo)
+        public DigitalOceanWorker(BotCommandManager botCommandManager, ITelegramBotClient telegramBotClient, ILogger logger)
         {
+            _botCommandManager = botCommandManager;
             _logger = logger;
             _telegramBotClient = telegramBotClient;
-            _bus = bus;
-            _sessionRepo = sessionRepo;
-            _handlerCallbackRepo = handlerCallbackRepo;
-            _serviceProvider = serviceProvider;
-
-            LoadCommands();
-            RunListeningBus();
+            _userId = int.Parse(Environment.GetEnvironmentVariable("USER_ID"));
+            
+            RegisterCommands();
         }
 
-        public Task StartAsync(CancellationToken cancellationToken)
+        public async Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Starting...");
-
+            _logger.Information("Starting bot...");
+            
             _telegramBotClient.OnMessage += OnMessage;
-            _telegramBotClient.OnUpdate += OnUpdate;
-            _telegramBotClient.StartReceiving(new[]
-            {
-                UpdateType.CallbackQuery,
-                UpdateType.Message
-            });
+            _telegramBotClient.OnCallbackQuery += OnCallbackQuery;
+            _telegramBotClient.StartReceiving(new[] {UpdateType.CallbackQuery, UpdateType.Message}, cancellationToken);
 
-            _logger.LogInformation("Started");
-
-            return Task.CompletedTask;
+            // await _telegramBotClient.SendTextMessageAsync(_userId, 
+            //     MessageHelper.GetMainMenuMessage(), 
+            //     replyMarkup: KeyboardHelper.GetMainMenuKeyboard(), 
+            //     cancellationToken: cancellationToken);
+            
+            _logger.Information("Bot started successfully!");
         }
-
+        
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Stopping...");
+            _logger.Information("Stopping bot...");
 
-            _telegramBotClient.StopReceiving();
-            _bus?.Dispose();
+            _telegramBotClient?.StopReceiving();
 
-            _logger.LogInformation("Stopped");
+            _logger.Information("Bot stopped!");
 
             return Task.CompletedTask;
         }
 
         private async void OnMessage(object sender, MessageEventArgs e)
         {
-            try
+            if (e.Message.Type == MessageType.Text && e.Message.From.Id == _userId)
             {
-                if (e.Message.Type == MessageType.Text && !e.Message.From.IsBot)
-                {
-                    var session = _sessionRepo.Get(e.Message.From.Id);
-                    if (session != null)
-                    {
-                        var command = _botCommand.Commands.FirstOrDefault(c => c.Name == e.Message.Text);
-                        if (command != null)
-                        {
-                            var controller = GetCommandOrCallback<IBotCommand>(command.Type);
-                            controller?.Execute(e.Message, session.State);
-                            
-                        }
-                        else
-                        {
-                            var className = _botCommand.States.FirstOrDefault(c => c.SessionStates.Contains(session.State))?.Type;
-                            if (!string.IsNullOrEmpty(className))
-                            {
-                                var controller = GetCommandOrCallback<IBotCommand>(className);
-                                await controller.Execute(e.Message, session.State);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        var controller = GetCommandOrCallback<IBotCommand>(typeof(StartCommand).FullName);
-                        await controller.Execute(e.Message, SessionState.Unknown);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"ChatId={e.Message.Chat.Id.ToString()}, ErrorMessage={ex.Message}, StackTrace={ex.StackTrace}");
+                await _botCommandManager.StartCommandAsync(e.Message);
             }
         }
 
-        private async void OnUpdate(object sender, UpdateEventArgs e)
+        private async void OnCallbackQuery(object sender, CallbackQueryEventArgs e)
         {
-            try
+            if (e.CallbackQuery.From.Id == _userId)
             {
-                if (e.Update.CallbackQuery != null)
-                {
-                    var callBackData = e.Update.CallbackQuery.Data.Split(';');
-                    if (callBackData.Length > 0 && callBackData[0] != "Empty")
-                    {
-                        var handlerCallback = _handlerCallbackRepo.Get(e.Update.CallbackQuery.From.Id);
-                        if (handlerCallback != null && handlerCallback.MessageId == e.Update.CallbackQuery.Message.MessageId)
-                        {
-                            var callback = GetCommandOrCallback<IBotCallback>(handlerCallback.HandlerType);
-                            var session = _sessionRepo.Get(e.Update.CallbackQuery.From.Id);
-                            
-                            if (callback != null && session != null)
-                            {
-                                await _telegramBotClient.AnswerCallbackQueryAsync(e.Update.CallbackQuery.Id);
-                                await callback.Execute(e.Update.CallbackQuery, e.Update.CallbackQuery.Message, session.State);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        await _telegramBotClient.AnswerCallbackQueryAsync(e.Update.CallbackQuery.Id);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"UserId={e.Update.Message.From.Id.ToString()},ErrorMessage={ex.Message}, StackTrace={ex.StackTrace}");
+                await _botCommandManager.StartCallbackQueryAsync(e.CallbackQuery.Message.Chat.Id, e.CallbackQuery.Message.MessageId, e.CallbackQuery.Id, e.CallbackQuery.Data);
             }
         }
-
-        private void RunListeningBus()
+        
+        private void RegisterCommands()
         {
-            _bus.Consume(_bus.QueueDeclare("auth-queue"), register =>
-            {
-                register.Add<AuthMessage>(async (message, info) =>
-                {
-                    try
-                    {
-                        if (message.Body.IsSuccess)
-                        {
-                            _sessionRepo.Update(message.Body.UserId, (session) =>
-                            {
-                                session.State = SessionState.MainMenu;
-                            });
+            #region Main
 
-                            await _telegramBotClient.SendTextMessageAsync(message.Body.ChatId, "Authentication completed \U0001F973", replyMarkup: Keyboards.GetMainMenuKeyboard());
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogError($"UserId={message.Body.UserId.ToString()}, ErrorMessage={ex.Message}, StackTrace={ex.StackTrace}");
-                    }
-                });
-            });
-        }
+            _botCommandManager
+                .OnCommand(CommandType.Start, typeof(StartCommand))
+                .OnCommand(CommandType.Back, typeof(BackCommand));
 
-        private T GetCommandOrCallback<T>(string className) where T : class
-        {
-            var type = Type.GetType(className);
-            return (T)ActivatorUtilities.CreateInstance(_serviceProvider, type);
-        }
+            #endregion
+            
+            #region Account
 
-        private void LoadCommands()
-        {
-            var json = File.ReadAllText($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}//route.json");
-            _botCommand = JsonConvert.DeserializeObject<Router>(json);
+            _botCommandManager.OnCommand(CommandType.Account, typeof(GetAccountCommand));
+
+            #endregion
+
+            #region Droplet
+
+            _botCommandManager
+                .OnCommand(CommandType.Droplets, typeof(GetDropletsCommand))
+                .OnCommand(CommandType.DropletReboot, typeof(RebootCommand))
+                .OnCommand(CommandType.DropletRename, typeof(RenameCommand))
+                .OnCommand(CommandType.DropletShutdown, typeof(ShutdownCommand))
+                .OnCommand(CommandType.DropletPowerCycle, typeof(PowerCycleCommand))
+                .OnCommand(CommandType.DropletPowerOn, typeof(PowerOnCommand))
+                .OnCommand(CommandType.DropletResetPassword, typeof(ResetPasswordCommand))
+                .OnCommand(CommandType.DropletCreateSnapshot, typeof(SnapshotCommand))
+                .OnState(StateType.DropletWaitEnterNewName, typeof(WaitEnterNewNameDropletStateHandler))
+                .OnState(StateType.DropletWaitEnterSnapshotName, typeof(WaitEnterSnapshotNameStateHandler))
+                .OnCallbackQuery(CallbackQueryType.DropletNext, typeof(PreviousAndNextDropletCallbackQuery))
+                .OnCallbackQuery(CallbackQueryType.DropletPrevious, typeof(PreviousAndNextDropletCallbackQuery))
+                .OnCallbackQuery(CallbackQueryType.DropletSelect, typeof(SelectDropletCallbackQuery));
+
+            #endregion
+
+            #region Firewall
+
+            _botCommandManager
+                .OnCommand(CommandType.Firewalls, typeof(GetFirewallsCommand))
+                .OnCommand(CommandType.FirewallAddInboundRule, typeof(AddInboundRuleCommand))
+                .OnCommand(CommandType.FirewallAddOutboundRule, typeof(AddOutboundRuleCommand))
+                .OnCommand(CommandType.FirewallCreateNew, typeof(CreateFirewallCommand))
+                .OnState(StateType.FirewallWaitEnterInboundRule, typeof(WaitEnterInboundRuleStateHandler))
+                .OnState(StateType.FirewallWaitEnterOutboundRule, typeof(WaitEnterOutboundRuleStateHandler))
+                .OnState(StateType.FirewallWaitEnterCreationData, typeof(WaitEnterCreationDataFirewallStateHandler))
+                .OnCallbackQuery(CallbackQueryType.FirewallNext, typeof(PreviousAndNextFirewallCallbackQuery))
+                .OnCallbackQuery(CallbackQueryType.FirewallPrevious, typeof(PreviousAndNextFirewallCallbackQuery))
+                .OnCallbackQuery(CallbackQueryType.FirewallSelect, typeof(SelectFirewallCallbackQuery));
+
+            #endregion
         }
     }
 }

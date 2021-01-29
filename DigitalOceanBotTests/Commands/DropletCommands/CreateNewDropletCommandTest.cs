@@ -1,19 +1,5 @@
-using System;
-using System.Collections.Generic;
-using DigitalOceanBot;
-using DigitalOceanBot.Commands.DropletCommands;
-using DigitalOceanBot.Factory;
-using DigitalOceanBot.Models;
 using DigitalOceanBot.MongoDb;
 using DigitalOceanBot.MongoDb.Models;
-using DigitalOceanBot.Pages;
-using Microsoft.Extensions.Logging;
-using NSubstitute;
-using Telegram.Bot;
-using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
-using Telegram.Bot.Types.ReplyMarkups;
-using Xunit;
 using Requests = DigitalOcean.API.Models.Requests;
 using Responses = DigitalOcean.API.Models.Responses;
 

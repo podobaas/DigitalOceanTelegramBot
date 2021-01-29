@@ -1,13 +1,5 @@
-using DigitalOceanBot;
-using DigitalOceanBot.Commands;
 using DigitalOceanBot.MongoDb;
 using DigitalOceanBot.MongoDb.Models;
-using Microsoft.Extensions.Logging;
-using NSubstitute;
-using Telegram.Bot;
-using Telegram.Bot.Types;
-using Telegram.Bot.Types.ReplyMarkups;
-using Xunit;
 
 namespace DigitalOceanBotTests.Commands
 {
