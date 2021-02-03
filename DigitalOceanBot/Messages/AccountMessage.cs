@@ -1,9 +1,10 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using DigitalOcean.API.Models.Responses;
 
 namespace DigitalOceanBot.Messages
 {
-    public static class AccountMessage
+    internal static class AccountMessage
     {
         public static string GetAccountInfoMessage(Account account, Balance balance)
         {

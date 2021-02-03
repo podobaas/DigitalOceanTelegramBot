@@ -4,7 +4,7 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace DigitalOceanBot.Keyboards
 {
-    public static class FirewallKeyboard
+    internal static class FirewallKeyboard
     {
         public static ReplyKeyboardMarkup GetFirewallKeyboard()
         {
@@ -20,7 +20,7 @@ namespace DigitalOceanBot.Keyboards
                 }
             };
 
-            return new ReplyKeyboardMarkup(inlineKeyboardButtons, true, true);
+            return new ReplyKeyboardMarkup(inlineKeyboardButtons, true);
         }
         
         public static ReplyKeyboardMarkup GetFirewallOperationsKeyboard()
@@ -43,7 +43,7 @@ namespace DigitalOceanBot.Keyboards
                 }
             };
 
-            return new ReplyKeyboardMarkup(inlineKeyboardButtons, true, true);
+            return new ReplyKeyboardMarkup(inlineKeyboardButtons, true);
         }
         
         public static InlineKeyboardMarkup GetFirewallPaginatorKeyboard(int pageIndex, int count, string id)
@@ -71,6 +71,12 @@ namespace DigitalOceanBot.Keyboards
                 Text = $"Select",
                 CallbackData = $"FirewallSelect;{id}"
             };
+            
+            var createNew = new InlineKeyboardButton
+            {
+                Text = $"Create new",
+                CallbackData = $"FirewallCreateNew"
+            };
 
             var buttons = new List<List<InlineKeyboardButton>>
             {
@@ -83,6 +89,10 @@ namespace DigitalOceanBot.Keyboards
                 new()
                 {
                     select
+                },
+                new()
+                {
+                    createNew
                 }
             };
 

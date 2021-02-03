@@ -3,7 +3,7 @@ using DigitalOceanBot.Types.Enums;
 
 namespace DigitalOceanBot.Extensions
 {
-    public static class ActionExtension
+    internal static class ActionExtension
     {
         public static ActionStatus GetStatus(this Action self) => self.Status switch
         {

@@ -1,6 +1,6 @@
 ﻿namespace DigitalOceanBot.Types
 {
-    public class CommandConst
+    internal static class CommandConst
     {
         public const string Start = "/start";
         public const string Back = "Back";

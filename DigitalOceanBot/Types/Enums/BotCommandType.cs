@@ -2,7 +2,7 @@
 
 namespace DigitalOceanBot.Types.Enums
 {
-    public enum CommandType
+    internal enum BotCommandType
     {
         #region Main
 

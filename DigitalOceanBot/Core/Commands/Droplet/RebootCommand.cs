@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using DigitalOcean.API;
+using DigitalOceanBot.Core.Attributes;
 using DigitalOceanBot.Extensions;
 using DigitalOceanBot.Messages;
 using DigitalOceanBot.Services;
@@ -11,7 +12,8 @@ using Telegram.Bot.Types;
 
 namespace DigitalOceanBot.Core.Commands.Droplet
 {
-    public class RebootCommand : ICommand
+    [BotCommand(BotCommandType.DropletReboot)]
+    public sealed class RebootCommand : IBotCommand
     {
         private readonly ITelegramBotClient _telegramBotClient;
         private readonly IDigitalOceanClient _digitalOceanClient;
@@ -29,7 +31,7 @@ namespace DigitalOceanBot.Core.Commands.Droplet
 
         public async Task ExecuteCommandAsync(Message message)
         {
-            var dropletId = _storageService.Get<long>(StorageKeys.SelectedDroplet);
+            var dropletId = _storageService.Get<long>(StorageKeys.DropletId);
 
             if (dropletId > 0)
             {

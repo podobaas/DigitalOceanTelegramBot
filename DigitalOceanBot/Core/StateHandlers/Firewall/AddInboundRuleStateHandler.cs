@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using DigitalOcean.API;
 using DigitalOcean.API.Models.Requests;
+using DigitalOceanBot.Core.Attributes;
 using DigitalOceanBot.Messages;
 using DigitalOceanBot.Services;
 using DigitalOceanBot.Types;
@@ -13,13 +14,14 @@ using Telegram.Bot.Types.Enums;
 
 namespace DigitalOceanBot.Core.StateHandlers.Firewall
 {
-    public class WaitEnterOutboundRuleStateHandler: IStateHandler
+    [BotStateHandler(BotStateType.FirewallUpdateWaitingEnterInboundRule)]
+    public sealed class AddInboundRuleStateHandler: IBotStateHandler
     {
         private readonly ITelegramBotClient _telegramBotClient;
         private readonly IDigitalOceanClient _digitalOceanClient;
         private readonly StorageService _storageService;
 
-        public WaitEnterOutboundRuleStateHandler(
+        public AddInboundRuleStateHandler(
             ITelegramBotClient telegramBotClient,
             IDigitalOceanClient digitalOceanClient,
             StorageService storageService)
@@ -29,16 +31,17 @@ namespace DigitalOceanBot.Core.StateHandlers.Firewall
             _storageService = storageService;
         }
         
+
         public async Task ExecuteHandlerAsync(Message message)
         {
-            var firewallId = _storageService.Get<string>(StorageKeys.SelectedFirewall);
+            var firewallId = _storageService.Get<string>(StorageKeys.FirewallId);
 
             if (string.IsNullOrEmpty(firewallId))
             {
                 return;
             }
             
-            var outboundRules = new List<OutboundRule>();
+            var inboundRules = new List<InboundRule>();
             var invalidRules = new List<string>();
             var rules = message.Text.Split(";");
             var regExp = new Regex(RegExpPatterns.NetworkAddress);
@@ -49,20 +52,20 @@ namespace DigitalOceanBot.Core.StateHandlers.Firewall
                 
                 if (resultMatch.Success)
                 {
-                    var inboundRule = new OutboundRule
+                    var inboundRule = new InboundRule
                     {
-                        Protocol = resultMatch.Groups[0].Value,
-                        Ports = resultMatch.Groups[1].Value,
-                        Destinations = new SourceLocation
+                        Protocol = resultMatch.Groups[1].Value,
+                        Ports = resultMatch.Groups[2].Value,
+                        Sources = new SourceLocation
                         {
                             Addresses = new List<string>
                             {
-                                $"{resultMatch.Groups[2].Value}/{resultMatch.Groups[3].Value}"
+                                $"{resultMatch.Groups[3].Value}/{resultMatch.Groups[4].Value}"
                             }
                         }
                     };
 
-                    outboundRules.Add(inboundRule);
+                    inboundRules.Add(inboundRule);
                 }
                 else
                 {
@@ -70,16 +73,16 @@ namespace DigitalOceanBot.Core.StateHandlers.Firewall
                 }
             }
 
-            if (outboundRules.Count > 0)
+            if (inboundRules.Count > 0)
             {
                 await _digitalOceanClient.Firewalls.AddRules(firewallId, new FirewallRules
                 {
-                    OutboundRules = outboundRules
+                    InboundRules = inboundRules
                 });
 
                 await _telegramBotClient.SendTextMessageAsync(
                     chatId:message.Chat.Id, 
-                    text:FirewallMessage.GetCreatedBoundRulesMessage(outboundRules.Count), 
+                    text:FirewallMessage.GetCreatedBoundRulesMessage(inboundRules.Count), 
                     parseMode:ParseMode.Markdown);
             }
 
@@ -91,7 +94,7 @@ namespace DigitalOceanBot.Core.StateHandlers.Firewall
                     parseMode:ParseMode.Html);
             }
             
-            _storageService.AddOrUpdate(StorageKeys.BotCurrentState, StateType.None);
+            _storageService.AddOrUpdate(StorageKeys.BotCurrentState, BotStateType.None);
         }
     }
 }

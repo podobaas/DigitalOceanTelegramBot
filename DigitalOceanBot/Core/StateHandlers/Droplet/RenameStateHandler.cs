@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using DigitalOcean.API;
+using DigitalOceanBot.Core.Attributes;
 using DigitalOceanBot.Extensions;
 using DigitalOceanBot.Messages;
 using DigitalOceanBot.Services;
@@ -11,13 +12,14 @@ using Telegram.Bot.Types;
 
 namespace DigitalOceanBot.Core.StateHandlers.Droplet
 {
-    public class WaitEnterNewNameDropletStateHandler: IStateHandler
+    [BotStateHandler(BotStateType.DropletUpdateWaitingEnterNewName)]
+    public sealed class RenameStateHandler : IBotStateHandler
     {
         private readonly ITelegramBotClient _telegramBotClient;
         private readonly IDigitalOceanClient _digitalOceanClient;
         private readonly StorageService _storageService;
 
-        public WaitEnterNewNameDropletStateHandler(
+        public RenameStateHandler(
             ITelegramBotClient telegramBotClient,
             IDigitalOceanClient digitalOceanClient,
             StorageService storageService)
@@ -26,10 +28,11 @@ namespace DigitalOceanBot.Core.StateHandlers.Droplet
             _digitalOceanClient = digitalOceanClient;
             _storageService = storageService;
         }
-        
+
+
         public async Task ExecuteHandlerAsync(Message message)
         {
-            var dropletId = _storageService.Get<long>(StorageKeys.SelectedDroplet);
+            var dropletId = _storageService.Get<long>(StorageKeys.DropletId);
 
             if (dropletId > 0)
             {
@@ -41,29 +44,29 @@ namespace DigitalOceanBot.Core.StateHandlers.Droplet
                 while (status is ActionStatus.Waiting)
                 {
                     await Task.Delay(TimeSpan.FromSeconds(1));
-                    
+
                     var actionResult = await _digitalOceanClient.DropletActions.GetDropletAction(dropletId, action.Id);
                     status = actionResult.GetStatus();
                     cancellationTokenSource.Token.ThrowIfCancellationRequested();
                 }
-                
+
                 switch (status)
                 {
                     case ActionStatus.Success:
                         await _telegramBotClient.SendTextMessageAsync(
-                            chatId:message.Chat.Id, 
-                            text:CommonMessage.GetDoneMessage());
+                            chatId: message.Chat.Id,
+                            text: CommonMessage.GetDoneMessage());
                         break;
                     case ActionStatus.Error:
                         await _telegramBotClient.SendTextMessageAsync(
-                            chatId:message.Chat.Id, 
-                            text:CommonMessage.GetErrorMessage());
+                            chatId: message.Chat.Id,
+                            text: CommonMessage.GetErrorMessage());
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(status));
                 }
-                
-                _storageService.AddOrUpdate(StorageKeys.BotCurrentState, StateType.None);
+
+                _storageService.AddOrUpdate(StorageKeys.BotCurrentState, BotStateType.None);
             }
         }
     }

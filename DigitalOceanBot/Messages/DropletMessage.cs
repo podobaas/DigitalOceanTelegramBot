@@ -4,13 +4,15 @@ using DigitalOcean.API.Models.Responses;
 
 namespace DigitalOceanBot.Messages
 {
-    public static class DropletMessage
+    internal static class DropletMessage
     {
         public static string GetDropletInfoMessage(Droplet droplet)
         {
             var stringBuilder = new StringBuilder(string.Empty);
 
-            stringBuilder.Append($"\U0001F4A7 *{droplet.Name} (Created at UTC {droplet.CreatedAt.ToString("dd/MM/yyyy HH:mm:ss")})*\n\n");
+            stringBuilder.Append($"\U0001F4A7 *{droplet.Name}*\n\n");
+            stringBuilder.Append($"Id: *{droplet.Id.ToString()}*\n");
+            stringBuilder.Append($"Created at: *{droplet.CreatedAt.ToString("dd/MM/yyyy HH:mm:ss")}*\n");
             stringBuilder.Append($"Status: {GetStatusDroplet(droplet.Status)} *({droplet.Status})*\n");
             stringBuilder.Append($"Image: *{droplet.Image.Distribution} {droplet.Image.Name}*\n");
             stringBuilder.Append($"vCPUs: *{droplet.Vcpus.ToString()}*\n");
@@ -28,20 +30,15 @@ namespace DigitalOceanBot.Messages
         {
             return $"\U0001F4A7 Selected droplet: *{droplet.Name}*";
         }
-
-        public static string GetLoadingDropletsMessage()
-        {
-            return "\U0001F4C0 Loading your droplets...";
-        }
-
+        
         public static string GetDropletsNotFoundMessage()
         {
             return "You don't have a droplets \U0001F914";
         }
         
-        public static string GetEnterNewNameMessage()
+        public static string GetEnterNameMessage()
         {
-            return "Enter a new name for the droplet";
+            return "Enter a name for the droplet";
         }
         
         public static string GetEnterSnapshotNameMessage()

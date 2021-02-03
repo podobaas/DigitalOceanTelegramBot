@@ -1,12 +1,15 @@
 ﻿using System.Threading.Tasks;
+using DigitalOceanBot.Core.Attributes;
 using DigitalOceanBot.Keyboards;
 using DigitalOceanBot.Messages;
+using DigitalOceanBot.Types.Enums;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
 namespace DigitalOceanBot.Core.Commands.Main
 {
-    public class StartCommand : ICommand
+    [BotCommand(BotCommandType.Start)]
+    public sealed class StartCommand : IBotCommand
     {
         private readonly ITelegramBotClient _telegramBotClient;
 

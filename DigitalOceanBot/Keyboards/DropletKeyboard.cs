@@ -4,7 +4,7 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace DigitalOceanBot.Keyboards
 {
-    public static class DropletKeyboard
+    internal static class DropletKeyboard
     {
         public static ReplyKeyboardMarkup GetDropletKeyboard()
         {
@@ -20,7 +20,7 @@ namespace DigitalOceanBot.Keyboards
                 }
             };
 
-            return new ReplyKeyboardMarkup(inlineKeyboardButtons, true, true);
+            return new ReplyKeyboardMarkup(inlineKeyboardButtons, true);
         }
         
         public static ReplyKeyboardMarkup GetDropletOperationsKeyboard()
@@ -52,7 +52,7 @@ namespace DigitalOceanBot.Keyboards
                 }
             };
 
-            return new ReplyKeyboardMarkup(inlineKeyboardButtons, true, true);
+            return new ReplyKeyboardMarkup(inlineKeyboardButtons, true);
         }
         
         public static InlineKeyboardMarkup GetDropletPaginatorKeyboard(int pageIndex, int count, string id)
@@ -80,6 +80,12 @@ namespace DigitalOceanBot.Keyboards
                 Text = $"Select",
                 CallbackData = $"DropletSelect;{id}"
             };
+            
+            var createNew = new InlineKeyboardButton
+            {
+                Text = $"Create new",
+                CallbackData = $"DropletCreateNew;{id}"
+            };
 
             var buttons = new List<List<InlineKeyboardButton>>
             {
@@ -92,6 +98,10 @@ namespace DigitalOceanBot.Keyboards
                 new()
                 {
                     select
+                },
+                new()
+                {
+                    createNew
                 }
             };
 

@@ -1,18 +1,21 @@
 ﻿using System.Threading.Tasks;
+using DigitalOceanBot.Core.Attributes;
 using DigitalOceanBot.Services;
 using DigitalOceanBot.Services.Paginators;
+using DigitalOceanBot.Types.Enums;
 using Telegram.Bot;
 using Telegram.Bot.Types.Enums;
 
 namespace DigitalOceanBot.Core.CallbackQueries.Firewall
 {
-    public class SelectFirewallCallbackQuery: ICallbackQuery
+    [BotCallbackQuery(BotCallbackQueryType.FirewallSelect)]
+    public sealed class SelectFirewallBotCallbackQuery: IBotCallbackQuery
     {
         private readonly ITelegramBotClient _telegramBotClient;
         private readonly FirewallPaginatorService _firewallPaginatorService;
         private readonly StorageService _storageService;
         
-        public SelectFirewallCallbackQuery(
+        public SelectFirewallBotCallbackQuery(
             ITelegramBotClient telegramBotClient, 
             FirewallPaginatorService firewallPaginatorService,
             StorageService storageService)
@@ -26,8 +29,8 @@ namespace DigitalOceanBot.Core.CallbackQueries.Firewall
         {
             var paginator = _firewallPaginatorService.Select(payload);
             
-            _storageService.AddOrUpdate(StorageKeys.SelectedFirewall, payload);
-            _storageService.Remove(StorageKeys.MyFirewalls);
+            _storageService.AddOrUpdate(StorageKeys.FirewallId, payload);
+            _storageService.Remove(StorageKeys.Firewalls);
             
             await _telegramBotClient.DeleteMessageAsync(chatId, messageId);
             

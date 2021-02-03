@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace DigitalOceanBot.Extensions
 {
-    public static class EnumExtension
+    internal static class EnumExtension
     {
         public static string GetStringCommand(this Enum enumVal)
         {

@@ -9,7 +9,7 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace DigitalOceanBot.Services.Paginators
 {
-    public class FirewallPaginatorService : IPaginator
+    public sealed class FirewallPaginatorService : IPaginator
     {
         private readonly StorageService _storageService;
 
@@ -20,8 +20,8 @@ namespace DigitalOceanBot.Services.Paginators
         
         public Paginator<InlineKeyboardMarkup> GetPage(int pageIndex)
         {
-            var firewalls = _storageService.Get<IReadOnlyCollection<Firewall>>(StorageKeys.MyFirewalls);
-            var droplets = _storageService.Get<IReadOnlyCollection<Droplet>>(StorageKeys.MyDroplets);
+            var firewalls = _storageService.Get<IReadOnlyCollection<Firewall>>(StorageKeys.Firewalls);
+            var droplets = _storageService.Get<IReadOnlyCollection<Droplet>>(StorageKeys.Droplets);
 
             if (firewalls is not (not null and {Count: > 0}))
             {
@@ -40,7 +40,7 @@ namespace DigitalOceanBot.Services.Paginators
 
         public Paginator<ReplyKeyboardMarkup> Select(string id)
         {
-            var firewall = _storageService.Get<IReadOnlyList<Firewall>>(StorageKeys.MyFirewalls).FirstOrDefault(x => x.Id == id);
+            var firewall = _storageService.Get<IReadOnlyList<Firewall>>(StorageKeys.Firewalls).FirstOrDefault(x => x.Id == id);
 
             if (firewall is null)
             {
@@ -52,6 +52,11 @@ namespace DigitalOceanBot.Services.Paginators
                 MessageText = FirewallMessage.GetSelectedFirewallMessage(firewall),
                 Keyboard = FirewallKeyboard.GetFirewallOperationsKeyboard()
             };
+        }
+
+        public T Select<T>(string id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

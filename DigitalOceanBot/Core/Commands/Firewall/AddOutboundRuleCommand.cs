@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using DigitalOceanBot.Core.Attributes;
 using DigitalOceanBot.Messages;
 using DigitalOceanBot.Services;
 using DigitalOceanBot.Types.Enums;
@@ -8,7 +9,8 @@ using Telegram.Bot.Types.Enums;
 
 namespace DigitalOceanBot.Core.Commands.Firewall
 {
-    public class AddOutboundRuleCommand : ICommand
+    [BotCommand(BotCommandType.FirewallAddOutboundRule)]
+    public sealed class AddOutboundRuleCommand : IBotCommand
     {
         private readonly ITelegramBotClient _telegramBotClient;
         private readonly StorageService _storageService;
@@ -23,11 +25,11 @@ namespace DigitalOceanBot.Core.Commands.Firewall
         
         public async Task ExecuteCommandAsync(Message message)
         {
-            var firewallId = _storageService.Get<string>(StorageKeys.SelectedFirewall);
+            var firewallId = _storageService.Get<string>(StorageKeys.FirewallId);
 
             if (!string.IsNullOrEmpty(firewallId))
             {
-                _storageService.AddOrUpdate(StorageKeys.BotCurrentState, StateType.FirewallWaitEnterOutboundRule);
+                _storageService.AddOrUpdate(StorageKeys.BotCurrentState, BotStateType.FirewallUpdateWaitingEnterOutboundRule);
                 
                 await _telegramBotClient.SendTextMessageAsync(
                     chatId:message.Chat.Id, 

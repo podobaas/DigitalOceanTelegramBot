@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 
 namespace DigitalOceanBot.Services
 {
-    public class StorageService
+    public sealed class StorageService
     {
         private ConcurrentDictionary<string, object> _dictionary = new();
 
@@ -54,10 +54,18 @@ namespace DigitalOceanBot.Services
 
     public static class StorageKeys
     {
-        public const string BotCurrentState = "current_state";
-        public const string MyDroplets = "my_droplets";
-        public const string SelectedDroplet = "selected_droplet";
-        public const string MyFirewalls = "my_firewalls";
-        public const string SelectedFirewall = "selected_firewall";
+        public const string BotCurrentState = "botCurrentState";
+        public const string Droplets = "droplets";
+        public const string DropletId = "dropletId";
+        public const string NewDroplet = "newDroplet";
+        public const string Firewalls = "firewalls";
+        public const string FirewallId = "firewallId";
+        public const string NewFirewall = "newFirewall";
+        public const string Projects = "projects";
+        public const string ProjectId = "projectId";
+        public const string NewProject = "newProject";
+        public const string Images = "images";
+        public const string ImageId = "imageId";
+        public const string Regions = "regions";
     }
 }

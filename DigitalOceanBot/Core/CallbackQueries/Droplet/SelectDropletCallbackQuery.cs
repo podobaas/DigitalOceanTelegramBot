@@ -1,12 +1,15 @@
 ﻿using System.Threading.Tasks;
+using DigitalOceanBot.Core.Attributes;
 using DigitalOceanBot.Services;
 using DigitalOceanBot.Services.Paginators;
+using DigitalOceanBot.Types.Enums;
 using Telegram.Bot;
 using Telegram.Bot.Types.Enums;
 
 namespace DigitalOceanBot.Core.CallbackQueries.Droplet
 {
-    public class SelectDropletCallbackQuery: ICallbackQuery
+    [BotCallbackQuery(BotCallbackQueryType.DropletSelect)]
+    public sealed class SelectDropletCallbackQuery: IBotCallbackQuery
     {
         private readonly ITelegramBotClient _telegramBotClient;
         private readonly DropletPaginatorService _dropletPaginatorService;
@@ -26,8 +29,8 @@ namespace DigitalOceanBot.Core.CallbackQueries.Droplet
         {
             var paginator = _dropletPaginatorService.Select(payload);
             
-            _storageService.AddOrUpdate(StorageKeys.SelectedDroplet, long.Parse(payload));
-            _storageService.Remove(StorageKeys.MyDroplets);
+            _storageService.AddOrUpdate(StorageKeys.DropletId, long.Parse(payload));
+            _storageService.Remove(StorageKeys.Droplets);
             
             await _telegramBotClient.DeleteMessageAsync(chatId, messageId);
             

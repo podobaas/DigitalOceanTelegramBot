@@ -1,6 +1,6 @@
 ﻿namespace DigitalOceanBot.Types.Enums
 {
-    public enum ActionStatus
+    internal enum ActionStatus
     {
         Success,
         Error,

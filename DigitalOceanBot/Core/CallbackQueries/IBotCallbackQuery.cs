@@ -2,7 +2,7 @@
 
 namespace DigitalOceanBot.Core.CallbackQueries
 {
-    public interface ICallbackQuery
+    public interface IBotCallbackQuery
     {
          Task ExecuteCallbackQueryAsync(long chatId, int messageId, string callbackQueryId, string payload);
     }

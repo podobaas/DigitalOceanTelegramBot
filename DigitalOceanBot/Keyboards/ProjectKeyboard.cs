@@ -1,9 +1,10 @@
-﻿using DigitalOceanBot.Types;
+﻿using System.Collections.Generic;
+using DigitalOceanBot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace DigitalOceanBot.Keyboards
 {
-    public static class ProjectKeyboard
+    internal static class ProjectKeyboard
     { 
         public static ReplyKeyboardMarkup GetProjectKeyboard()
         {
@@ -19,7 +20,7 @@ namespace DigitalOceanBot.Keyboards
                 }
             };
 
-            return new ReplyKeyboardMarkup(inlineKeyboardButtons, true, true);
+            return new ReplyKeyboardMarkup(inlineKeyboardButtons, true);
         }
         
         public static ReplyKeyboardMarkup GetProjectOperationsKeyboard()
@@ -46,7 +47,7 @@ namespace DigitalOceanBot.Keyboards
                 }
             };
 
-            return new ReplyKeyboardMarkup(inlineKeyboardButtons, true, true);
+            return new ReplyKeyboardMarkup(inlineKeyboardButtons, true);
         }
         
         public static ReplyKeyboardMarkup GetProjectPurposeKeyboard()
@@ -117,6 +118,59 @@ namespace DigitalOceanBot.Keyboards
             };
 
             return new ReplyKeyboardMarkup(inlineKeyboardButtons, true, true);
+        }
+
+        public static InlineKeyboardMarkup GetProjectPaginatorKeyboard(int pageIndex, int count, string id)
+        {
+            var back = new InlineKeyboardButton
+            {
+                Text = "\U0001F448 Prev",
+                CallbackData = pageIndex > 0 ? $"ProjectPrevious;{(pageIndex - 1).ToString()}" : "None"
+            };
+
+            var next = new InlineKeyboardButton
+            {
+                Text = "Next \U0001F449",
+                CallbackData = pageIndex < count - 1 ? $"ProjectNext;{(pageIndex + 1).ToString()}" : "None"
+            };
+
+            var countLabel = new InlineKeyboardButton
+            {
+                Text = $"{(pageIndex + 1).ToString()}/{count.ToString()}",
+                CallbackData = "None"
+            };
+
+            var choose = new InlineKeyboardButton
+            {
+                Text = "Select",
+                CallbackData = $"ProjectSelect;{id}"
+            };
+            
+            var createNew = new InlineKeyboardButton
+            {
+                Text = $"Create new",
+                CallbackData = $"ProjectCreateNew;{id}"
+            };
+
+            var buttons = new List<List<InlineKeyboardButton>>
+            {
+                new()
+                {
+                    back,
+                    countLabel,
+                    next
+                },
+                new()
+                {
+                    choose
+                },
+                new()
+                {
+                    createNew
+                }
+            };
+
+            return new InlineKeyboardMarkup(buttons);
         }
     }
 }

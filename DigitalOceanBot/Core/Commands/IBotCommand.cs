@@ -3,7 +3,7 @@ using Telegram.Bot.Types;
 
 namespace DigitalOceanBot.Core.Commands
 {
-    public interface ICommand
+    public interface IBotCommand
     {
         Task ExecuteCommandAsync(Message message);
     }

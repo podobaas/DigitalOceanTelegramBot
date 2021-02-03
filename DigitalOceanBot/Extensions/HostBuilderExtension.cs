@@ -1,26 +1,28 @@
 ﻿using System;
 using DigitalOcean.API;
 using DigitalOceanBot.Core;
+using DigitalOceanBot.Core.Attributes;
+using DigitalOceanBot.Core.CallbackQueries;
+using DigitalOceanBot.Core.Commands;
+using DigitalOceanBot.Core.StateHandlers;
 using DigitalOceanBot.Services;
 using DigitalOceanBot.Services.Paginators;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Serilog;
-using Serilog.Events;
+using Microsoft.Extensions.Logging;
 using Telegram.Bot;
 
 namespace DigitalOceanBot.Extensions
 {
-    public static class HostBuilderExtension
+    internal static class HostBuilderExtension
     {
         public static IHostBuilder ConfigureLogging(this IHostBuilder hostBuilder)
         {
-            return hostBuilder.UseSerilog((_, configuration) =>
+            return hostBuilder.ConfigureLogging((_, configuration) =>
             {
-                configuration.Enrich.FromLogContext()
-                    .MinimumLevel.Information()
-                    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-                    .WriteTo.Console();
+                configuration.AddFilter("Microsoft.Hosting.Lifetime", LogLevel.Warning);
+                configuration.AddFilter(x => x == LogLevel.Information);
+                configuration.AddConsole();
             });
         }
         
@@ -28,7 +30,7 @@ namespace DigitalOceanBot.Extensions
         {
             return hostBuilder.ConfigureServices((_, collection) =>
             {
-                collection.AddSingleton<ITelegramBotClient>(x => new TelegramBotClient(Environment.GetEnvironmentVariable("TELEGRAM_TOKEN")));
+                collection.AddSingleton<ITelegramBotClient>(_ => new TelegramBotClient(EnvironmentVars.GetTelegramToken()));
             });
         }
         
@@ -42,11 +44,27 @@ namespace DigitalOceanBot.Extensions
                         .AddClasses()
                         .AsSelf()
                         .WithSingletonLifetime();
+                    
+                    scan.FromAssemblyOf<IBotCommand>()
+                        .AddClasses(x => x.AssignableTo<IBotCommand>())
+                        .As<IBotCommand>()
+                        .WithSingletonLifetime();
+                    
+                    scan.FromAssemblyOf<IBotStateHandler>()
+                        .AddClasses(x => x.AssignableTo<IBotStateHandler>())
+                        .As<IBotStateHandler>()
+                        .WithSingletonLifetime();
+                    
+                    scan.FromAssemblyOf<IBotCallbackQuery>()
+                        .AddClasses(x => x.AssignableTo<IBotCallbackQuery>())
+                        .As<IBotCallbackQuery>()
+                        .WithSingletonLifetime();
+                    
                 });
-                
-                collection.AddSingleton<IDigitalOceanClient>(x => new DigitalOceanClient(Environment.GetEnvironmentVariable("DIGITALOCEAN_TOKEN")));
+
+                collection.AddSingleton<IDigitalOceanClient>(_ => new DigitalOceanClient(EnvironmentVars.GetDigitalOceanToken()));
                 collection.AddSingleton<StorageService>();
-                collection.AddSingleton<BotCommandManager>();
+                collection.AddSingleton<BotCommandResolver>();
             });
         }
         

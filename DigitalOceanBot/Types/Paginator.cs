@@ -2,7 +2,7 @@
 
 namespace DigitalOceanBot.Types
 {
-    public record Paginator<T> where T : IReplyMarkup
+    public sealed record Paginator<T> where T : IReplyMarkup
     {
         public string MessageText { get; init; }
 

@@ -1,19 +1,22 @@
 ﻿using System.Threading.Tasks;
+using DigitalOceanBot.Core.Attributes;
 using DigitalOceanBot.Messages;
 using DigitalOceanBot.Services;
 using DigitalOceanBot.Types.Enums;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
 
-namespace DigitalOceanBot.Core.Commands.Droplet
+namespace DigitalOceanBot.Core.Commands.Project
 {
-    public class SnapshotCommand : ICommand
+    [BotCommand(BotCommandType.ChangeDescriptionProject)]
+    public sealed class ChangeDescriptionCommand : IBotCommand
     {
         private readonly ITelegramBotClient _telegramBotClient;
         private readonly StorageService _storageService;
 
-        public SnapshotCommand(ITelegramBotClient telegramBotClient, StorageService storageService)
+        public ChangeDescriptionCommand(
+            ITelegramBotClient telegramBotClient,
+            StorageService storageService)
         {
             _telegramBotClient = telegramBotClient;
             _storageService = storageService;
@@ -21,16 +24,15 @@ namespace DigitalOceanBot.Core.Commands.Droplet
 
         public async Task ExecuteCommandAsync(Message message)
         {
-            var dropletId = _storageService.Get<long>(StorageKeys.SelectedDroplet);
-            
-            if (dropletId > 0)
+            var projectId = _storageService.Get<string>(StorageKeys.ProjectId);
+
+            if (!string.IsNullOrEmpty(projectId))
             {
-                _storageService.AddOrUpdate(StorageKeys.BotCurrentState, StateType.DropletWaitEnterSnapshotName);
+                _storageService.AddOrUpdate(StorageKeys.BotCurrentState, BotStateType.ProjectUpdateWaitingEnterNewDescription);
                 
                 await _telegramBotClient.SendTextMessageAsync(
                     chatId:message.Chat.Id, 
-                    text:DropletMessage.GetEnterSnapshotNameMessage(), 
-                    parseMode:ParseMode.Markdown);
+                    text:ProjectMessage.GetEnterDescriptionMessage());
             }
         }
     }

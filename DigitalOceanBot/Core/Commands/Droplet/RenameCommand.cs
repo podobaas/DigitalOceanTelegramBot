@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using DigitalOceanBot.Core.Attributes;
 using DigitalOceanBot.Messages;
 using DigitalOceanBot.Services;
 using DigitalOceanBot.Types.Enums;
@@ -8,7 +11,8 @@ using Telegram.Bot.Types.Enums;
 
 namespace DigitalOceanBot.Core.Commands.Droplet
 {
-    public class RenameCommand : ICommand
+    [BotCommand(BotCommandType.DropletRename)]
+    public sealed class RenameCommand : IBotCommand
     {
         private readonly ITelegramBotClient _telegramBotClient;
         private readonly StorageService _storageService;
@@ -21,15 +25,15 @@ namespace DigitalOceanBot.Core.Commands.Droplet
 
         public async Task ExecuteCommandAsync(Message message)
         {
-            var dropletId = _storageService.Get<long>(StorageKeys.SelectedDroplet);
+            var dropletId = _storageService.Get<long>(StorageKeys.DropletId);
             
             if (dropletId > 0)
             {
-                _storageService.AddOrUpdate(StorageKeys.BotCurrentState, StateType.DropletWaitEnterNewName);
+                _storageService.AddOrUpdate(StorageKeys.BotCurrentState, BotStateType.DropletUpdateWaitingEnterNewName);
                 
                 await _telegramBotClient.SendTextMessageAsync(
                     chatId:message.Chat.Id, 
-                    text:DropletMessage.GetEnterNewNameMessage(), 
+                    text:DropletMessage.GetEnterNameMessage(), 
                     parseMode:ParseMode.Markdown);
             }
         }

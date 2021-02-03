@@ -1,6 +1,6 @@
 ﻿namespace DigitalOceanBot.Messages
 {
-    public static class CommonMessage
+    internal static class CommonMessage
     {
         public static string GetMainMenuMessage()
         {
@@ -16,6 +16,12 @@
         {
             return "Error \U0000274C";
         }
+
+        public static string GetInvalidIndexMessage()
+        {
+            return "The value must be greater than 0";
+        }
+        
         public static string GetDigitalOceanApiErrorMessage(string message)
         {
             return $"DigitalOcean API Error: {message}";

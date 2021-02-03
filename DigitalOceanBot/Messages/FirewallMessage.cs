@@ -5,18 +5,20 @@ using DigitalOcean.API.Models.Responses;
 
 namespace DigitalOceanBot.Messages
 {
-    public static class FirewallMessage
+    internal static class FirewallMessage
     {
         public static string GetFirewallInfoMessage(Firewall firewall, IEnumerable<Droplet> droplets)
         {
                 var stringBuilder = new StringBuilder(string.Empty);
                 
-                stringBuilder.Append($"\U0001F3F0 *{firewall!.Name} (Created at UTC {firewall.CreatedAt.ToString("dd/MM/yyyy HH:mm:ss")})*\n\n");
+                stringBuilder.Append($"\U0001F3F0 *{firewall!.Name}*\n\n");
+                stringBuilder.AppendLine($"Id: *{firewall.Id}*");
+                stringBuilder.AppendLine($"Created at: *{firewall.CreatedAt.ToString("dd/MM/yyyy HH:mm:ss")}*");
                 stringBuilder.Append($"Status: *{GetFirewallStatus(firewall.Status)} ({firewall.Status})*\n");
 
                 if (firewall is {DropletIds: not null and {Count: > 0}})
                 {
-                    stringBuilder.Append($"Related droplets: *{string.Join(',', droplets.Where(d => firewall.DropletIds.Contains(d.Id)).Select(d => d.Name))}*\n");
+                    stringBuilder.Append($"Associated droplets: *{string.Join(',', droplets.Where(d => firewall.DropletIds.Contains(d.Id)).Select(d => d.Name))}*\n");
                 }
 
                 if (firewall is {Tags: not null and {Count: > 0}})
@@ -83,9 +85,9 @@ namespace DigitalOceanBot.Messages
             return stringBuilder.ToString();
         }
         
-        public static string GetLoadingFirewallsMessage()
+        public static string GetEnterNameMessage()
         {
-            return "\U0001F4C0 Loading your firewalls...";
+            return "Enter a name for the firewall";
         }
         
         public static string GetFirewallsNotFoundMessage()
@@ -93,10 +95,10 @@ namespace DigitalOceanBot.Messages
             return "You don't have a firewalls \U0001F914";
         }
 
-        public static string GetEnterBoundRuleMessage()
+        public static string GetEnterBoundRuleMessage(string ruleType = null)
         {
             var stringBuilder = new StringBuilder(string.Empty);
-            stringBuilder.AppendLine("Enter a rule(s)");
+            stringBuilder.AppendLine(ruleType is not null ? $"Enter an {ruleType} rule(s)" : "Enter a rule(s)");
             stringBuilder.AppendLine("");
             stringBuilder.AppendLine("Example");
             stringBuilder.AppendLine("<code>tcp:80:0.0.0.0/0;icmp:8000-9000:0.0.0.0/0;udp:421:1.1.1.1/0</code>");
@@ -120,6 +122,28 @@ namespace DigitalOceanBot.Messages
             }
 
             return stringBuilder.ToString();
+        }
+
+        public static string GetDropletsListMessage(IEnumerable<Droplet> droplets)
+        {
+            var count = 1;
+            var stringBuilder = new StringBuilder(string.Empty);
+            stringBuilder.AppendLine("Enter droplet number separated by commas or range");
+            stringBuilder.AppendLine("Example: 2 or 2,3,4,5 or 2-5");
+            stringBuilder.AppendLine("");
+
+            foreach (var droplet in droplets)
+            {
+                stringBuilder.AppendLine($"*{count}* - {droplet.Name}");
+                count++;
+            }
+
+            return stringBuilder.ToString();
+        }
+
+        public static string GetNoAssociatedDropletsMessage()
+        {
+            return "Firewall has no associated droplets";
         }
         
         private static string GetFirewallStatus(string status) => status switch

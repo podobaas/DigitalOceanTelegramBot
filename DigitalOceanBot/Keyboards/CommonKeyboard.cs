@@ -3,7 +3,7 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace DigitalOceanBot.Keyboards
 {
-    public static class CommonKeyboard
+    internal static class CommonKeyboard
     {
         public static ReplyKeyboardMarkup GetMainMenuKeyboard()
         {
@@ -21,7 +21,7 @@ namespace DigitalOceanBot.Keyboards
                 }
             };
 
-            return new ReplyKeyboardMarkup(inlineKeyboardButtons, true, true);
+            return new ReplyKeyboardMarkup(inlineKeyboardButtons, true);
         }
     }
 }

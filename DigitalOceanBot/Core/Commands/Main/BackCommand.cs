@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using DigitalOceanBot.Core.Attributes;
 using DigitalOceanBot.Keyboards;
 using DigitalOceanBot.Messages;
 using DigitalOceanBot.Services;
@@ -8,7 +9,8 @@ using Telegram.Bot.Types;
 
 namespace DigitalOceanBot.Core.Commands.Main
 {
-    public class BackCommand : ICommand
+    [BotCommand(BotCommandType.Back)]
+    public sealed class BackCommand : IBotCommand
     {
         private readonly ITelegramBotClient _telegramBotClient;
         private readonly StorageService _storageService;
@@ -21,7 +23,7 @@ namespace DigitalOceanBot.Core.Commands.Main
 
         public async Task ExecuteCommandAsync(Message message)
         {
-            _storageService.AddOrUpdate(StorageKeys.BotCurrentState, StateType.None);
+            _storageService.AddOrUpdate(StorageKeys.BotCurrentState, BotStateType.None);
             
             await _telegramBotClient.SendTextMessageAsync(
                 chatId:message.Chat.Id, 

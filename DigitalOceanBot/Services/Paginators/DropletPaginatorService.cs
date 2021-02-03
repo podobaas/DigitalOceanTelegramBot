@@ -9,7 +9,7 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace DigitalOceanBot.Services.Paginators
 {
-    public class DropletPaginatorService : IPaginator
+    public sealed class DropletPaginatorService : IPaginator
     {
         private readonly StorageService _storageService;
 
@@ -20,7 +20,7 @@ namespace DigitalOceanBot.Services.Paginators
 
         public Paginator<InlineKeyboardMarkup> GetPage(int pageIndex)
         {
-            var droplets = _storageService.Get<IReadOnlyList<Droplet>>(StorageKeys.MyDroplets);
+            var droplets = _storageService.Get<IReadOnlyList<Droplet>>(StorageKeys.Droplets);
 
             if (droplets is not (not null and {Count: > 0}))
             {
@@ -39,7 +39,7 @@ namespace DigitalOceanBot.Services.Paginators
 
         public Paginator<ReplyKeyboardMarkup> Select(string id)
         {
-            var droplet = _storageService.Get<IReadOnlyList<Droplet>>(StorageKeys.MyDroplets).FirstOrDefault(x => x.Id == long.Parse(id));
+            var droplet = _storageService.Get<IReadOnlyList<Droplet>>(StorageKeys.Droplets).FirstOrDefault(x => x.Id == long.Parse(id));
 
             if (droplet is null)
             {
@@ -52,6 +52,11 @@ namespace DigitalOceanBot.Services.Paginators
                 Keyboard = DropletKeyboard.GetDropletOperationsKeyboard()
             };
 
+        }
+
+        public T Select<T>(string id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

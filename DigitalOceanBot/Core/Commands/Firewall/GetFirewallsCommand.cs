@@ -1,16 +1,19 @@
 ﻿using System.Threading.Tasks;
 using DigitalOcean.API;
+using DigitalOceanBot.Core.Attributes;
 using DigitalOceanBot.Keyboards;
 using DigitalOceanBot.Messages;
 using DigitalOceanBot.Services;
 using DigitalOceanBot.Services.Paginators;
+using DigitalOceanBot.Types.Enums;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
 namespace DigitalOceanBot.Core.Commands.Firewall
 {
-    public class GetFirewallsCommand : ICommand
+    [BotCommand(BotCommandType.Firewalls)]
+    public sealed class GetFirewallsCommand : IBotCommand
     {
         private readonly ITelegramBotClient _telegramBotClient;
         private readonly IDigitalOceanClient _digitalOceanClient;
@@ -31,18 +34,13 @@ namespace DigitalOceanBot.Core.Commands.Firewall
 
         public async Task ExecuteCommandAsync(Message message)
         {
-            await _telegramBotClient.SendTextMessageAsync(
-                chatId:message.Chat.Id, 
-                text:FirewallMessage.GetLoadingFirewallsMessage(), 
-                replyMarkup: FirewallKeyboard.GetFirewallKeyboard());
-            
             var firewalls = await _digitalOceanClient.Firewalls.GetAll();
 
             if (firewalls is not null and {Count: > 0})
             {
-                _storageService.AddOrUpdate(StorageKeys.MyFirewalls, firewalls);
+                _storageService.AddOrUpdate(StorageKeys.Firewalls, firewalls);
                 var droplets = await _digitalOceanClient.Droplets.GetAll();
-                _storageService.AddOrUpdate(StorageKeys.MyDroplets, droplets);
+                _storageService.AddOrUpdate(StorageKeys.Droplets, droplets);
                 var pageModel = _firewallPaginatorService.GetPage(0);
                 
                 await _telegramBotClient.SendTextMessageAsync(
