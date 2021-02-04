@@ -8,7 +8,6 @@
         public const string Account = "🌊 Account";
         
         public const string Projects = "📝 Projects";
-        public const string CreateNewProject = "Create new project";
         public const string SetAsDefaultProject = "Set as default";
         public const string RenameProject = "Rename project";
         public const string ChangeDescriptionProject = "Change description";
@@ -16,7 +15,6 @@
         public const string ChangeEnvironmentProject = "Change environment";
 
         public const string Droplets = "💧 Droplets";
-        public const string DropletCreateNew = "Create new droplet";
         public const string DropletRename = "Rename droplet";
         public const string DropletReboot = "Reboot droplet";
         public const string DropletPowerCycle = "Power cycle droplet";
@@ -26,7 +24,6 @@
         public const string DropletCreateSnapshot = "Create snapshot";
         
         public const string Firewalls = "🏰 Firewalls";
-        public const string FirewallCreateNew = "Create new firewall";
         public const string FirewallAddInboundRule = "Add inbound rule";
         public const string FirewallAddOutboundRule = "Add outbound rule";
         public const string FirewallAddDroplets = "Add droplets to firewall";
