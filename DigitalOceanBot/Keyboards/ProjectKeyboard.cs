@@ -1,49 +1,35 @@
 ﻿using System.Collections.Generic;
+using DigitalOceanBot.Core;
 using DigitalOceanBot.Types;
+using DigitalOceanBot.Types.Const;
+using DigitalOceanBot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace DigitalOceanBot.Keyboards
 {
     internal static class ProjectKeyboard
-    { 
-        public static ReplyKeyboardMarkup GetProjectKeyboard()
-        {
-            var inlineKeyboardButtons = new[]
-            {
-                new[]
-                {
-                    new KeyboardButton(CommandConst.CreateNewProject),
-                },
-                new[]
-                {
-                    new KeyboardButton(CommandConst.Back)
-                }
-            };
-
-            return new ReplyKeyboardMarkup(inlineKeyboardButtons, true);
-        }
-        
+    {
         public static ReplyKeyboardMarkup GetProjectOperationsKeyboard()
         {
             var inlineKeyboardButtons = new[]
             {
                 new[]
                 {
-                    new KeyboardButton(CommandConst.SetAsDefaultProject)
+                    new KeyboardButton(BotCommands.SetAsDefaultProject)
                 },
                 new[]
                 {
-                    new KeyboardButton(CommandConst.RenameProject),
-                    new KeyboardButton(CommandConst.ChangeDescriptionProject),
+                    new KeyboardButton(BotCommands.RenameProject),
+                    new KeyboardButton(BotCommands.ChangeDescriptionProject),
                 },
                 new[]
                 {
-                    new KeyboardButton(CommandConst.ChangePurposeProject),
-                    new KeyboardButton(CommandConst.ChangeEnvironmentProject)
+                    new KeyboardButton(BotCommands.ChangePurposeProject),
+                    new KeyboardButton(BotCommands.ChangeEnvironmentProject)
                 },
                 new[]
                 {
-                    new KeyboardButton(CommandConst.Back)
+                    new KeyboardButton(BotCommands.Back)
                 }
             };
 
@@ -125,31 +111,35 @@ namespace DigitalOceanBot.Keyboards
             var back = new InlineKeyboardButton
             {
                 Text = "\U0001F448 Prev",
-                CallbackData = pageIndex > 0 ? $"ProjectPrevious;{(pageIndex - 1).ToString()}" : "None"
+                CallbackData = pageIndex > 0 ? 
+                    $"{BotCallbackQueryType.ProjectPrevious};{(pageIndex - 1).ToString()}" : 
+                    $"{BotCallbackQueryType.None}"
             };
 
             var next = new InlineKeyboardButton
             {
                 Text = "Next \U0001F449",
-                CallbackData = pageIndex < count - 1 ? $"ProjectNext;{(pageIndex + 1).ToString()}" : "None"
+                CallbackData = pageIndex < count - 1 ? 
+                    $"{BotCallbackQueryType.ProjectNext};{(pageIndex + 1).ToString()}" : 
+                    $"{BotCallbackQueryType.None}"
             };
 
             var countLabel = new InlineKeyboardButton
             {
                 Text = $"{(pageIndex + 1).ToString()}/{count.ToString()}",
-                CallbackData = "None"
+                CallbackData = $"{BotCallbackQueryType.None}"
             };
 
             var choose = new InlineKeyboardButton
             {
                 Text = "Select",
-                CallbackData = $"ProjectSelect;{id}"
+                CallbackData = $"{BotCallbackQueryType.ProjectSelect};{id}"
             };
             
             var createNew = new InlineKeyboardButton
             {
                 Text = $"Create new",
-                CallbackData = $"ProjectCreateNew;{id}"
+                CallbackData = $"{BotCallbackQueryType.ProjectCreateNew};{id}"
             };
 
             var buttons = new List<List<InlineKeyboardButton>>

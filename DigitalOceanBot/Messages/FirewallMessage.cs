@@ -10,79 +10,63 @@ namespace DigitalOceanBot.Messages
         public static string GetFirewallInfoMessage(Firewall firewall, IEnumerable<Droplet> droplets)
         {
                 var stringBuilder = new StringBuilder(string.Empty);
-                
-                stringBuilder.Append($"\U0001F3F0 *{firewall!.Name}*\n\n");
+                stringBuilder.AppendLine($"\U0001F3F0 *{firewall!.Name}*");
+                stringBuilder.AppendLine("");
                 stringBuilder.AppendLine($"Id: *{firewall.Id}*");
                 stringBuilder.AppendLine($"Created at: *{firewall.CreatedAt.ToString("dd/MM/yyyy HH:mm:ss")}*");
-                stringBuilder.Append($"Status: *{GetFirewallStatus(firewall.Status)} ({firewall.Status})*\n");
+                stringBuilder.AppendLine($"Status: *{GetFirewallStatus(firewall.Status)} ({firewall.Status})*");
 
                 if (firewall is {DropletIds: not null and {Count: > 0}})
                 {
-                    stringBuilder.Append($"Associated droplets: *{string.Join(',', droplets.Where(d => firewall.DropletIds.Contains(d.Id)).Select(d => d.Name))}*\n");
+                    stringBuilder.AppendLine($"Associated droplets: *{string.Join(',', droplets.Where(d => firewall.DropletIds.Contains(d.Id)).Select(d => d.Name))}*");
                 }
 
                 if (firewall is {Tags: not null and {Count: > 0}})
                 {
-                    stringBuilder.Append($"Tags: *{string.Join(',', firewall.Tags)}*\n");
+                    stringBuilder.AppendLine($"Tags: *{string.Join(',', firewall.Tags)}*");
                 }
 
-                stringBuilder.Append($"\n\U00002B07 *Inbound rules:* \n");
+                stringBuilder.AppendLine("");
+                stringBuilder.AppendLine("⬇ *Inbound rules:*");
+                stringBuilder.AppendLine("");
 
                 foreach (var rule in firewall.InboundRules)
                 {
-                    stringBuilder.Append($"---------------------------\n");
-                    stringBuilder.Append($"Protocol: *{rule.Protocol}*\n");
-                    stringBuilder.Append($"Ports: *{rule.Ports}*\n");
+                    stringBuilder.AppendLine("---------------------------");
+                    stringBuilder.AppendLine($"Protocol: *{rule.Protocol}*");
+                    stringBuilder.AppendLine($"Ports: *{rule.Ports}*");
 
                     if (rule.Sources?.Addresses?.Count > 0)
                     {
-                        stringBuilder.Append($"Addresses: *{string.Join(',', rule.Sources.Addresses)}*\n");
+                        stringBuilder.AppendLine($"Addresses: *{string.Join(',', rule.Sources.Addresses)}*");
                     }
                 }
 
-                stringBuilder.Append($"---------------------------\n");
-                stringBuilder.Append($"\n\U00002B06	*Outbound rules:* \n");
+                stringBuilder.AppendLine("---------------------------");
+                stringBuilder.AppendLine("");
+                stringBuilder.AppendLine("⬆\t*Outbound rules:*");
+                stringBuilder.AppendLine("");
 
                 foreach (var rule in firewall.OutboundRules)
                 {
-                    stringBuilder.Append($"---------------------------\n");
-                    stringBuilder.Append($"Protocol: *{rule.Protocol}*\n");
-                    stringBuilder.Append($"Ports: *{rule.Ports}*\n");
+                    stringBuilder.AppendLine("---------------------------");
+                    stringBuilder.AppendLine($"Protocol: *{rule.Protocol}*");
+                    stringBuilder.AppendLine($"Ports: *{rule.Ports}*");
 
                     if (rule?.Destinations?.Addresses?.Count > 0)
                     {
-                        stringBuilder.Append($"Destinations: *{string.Join(',', rule.Destinations.Addresses)}*\n");
+                        stringBuilder.AppendLine($"Destinations: *{string.Join(',', rule.Destinations.Addresses)}*");
                     }
                 }
 
-                stringBuilder.Append($"---------------------------");
+                stringBuilder.AppendLine("---------------------------");
 
             return stringBuilder.ToString();
         }
 
         public static string GetSelectedFirewallMessage(Firewall firewall)
         {
-            return $"\U0001F3F0 Selected firewall: *{firewall.Name}*";
-        }
-        
-        public static string GetEnterCreationDataFirewallMessage()
-        {
-            var stringBuilder = new StringBuilder(string.Empty);
-            stringBuilder.AppendLine("Enter the data to create a firewall in the format: <b>Name;Inbound rule</b>");
-            stringBuilder.AppendLine("");
-            stringBuilder.AppendLine("Example");
-            stringBuilder.AppendLine("<code>TestFirewall;tcp:22:0.0.0.0/0</code>");
-            return stringBuilder.ToString();
-        }
-        
-        public static string GetInvalidCreationDataFirewallMessage()
-        {
-            var stringBuilder = new StringBuilder(string.Empty);
-            stringBuilder.AppendLine("Invalid data");
-            stringBuilder.AppendLine("");
-            stringBuilder.AppendLine("Example");
-            stringBuilder.AppendLine("<code>TestFirewall;tcp:80:0.0.0.0/0</code>");
-            return stringBuilder.ToString();
+            return $"Selected firewall: \U0001F3F0 *{firewall.Name}*";
         }
         
         public static string GetEnterNameMessage()

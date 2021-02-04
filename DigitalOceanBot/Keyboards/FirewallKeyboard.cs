@@ -1,45 +1,31 @@
 ﻿using System.Collections.Generic;
+using DigitalOceanBot.Core;
 using DigitalOceanBot.Types;
+using DigitalOceanBot.Types.Const;
+using DigitalOceanBot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace DigitalOceanBot.Keyboards
 {
     internal static class FirewallKeyboard
     {
-        public static ReplyKeyboardMarkup GetFirewallKeyboard()
-        {
-            var inlineKeyboardButtons = new[]
-            {
-                new[]
-                {
-                    new KeyboardButton(CommandConst.FirewallCreateNew),
-                },
-                new[]
-                {
-                    new KeyboardButton(CommandConst.Back)
-                }
-            };
-
-            return new ReplyKeyboardMarkup(inlineKeyboardButtons, true);
-        }
-        
         public static ReplyKeyboardMarkup GetFirewallOperationsKeyboard()
         {
             var inlineKeyboardButtons = new[]
             {
                 new[]
                 {
-                    new KeyboardButton(CommandConst.FirewallAddInboundRule),
-                    new KeyboardButton(CommandConst.FirewallAddOutboundRule),
+                    new KeyboardButton(BotCommands.FirewallAddInboundRule),
+                    new KeyboardButton(BotCommands.FirewallAddOutboundRule),
                 },
                 new[]
                 {
-                    new KeyboardButton(CommandConst.FirewallAddDroplets),
-                    new KeyboardButton(CommandConst.FirewallRemoveDroplets)
+                    new KeyboardButton(BotCommands.FirewallAddDroplets),
+                    new KeyboardButton(BotCommands.FirewallRemoveDroplets)
                 },
                 new[]
                 {
-                    new KeyboardButton(CommandConst.Back)
+                    new KeyboardButton(BotCommands.Back)
                 }
             };
 
@@ -51,31 +37,35 @@ namespace DigitalOceanBot.Keyboards
             var back = new InlineKeyboardButton
             {
                 Text = "\U0001F448 Prev",
-                CallbackData = pageIndex > 0 ? $"FirewallPrevious;{(pageIndex - 1).ToString()}" : "None"
+                CallbackData = pageIndex > 0 ? 
+                    $"{BotCallbackQueryType.FirewallPrevious};{(pageIndex - 1).ToString()}" : 
+                    $"{BotCallbackQueryType.None}"
             };
 
             var next = new InlineKeyboardButton
             {
                 Text = "Next \U0001F449",
-                CallbackData = pageIndex < count - 1 ? $"FirewallNext;{(pageIndex + 1).ToString()}" : "None"
+                CallbackData = pageIndex < count - 1 ? 
+                    $"{BotCallbackQueryType.FirewallNext};{(pageIndex + 1).ToString()}" : 
+                    $"{BotCallbackQueryType.None}"
             };
 
             var countLabel = new InlineKeyboardButton
             {
                 Text = $"{(pageIndex + 1).ToString()}/{count.ToString()}",
-                CallbackData = "None"
+                CallbackData = $"{BotCallbackQueryType.None}"
             };
 
             var select = new InlineKeyboardButton
             {
                 Text = $"Select",
-                CallbackData = $"FirewallSelect;{id}"
+                CallbackData = $"{BotCallbackQueryType.FirewallSelect};{id}"
             };
             
             var createNew = new InlineKeyboardButton
             {
                 Text = $"Create new",
-                CallbackData = $"FirewallCreateNew"
+                CallbackData = $"{BotCallbackQueryType.FirewallCreateNew}"
             };
 
             var buttons = new List<List<InlineKeyboardButton>>

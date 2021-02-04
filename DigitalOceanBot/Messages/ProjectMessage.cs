@@ -10,6 +10,7 @@ namespace DigitalOceanBot.Messages
             var stringBuilder = new StringBuilder(string.Empty);
 
             stringBuilder.AppendLine($"\U0001F4DD *{project.Name}*");
+            stringBuilder.AppendLine("");
             stringBuilder.AppendLine($"Id: *{project.Id}*");
             stringBuilder.AppendLine($"Created at: *{project.CreatedAt.ToString("dd/MM/yyyy HH:mm:ss")}*");
             stringBuilder.AppendLine($"Description: *{project.Description} *");

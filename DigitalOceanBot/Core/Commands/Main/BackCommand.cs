@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using DigitalOceanBot.Core.Attributes;
 using DigitalOceanBot.Keyboards;
 using DigitalOceanBot.Messages;
 using DigitalOceanBot.Services;
+using DigitalOceanBot.Types.Attributes;
 using DigitalOceanBot.Types.Enums;
 using Telegram.Bot;
 using Telegram.Bot.Types;

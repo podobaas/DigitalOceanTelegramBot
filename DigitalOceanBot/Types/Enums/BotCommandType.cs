@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using DigitalOceanBot.Types.Const;
 
 namespace DigitalOceanBot.Types.Enums
 {
@@ -6,95 +7,86 @@ namespace DigitalOceanBot.Types.Enums
     {
         #region Main
 
-        [Description(CommandConst.Start)]
+        [Description(BotCommands.Start)]
         Start,
         
-        [Description(CommandConst.Back)]
+        [Description(BotCommands.Back)]
         Back,
 
         #endregion
 
         #region Account
 
-        [Description(CommandConst.Account)]
+        [Description(BotCommands.Account)]
         Account,
 
         #endregion
 
         #region Projects
 
-        [Description(CommandConst.Projects)]
+        [Description(BotCommands.Projects)]
         Projects,
-        
-        [Description(CommandConst.CreateNewProject)]
-        CreateNewProject,
-        
-        [Description(CommandConst.SetAsDefaultProject)]
+
+        [Description(BotCommands.SetAsDefaultProject)]
         SetAsDefaultProject,
         
-        [Description(CommandConst.RenameProject)]
+        [Description(BotCommands.RenameProject)]
         RenameProject,
         
-        [Description(CommandConst.ChangeDescriptionProject)]
+        [Description(BotCommands.ChangeDescriptionProject)]
         ChangeDescriptionProject,
         
-        [Description(CommandConst.ChangePurposeProject)]
+        [Description(BotCommands.ChangePurposeProject)]
         ChangePurposeProject,
         
-        [Description(CommandConst.ChangeEnvironmentProject)]
+        [Description(BotCommands.ChangeEnvironmentProject)]
         ChangeEnvironmentProject,
 
         #endregion
 
         #region Droplet
 
-        [Description(CommandConst.Droplets)]
+        [Description(BotCommands.Droplets)]
         Droplets,
         
-        [Description(CommandConst.DropletCreateNew)]
-        DropletCreateNew,
-        
-        [Description(CommandConst.DropletRename)]
+        [Description(BotCommands.DropletRename)]
         DropletRename,
         
-        [Description(CommandConst.DropletReboot)]
+        [Description(BotCommands.DropletReboot)]
         DropletReboot,
         
-        [Description(CommandConst.DropletPowerCycle)]
+        [Description(BotCommands.DropletPowerCycle)]
         DropletPowerCycle,
         
-        [Description(CommandConst.DropletShutdown)]
+        [Description(BotCommands.DropletShutdown)]
         DropletShutdown,
         
-        [Description(CommandConst.DropletPowerOn)]
+        [Description(BotCommands.DropletPowerOn)]
         DropletPowerOn,
         
-        [Description(CommandConst.DropletResetPassword)]
+        [Description(BotCommands.DropletResetPassword)]
         DropletResetPassword,
         
-        [Description(CommandConst.DropletCreateSnapshot)]
+        [Description(BotCommands.DropletCreateSnapshot)]
         DropletCreateSnapshot,
 
         #endregion
 
         #region Firewall
         
-        [Description(CommandConst.Firewalls)]
+        [Description(BotCommands.Firewalls)]
         Firewalls,
         
-        [Description(CommandConst.FirewallCreateNew)]
-        FirewallCreateNew,
-        
-        [Description(CommandConst.FirewallAddInboundRule)]
+        [Description(BotCommands.FirewallAddInboundRule)]
         FirewallAddInboundRule,
         
-        [Description(CommandConst.FirewallAddOutboundRule)]
+        [Description(BotCommands.FirewallAddOutboundRule)]
         FirewallAddOutboundRule,
         
-        [Description(CommandConst.FirewallAddDroplets)]
+        [Description(BotCommands.FirewallAddDroplets)]
         FirewallAddDroplets,
         
-        [Description(CommandConst.FirewallRemoveDroplets)]
+        [Description(BotCommands.FirewallRemoveDroplets)]
         FirewallRemoveDroplets
         
         #endregion

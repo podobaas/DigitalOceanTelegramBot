@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DigitalOceanBot.Core.Attributes;
 using DigitalOceanBot.Core.CallbackQueries;
 using DigitalOceanBot.Core.Commands;
 using DigitalOceanBot.Core.StateHandlers;
+using DigitalOceanBot.Types.Attributes;
 using DigitalOceanBot.Types.Enums;
 
 namespace DigitalOceanBot.Extensions
@@ -28,7 +28,7 @@ namespace DigitalOceanBot.Extensions
                 if (Attribute.IsDefined(item.GetType(), typeof(BotCommandAttribute)))
                 {
                     var commandType = (BotCommandAttribute) Attribute.GetCustomAttribute(item.GetType(), typeof(BotCommandAttribute));
-                    var commandName = commandType.BotCommandType.GetStringCommand();
+                    var commandName = commandType?.BotCommandType.GetStringCommand();
                     if (commandName == name)
                     {
                         botCommand = item;

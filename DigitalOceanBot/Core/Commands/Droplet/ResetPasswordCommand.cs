@@ -2,10 +2,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 using DigitalOcean.API;
-using DigitalOceanBot.Core.Attributes;
 using DigitalOceanBot.Extensions;
 using DigitalOceanBot.Messages;
 using DigitalOceanBot.Services;
+using DigitalOceanBot.Types.Attributes;
 using DigitalOceanBot.Types.Enums;
 using Telegram.Bot;
 using Telegram.Bot.Types;

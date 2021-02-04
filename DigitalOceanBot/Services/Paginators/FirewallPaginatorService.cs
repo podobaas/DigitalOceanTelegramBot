@@ -4,8 +4,9 @@ using System.Linq;
 using DigitalOcean.API.Models.Responses;
 using DigitalOceanBot.Keyboards;
 using DigitalOceanBot.Messages;
-using DigitalOceanBot.Types;
+using DigitalOceanBot.Types.Classes;
 using Telegram.Bot.Types.ReplyMarkups;
+using Action = System.Action;
 
 namespace DigitalOceanBot.Services.Paginators
 {
@@ -13,11 +14,13 @@ namespace DigitalOceanBot.Services.Paginators
     {
         private readonly StorageService _storageService;
 
+        public Action OnSelectCallback { get; set; }
+        
         public FirewallPaginatorService(StorageService storageService)
         {
             _storageService = storageService;
         }
-        
+
         public Paginator<InlineKeyboardMarkup> GetPage(int pageIndex)
         {
             var firewalls = _storageService.Get<IReadOnlyCollection<Firewall>>(StorageKeys.Firewalls);
@@ -52,11 +55,6 @@ namespace DigitalOceanBot.Services.Paginators
                 MessageText = FirewallMessage.GetSelectedFirewallMessage(firewall),
                 Keyboard = FirewallKeyboard.GetFirewallOperationsKeyboard()
             };
-        }
-
-        public T Select<T>(string id)
-        {
-            throw new NotImplementedException();
         }
     }
 }

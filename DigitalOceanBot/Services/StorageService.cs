@@ -11,44 +11,41 @@ namespace DigitalOceanBot.Services
         {
             if (string.IsNullOrEmpty(key))
             {
-                throw new ArgumentNullException($"Parametr {nameof(key)} can't be null");
+                throw new ArgumentNullException($"Param {nameof(key)} can't be null");
             }
 
             if (val is null)
             {
-                throw new ArgumentNullException($"Parametr {nameof(val)} can't be null");
+                throw new ArgumentNullException($"Param {nameof(val)} can't be null");
             }
-
-            try
-            {
-                _dictionary.AddOrUpdate(key, val, (k, v) => val);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                throw;
-            }
+            
+            _dictionary.AddOrUpdate(key, val, (_, _) => val);
         }
 
         public T Get<T>(string key)
         {
             if (string.IsNullOrEmpty(key))
             {
-                throw new ArgumentNullException($"Parametr {nameof(key)} can't be null");
+                throw new ArgumentNullException($"Param {nameof(key)} can't be null");
             }
 
             var result = _dictionary.TryGetValue(key, out var val);
-            return result ? (T) val : default(T);
+            return result ? (T) val : default;
         }
 
         public void Remove(string key)
         {
             if (string.IsNullOrEmpty(key))
             {
-                throw new ArgumentNullException($"Parametr {nameof(key)} can't be null");
+                throw new ArgumentNullException($"Param {nameof(key)} can't be null");
             }
             
-            var result = _dictionary.TryRemove(key, out var val);
+            var result = _dictionary.TryRemove(key, out _);
+
+            if (!result)
+            {
+                throw new Exception($"Failed to remove value from dictionary. Key={key}");
+            }
         }
     }
 
@@ -67,5 +64,8 @@ namespace DigitalOceanBot.Services
         public const string Images = "images";
         public const string ImageId = "imageId";
         public const string Regions = "regions";
+        public const string RegionId = "regionId";
+        public const string Sizes = "sizes";
+        public const string SizeId = "sizeId";
     }
 }

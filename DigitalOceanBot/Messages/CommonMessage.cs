@@ -16,6 +16,11 @@
         {
             return "Error \U0000274C";
         }
+        
+        public static string GetCreatingMessage()
+        {
+            return "Creating \U000023F3";
+        }
 
         public static string GetInvalidIndexMessage()
         {

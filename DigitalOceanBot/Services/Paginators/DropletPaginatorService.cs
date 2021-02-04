@@ -4,8 +4,9 @@ using System.Linq;
 using DigitalOcean.API.Models.Responses;
 using DigitalOceanBot.Keyboards;
 using DigitalOceanBot.Messages;
-using DigitalOceanBot.Types;
+using DigitalOceanBot.Types.Classes;
 using Telegram.Bot.Types.ReplyMarkups;
+using Action = System.Action;
 
 namespace DigitalOceanBot.Services.Paginators
 {
@@ -13,6 +14,8 @@ namespace DigitalOceanBot.Services.Paginators
     {
         private readonly StorageService _storageService;
 
+        public Action OnSelectCallback { get; set; }
+        
         public DropletPaginatorService(StorageService storageService)
         {
             _storageService = storageService;
@@ -52,11 +55,6 @@ namespace DigitalOceanBot.Services.Paginators
                 Keyboard = DropletKeyboard.GetDropletOperationsKeyboard()
             };
 
-        }
-
-        public T Select<T>(string id)
-        {
-            throw new NotImplementedException();
         }
     }
 }

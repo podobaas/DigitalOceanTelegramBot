@@ -5,13 +5,14 @@
 <h4 align="center">Control your <a href="https://www.digitalocean.com" target="_blank">DigitalOcean</a> resources from the Telegram messenger</h4>
 
 <p align="center">
-<img src="https://api.codacy.com/project/badge/Grade/44bbed52b81a4718891619b496d13244"/>
-<img src="https://github.com/podobaas/DigitalOceanTelegramBot/workflows/DigitalOceanBot%20CI/badge.svg"/>
+<img alt="Docker Pulls" src="https://img.shields.io/docker/pulls/podobaas/digitalocean-telegram-bot">
+<img alt="GitHub last commit (branch)" src="https://img.shields.io/github/last-commit/podobaas/DigitalOceanTelegramBot/master">
 <img src="https://img.shields.io/github/license/podobaas/DigitalOceanTelegramBot"/>
 </p>
 
 <p align="center">
-  <a href="https://telegram.me/DigitalOceanDropletBot" target="_blank">Link to Telegram bot</a> |
+  <a href="https://hub.docker.com/r/podobaas/digitalocean-telegram-bot" target="_blank">DockerHub Page</a> 
+|
   <a href="https://www.digitalocean.com/community/tools/digitalocean-for-telegram" target="_blank">DigitalOcean Community Tools Page</a> 
 </p>   
   
@@ -20,24 +21,7 @@
   </a>
 </p>
 
-✺ Authorization based on DigitalOcean Application for API
-
-✺ For more security, **your token is auto revoked after 15 minutes** after authorization in DO account!
-
 <br/>
-
-<h4 align="center">This project is supported by:</h4>
-<p p align="center">
-  <a href="https://www.digitalocean.com/">
-    <img src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_horizontal_blue.svg" width="201px">
-  </a>
-</p>
-
-## Basic commands
-
-**/start** - Authentication in DigitalOcean account
-
-**/stop** - Revokation your token and delete session data from database
 
 ## Available functional
 <details><summary><b>Account</b> </summary>
@@ -83,27 +67,19 @@
 
 </details>
 
-## Missing functional (in development)
-+ Block Storage
-+ CDN Endpoints
-+ Certificates
-+ Databases
-+ Domains
-+ Domain Records
-+ Floating IPs
-+ Snapshots
-+ Kubernetes
-+ Load Balancers
+## Usage
+- Create your personal bot. Just talk to [@BotFather](https://t.me/botfather) or read [manual](https://core.telegram.org/bots#3-how-do-i-create-a-bot)
+- Get your UserId in Telegram [@getmyid_bot](https://t.me/getmyid_bot)
+- Create a personal [DigitalOcean token](https://cloud.digitalocean.com/account/api/tokens)
+- Pull docker image ``docker pull podobaas/digitalocean-telegram-bot``
+- Run ``docker container run -d -env TELEGRAM_BOT_TOKEN=XXX -env TELEGRAM_USER_ID=XXX -env DIGITALOCEAN_TOKEN=XXX --name MyBot digitalocean-telegram-bot``
+- Enjoy!
 
 ## Built With
-+ [.NET Core](https://github.com/dotnet/core)
++ [.NET 5](https://github.com/dotnet/core)
 + [TelegramBot API .NET](https://github.com/TelegramBots/Telegram.Bot)
 + [DigitalOcean API .NET](https://github.com/trmcnvn/DigitalOcean.API)
-+ [MongoDB](https://github.com/mongodb/mongo)
-+ [RabbitMQ](https://github.com/rabbitmq/rabbitmq-server)
-+ [EasyNetQ](https://github.com/EasyNetQ/EasyNetQ)
-+ [Serilog](https://github.com/serilog/serilog)
-+ [NSubstitute](https://github.com/nsubstitute/NSubstitute)
++ [Scrutor](https://github.com/khellang/Scrutor)
 
 ## References
 + [LICENSE](LICENSE)

@@ -1,54 +1,40 @@
 ﻿using System.Collections.Generic;
+using DigitalOceanBot.Core;
 using DigitalOceanBot.Types;
+using DigitalOceanBot.Types.Const;
+using DigitalOceanBot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace DigitalOceanBot.Keyboards
 {
     internal static class DropletKeyboard
     {
-        public static ReplyKeyboardMarkup GetDropletKeyboard()
-        {
-            var inlineKeyboardButtons = new[]
-            {
-                new[]
-                {
-                    new KeyboardButton(CommandConst.DropletCreateNew),
-                },
-                new[]
-                {
-                    new KeyboardButton(CommandConst.Back)
-                }
-            };
-
-            return new ReplyKeyboardMarkup(inlineKeyboardButtons, true);
-        }
-        
         public static ReplyKeyboardMarkup GetDropletOperationsKeyboard()
         {
             var inlineKeyboardButtons = new[]
             {
                 new[]
                 {
-                    new KeyboardButton(CommandConst.DropletRename),
+                    new KeyboardButton(BotCommands.DropletRename),
                 },
                 new[]
                 {
-                    new KeyboardButton(CommandConst.DropletReboot),
-                    new KeyboardButton(CommandConst.DropletPowerCycle),
+                    new KeyboardButton(BotCommands.DropletReboot),
+                    new KeyboardButton(BotCommands.DropletPowerCycle),
                 },
                 new[]
                 {
-                    new KeyboardButton(CommandConst.DropletShutdown),
-                    new KeyboardButton(CommandConst.DropletPowerOn),
+                    new KeyboardButton(BotCommands.DropletShutdown),
+                    new KeyboardButton(BotCommands.DropletPowerOn),
                 },
                 new[]
                 {
-                    new KeyboardButton(CommandConst.DropletCreateSnapshot),
-                    new KeyboardButton(CommandConst.DropletResetPassword),
+                    new KeyboardButton(BotCommands.DropletCreateSnapshot),
+                    new KeyboardButton(BotCommands.DropletResetPassword),
                 },
                 new[]
                 {
-                    new KeyboardButton(CommandConst.Back)
+                    new KeyboardButton(BotCommands.Back)
                 }
             };
 
@@ -60,31 +46,35 @@ namespace DigitalOceanBot.Keyboards
             var back = new InlineKeyboardButton
             {
                 Text = "\U0001F448 Prev",
-                CallbackData = pageIndex > 0 ? $"DropletPrevious;{(pageIndex - 1).ToString()}" : "None"
+                CallbackData = pageIndex > 0 ? 
+                    $"{BotCallbackQueryType.DropletPrevious};{(pageIndex - 1).ToString()}" : 
+                    $"{BotCallbackQueryType.None}"
             };
 
             var next = new InlineKeyboardButton
             {
                 Text = "Next \U0001F449",
-                CallbackData = pageIndex < count - 1 ? $"DropletNext;{(pageIndex + 1).ToString()}" : "None"
+                CallbackData = pageIndex < count - 1 ? 
+                    $"{BotCallbackQueryType.DropletNext};{(pageIndex + 1).ToString()}" : 
+                    $"{BotCallbackQueryType.None}"
             };
 
             var countLabel = new InlineKeyboardButton
             {
                 Text = $"{(pageIndex + 1).ToString()}/{count.ToString()}",
-                CallbackData = "None"
+                CallbackData = $"{BotCallbackQueryType.None}"
             };
 
             var select = new InlineKeyboardButton
             {
                 Text = $"Select",
-                CallbackData = $"DropletSelect;{id}"
+                CallbackData = $"{BotCallbackQueryType.DropletSelect};{id}"
             };
             
             var createNew = new InlineKeyboardButton
             {
                 Text = $"Create new",
-                CallbackData = $"DropletCreateNew;{id}"
+                CallbackData = $"{BotCallbackQueryType.DropletSelect};{id}"
             };
 
             var buttons = new List<List<InlineKeyboardButton>>

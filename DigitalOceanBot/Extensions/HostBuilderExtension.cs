@@ -1,12 +1,12 @@
 ﻿using System;
 using DigitalOcean.API;
 using DigitalOceanBot.Core;
-using DigitalOceanBot.Core.Attributes;
 using DigitalOceanBot.Core.CallbackQueries;
 using DigitalOceanBot.Core.Commands;
 using DigitalOceanBot.Core.StateHandlers;
 using DigitalOceanBot.Services;
 using DigitalOceanBot.Services.Paginators;
+using DigitalOceanBot.Workers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;

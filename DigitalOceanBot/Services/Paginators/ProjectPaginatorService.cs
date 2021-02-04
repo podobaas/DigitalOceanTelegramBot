@@ -4,14 +4,17 @@ using System.Linq;
 using DigitalOcean.API.Models.Responses;
 using DigitalOceanBot.Keyboards;
 using DigitalOceanBot.Messages;
-using DigitalOceanBot.Types;
+using DigitalOceanBot.Types.Classes;
 using Telegram.Bot.Types.ReplyMarkups;
+using Action = System.Action;
 
 namespace DigitalOceanBot.Services.Paginators
 {
     public sealed class ProjectPaginatorService : IPaginator
     {
         private readonly StorageService _storageService;
+        
+        public Action OnSelectCallback { get; set; }
 
         public ProjectPaginatorService(StorageService storageService)
         {

@@ -1,4 +1,6 @@
-﻿using DigitalOceanBot.Types;
+﻿using DigitalOceanBot.Core;
+using DigitalOceanBot.Types;
+using DigitalOceanBot.Types.Const;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace DigitalOceanBot.Keyboards
@@ -11,13 +13,13 @@ namespace DigitalOceanBot.Keyboards
             {
                 new[]
                 {
-                    new KeyboardButton(CommandConst.Account),
-                    new KeyboardButton(CommandConst.Projects),
+                    new KeyboardButton(BotCommands.Account),
+                    new KeyboardButton(BotCommands.Projects),
                 },
                 new[]
                 {
-                    new KeyboardButton(CommandConst.Droplets),
-                    new KeyboardButton(CommandConst.Firewalls),
+                    new KeyboardButton(BotCommands.Droplets),
+                    new KeyboardButton(BotCommands.Firewalls),
                 }
             };
 
