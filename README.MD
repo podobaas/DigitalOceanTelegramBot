@@ -72,7 +72,7 @@
 - Get your UserId in Telegram [@getmyid_bot](https://t.me/getmyid_bot)
 - Create a personal [DigitalOcean token](https://cloud.digitalocean.com/account/api/tokens)
 - Pull docker image ``docker pull podobaas/digitalocean-telegram-bot``
-- Run ``docker container run -d -env TELEGRAM_BOT_TOKEN=XXX -env TELEGRAM_USER_ID=XXX -env DIGITALOCEAN_TOKEN=XXX --name MyBot digitalocean-telegram-bot``
+- Run ``docker run -d --env TELEGRAM_BOT_TOKEN=XXX --env TELEGRAM_USER_ID=XXX --env DIGITALOCEAN_TOKEN=XXX --name my_do_bot podobaas/digitalocean-telegram-bot:1.0``
 - Enjoy!
 
 ## Built With
