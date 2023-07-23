@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -36,7 +36,7 @@
   <ItemGroup>
     <PackageReference Include="DigitalOcean.API" Version="5.2.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.1" />
-    <PackageReference Include="RestSharp" Version="106.10.1" />
+    <PackageReference Include="RestSharp" Version="106.12.0" />
     <PackageReference Include="Scrutor" Version="3.3.0" />
     <PackageReference Include="Telegram.Bot" Version="15.2.1" />
   </ItemGroup>
